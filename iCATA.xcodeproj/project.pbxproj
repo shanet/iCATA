@@ -17,7 +17,16 @@
 		258F1E44181B4FCE007D3ACE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 258F1E43181B4FCE007D3ACE /* Default@2x.png */; };
 		258F1E46181B4FCE007D3ACE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 258F1E45181B4FCE007D3ACE /* Default-568h@2x.png */; };
 		258F1E49181B4FCE007D3ACE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 258F1E47181B4FCE007D3ACE /* MainStoryboard.storyboard */; };
-		258F1E4C181B4FCE007D3ACE /* SPTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 258F1E4B181B4FCE007D3ACE /* SPTViewController.m */; };
+		25E2988F183319B500FC033D /* defaultPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25E2988E183319B500FC033D /* defaultPrefs.plist */; };
+		25E2989018331C0900FC033D /* SPTRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298871833194B00FC033D /* SPTRoutesModel.m */; };
+		25E2989118331C0D00FC033D /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298801833192D00FC033D /* DataManager.m */; };
+		25E2989218331C1200FC033D /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298821833192D00FC033D /* DataSource.m */; };
+		25E2989318331C1700FC033D /* SPTRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E2988B1833196700FC033D /* SPTRoute.m */; };
+		25E2989418331C1A00FC033D /* SPTRoutesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E2988D1833198000FC033D /* SPTRoutesListViewController.m */; };
+		25E2989618331C2700FC033D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E2989518331C2700FC033D /* CoreData.framework */; };
+		25E29898183326BA00FC033D /* routes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25E29897183326BA00FC033D /* routes.plist */; };
+		25E2989C18332FF700FC033D /* Routes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25E2989A18332FF700FC033D /* Routes.xcdatamodeld */; };
+		25E2989F183337E900FC033D /* tmp_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E2989E183337E900FC033D /* tmp_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,8 +44,23 @@
 		258F1E43181B4FCE007D3ACE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		258F1E45181B4FCE007D3ACE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		258F1E48181B4FCE007D3ACE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		258F1E4A181B4FCE007D3ACE /* SPTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTViewController.h; sourceTree = "<group>"; };
-		258F1E4B181B4FCE007D3ACE /* SPTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTViewController.m; sourceTree = "<group>"; };
+		25E2987F1833192D00FC033D /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
+		25E298801833192D00FC033D /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
+		25E298811833192D00FC033D /* DataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		25E298821833192D00FC033D /* DataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		25E298831833192D00FC033D /* DataManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManagerDelegate.h; sourceTree = "<group>"; };
+		25E298841833192D00FC033D /* DataSourceCellConfigurer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSourceCellConfigurer.h; sourceTree = "<group>"; };
+		25E298861833194B00FC033D /* SPTRoutesModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTRoutesModel.h; sourceTree = "<group>"; };
+		25E298871833194B00FC033D /* SPTRoutesModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTRoutesModel.m; sourceTree = "<group>"; };
+		25E2988A1833196700FC033D /* SPTRoute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTRoute.h; sourceTree = "<group>"; };
+		25E2988B1833196700FC033D /* SPTRoute.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTRoute.m; sourceTree = "<group>"; };
+		25E2988C1833198000FC033D /* SPTRoutesListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPTRoutesListViewController.h; sourceTree = "<group>"; };
+		25E2988D1833198000FC033D /* SPTRoutesListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SPTRoutesListViewController.m; sourceTree = "<group>"; };
+		25E2988E183319B500FC033D /* defaultPrefs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = defaultPrefs.plist; sourceTree = "<group>"; };
+		25E2989518331C2700FC033D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		25E29897183326BA00FC033D /* routes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = routes.plist; sourceTree = "<group>"; };
+		25E2989B18332FF700FC033D /* Routes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Routes.xcdatamodel; sourceTree = "<group>"; };
+		25E2989E183337E900FC033D /* tmp_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tmp_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25E2989618331C2700FC033D /* CoreData.framework in Frameworks */,
 				258F1E30181B4FCE007D3ACE /* UIKit.framework in Frameworks */,
 				258F1E32181B4FCE007D3ACE /* Foundation.framework in Frameworks */,
 				258F1E34181B4FCE007D3ACE /* CoreGraphics.framework in Frameworks */,
@@ -56,6 +81,7 @@
 		258F1E23181B4FCE007D3ACE = {
 			isa = PBXGroup;
 			children = (
+				25E2989518331C2700FC033D /* CoreData.framework */,
 				258F1E35181B4FCE007D3ACE /* iCATA */,
 				258F1E2E181B4FCE007D3ACE /* Frameworks */,
 				258F1E2D181B4FCE007D3ACE /* Products */,
@@ -85,9 +111,9 @@
 			children = (
 				258F1E3E181B4FCE007D3ACE /* SPTAppDelegate.h */,
 				258F1E3F181B4FCE007D3ACE /* SPTAppDelegate.m */,
-				258F1E47181B4FCE007D3ACE /* MainStoryboard.storyboard */,
-				258F1E4A181B4FCE007D3ACE /* SPTViewController.h */,
-				258F1E4B181B4FCE007D3ACE /* SPTViewController.m */,
+				25E2987E183318F400FC033D /* Models */,
+				25E2987D183318EE00FC033D /* Controllers */,
+				25E2987C183318E100FC033D /* Views */,
 				258F1E36181B4FCE007D3ACE /* Supporting Files */,
 			);
 			path = iCATA;
@@ -96,6 +122,9 @@
 		258F1E36181B4FCE007D3ACE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				25E2989D1833306400FC033D /* Route Icons */,
+				25E29897183326BA00FC033D /* routes.plist */,
+				25E2988E183319B500FC033D /* defaultPrefs.plist */,
 				258F1E37181B4FCE007D3ACE /* iCATA-Info.plist */,
 				258F1E38181B4FCE007D3ACE /* InfoPlist.strings */,
 				258F1E3B181B4FCE007D3ACE /* main.m */,
@@ -105,6 +134,49 @@
 				258F1E45181B4FCE007D3ACE /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25E2987C183318E100FC033D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				258F1E47181B4FCE007D3ACE /* MainStoryboard.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		25E2987D183318EE00FC033D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				25E2988C1833198000FC033D /* SPTRoutesListViewController.h */,
+				25E2988D1833198000FC033D /* SPTRoutesListViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		25E2987E183318F400FC033D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				25E298861833194B00FC033D /* SPTRoutesModel.h */,
+				25E298871833194B00FC033D /* SPTRoutesModel.m */,
+				25E2988A1833196700FC033D /* SPTRoute.h */,
+				25E2988B1833196700FC033D /* SPTRoute.m */,
+				25E2987F1833192D00FC033D /* DataManager.h */,
+				25E298801833192D00FC033D /* DataManager.m */,
+				25E298811833192D00FC033D /* DataSource.h */,
+				25E298821833192D00FC033D /* DataSource.m */,
+				25E298831833192D00FC033D /* DataManagerDelegate.h */,
+				25E298841833192D00FC033D /* DataSourceCellConfigurer.h */,
+				25E2989A18332FF700FC033D /* Routes.xcdatamodeld */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		25E2989D1833306400FC033D /* Route Icons */ = {
+			isa = PBXGroup;
+			children = (
+				25E2989E183337E900FC033D /* tmp_icon.png */,
+			);
+			name = "Route Icons";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +236,9 @@
 				258F1E44181B4FCE007D3ACE /* Default@2x.png in Resources */,
 				258F1E46181B4FCE007D3ACE /* Default-568h@2x.png in Resources */,
 				258F1E49181B4FCE007D3ACE /* MainStoryboard.storyboard in Resources */,
+				25E2988F183319B500FC033D /* defaultPrefs.plist in Resources */,
+				25E29898183326BA00FC033D /* routes.plist in Resources */,
+				25E2989F183337E900FC033D /* tmp_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,9 +249,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25E2989418331C1A00FC033D /* SPTRoutesListViewController.m in Sources */,
+				25E2989318331C1700FC033D /* SPTRoute.m in Sources */,
+				25E2989218331C1200FC033D /* DataSource.m in Sources */,
+				25E2989118331C0D00FC033D /* DataManager.m in Sources */,
+				25E2989018331C0900FC033D /* SPTRoutesModel.m in Sources */,
 				258F1E3C181B4FCE007D3ACE /* main.m in Sources */,
 				258F1E40181B4FCE007D3ACE /* SPTAppDelegate.m in Sources */,
-				258F1E4C181B4FCE007D3ACE /* SPTViewController.m in Sources */,
+				25E2989C18332FF700FC033D /* Routes.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,8 +379,22 @@
 				258F1E51181B4FCE007D3ACE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		25E2989A18332FF700FC033D /* Routes.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				25E2989B18332FF700FC033D /* Routes.xcdatamodel */,
+			);
+			currentVersion = 25E2989B18332FF700FC033D /* Routes.xcdatamodel */;
+			path = Routes.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 258F1E24181B4FCE007D3ACE /* Project object */;
 }
