@@ -42,7 +42,7 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    [self setNavBarBackButtonText];
+
     self.tableView.dataSource = self.dataSource;
     self.dataSource.tableView = self.tableView;
 
@@ -54,13 +54,6 @@
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
-
-- (void) setNavBarBackButtonText {
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] init];
-    backButton.title = @"Buildings";
-    self.navigationItem.backBarButtonItem = backButton;
-}
-
 
 -(void) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the code and name of the route as the text on the cell and the route icon
@@ -80,29 +73,19 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // If a cell in the search results table was selected, fire a show building info segue
-    /*if(tableView == self.searchDisplayController.searchResultsTableView) {
-        [self performSegueWithIdentifier:@"ShowBuildingInfoSegue" sender:nil];
-    }*/
-}
-
-- (void) tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    //[self performSegueWithIdentifier:@"ShowBuildingMapSegue" sender:indexPath];
-}
-
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSIndexPath *indexPath = nil;
-    
-    // Give the selected building to the building info/map controller
-    /*if([segue.identifier isEqualToString:@"ShowBuildingInfoSegue"]) {
-        indexPath = [self.tableView indexPathForSelectedRow];
-    } else if([segue.identifier isEqualToString:@"ShowBuildingMapSegue"]) {
-        indexPath = (NSIndexPath*)sender;
-    } else {
-        return;
+    if(tableView == self.searchDisplayController.searchResultsTableView) {
+        [self performSegueWithIdentifier:@"ShowMapSegue" sender:nil];
     }
-    
-    SPTBuildingDetailViewController *buildingDetailController = segue.destinationViewController;
-    buildingDetailController.building = [self.dataSource objectAtIndexPath:indexPath];*/
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
+    // Give the selected route to the map controller
+    if([segue.identifier isEqualToString:@"ShowMapSegue"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        
+        SPTMapViewController *mapController = segue.destinationViewController;
+        mapController.route = [self.dataSource objectAtIndexPath:indexPath];
+    }
 }
 
 - (BOOL) searchDisplayController:(UISearchDisplayController*) searchController shouldReloadTableForSearchString:(NSString *)searchString {
