@@ -45,33 +45,14 @@
     [self setNavBarBackButtonText];
     self.tableView.dataSource = self.dataSource;
     self.dataSource.tableView = self.tableView;
-    
-    // Add the edit button to the nav bar
-    //self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem, self.editButtonItem];
-    
+
     // Set the search options and provide the search controller with a data source
-    //self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Contains", @"Exclude", @"Match"];
-    //self.searchDisplayController.searchResultsDataSource = self.dataSource;
+    self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Contains", @"Exclude", @"Match"];
+    self.searchDisplayController.searchResultsDataSource = self.dataSource;
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self setDataSourcePredicate];
-}
-
-- (void) setDataSourcePredicate {
-    /*NSPredicate *predicate = nil;
-    
-    // If the pref is set to hide buildings without photos, give the data source
-    // a predicate which filters out buildings without the hasPhoto flag set
-    if([self.prefsModel readBoolPrefForKey:kHideBuildingsWithoutPhotoKey]) {
-        predicate = [NSPredicate predicateWithFormat:@"hasPhoto == 1"];
-    }
-    
-    // Set the predicate (nil if the pref is not set)
-    [self.dataSource updateWithPredicate:predicate];
-    
-    [self.tableView reloadData];*/
 }
 
 - (void) setNavBarBackButtonText {
@@ -162,14 +143,19 @@
 
 - (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController*)searchController {
     // When the search is done, change the datasource tableview back to the full tableview
-    [self setDataSourcePredicate];
+    [self removeDataSourcePredicate];
 
     self.dataSource.tableView = self.tableView;
 }
 
 - (void) searchBarCancelButtonClicked:(UISearchBar*)searchBar {
-    // If the search was cancelled, change the datasource predicate back
-    [self setDataSourcePredicate];
+    // If the search was cancelled, remove the datasource predicate
+    [self removeDataSourcePredicate];
+}
+
+- (void) removeDataSourcePredicate {
+    [self.dataSource updateWithPredicate:nil];
+    [self.tableView reloadData];
 }
 
 @end
