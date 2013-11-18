@@ -8,14 +8,19 @@
 
 #import "SPTRoute.h"
 
+// This is the new API currently in testing. This IP is expected to change to a domain sometime in the future.
+// This constant will need updated at that time.
+#define kDataUrl "http://50.203.43.19"
+
+// http://stackoverflow.com/questions/1560081/how-can-i-create-a-uicolor-from-a-hex-string
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 @interface SPTRoute ()
 enum XmlType {
     STOPS = 1,
     BUSES = 2
 };
 
-@property NSInteger currentXml;
-@property (strong, nonatomic) NSString *routeKmlUrl;
 @property (strong, nonatomic) NSOperationQueue *downloadQueue;
 @end
 
@@ -29,9 +34,8 @@ enum XmlType {
 
 @synthesize stops;
 @synthesize buses;
+@synthesize color;
 @synthesize downloadQueue;
-@synthesize currentXml;
-@synthesize routeKmlUrl;
 @synthesize routeKml;
 
 - (id) initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
@@ -40,9 +44,8 @@ enum XmlType {
     if(self) {
         self.stops = [[NSMutableArray alloc] init];
         self.buses = [[NSMutableArray alloc] init];
+        self.color = nil;
         self.downloadQueue = nil;
-        self.currentXml = 0;
-        self.routeKmlUrl = nil;
         self.routeKml = nil;
     }
     
@@ -58,16 +61,14 @@ enum XmlType {
 }
 
 - (void) downloadRouteStops {
-    self.currentXml = STOPS;
-    [self downloadXmlAtUrl:[NSString stringWithFormat:@"http://realtime.catabus.com/InfoPoint/map/GetRouteXml.ashx?RouteId=%@", self.code]];
+    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kDataUrl, 42]];
 }
 
 - (void) downloadBusLocations {
-    self.currentXml = BUSES;
-    [self downloadXmlAtUrl:[NSString stringWithFormat:@"http://realtime.catabus.com/InfoPoint/map/GetVehicleXml.ashx?RouteId=%@", self.code]];
+    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/map/GetVehicleXml.ashx?RouteId=%@", kDataUrl, self.code]];
 }
 
-- (void) downloadXmlAtUrl:(NSString*) url {
+- (void) downloadJsonAtUrl:(NSString*) url {
     NSURL *_url = [NSURL URLWithString:url];
     NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:_url];
     self.downloadQueue = [[NSOperationQueue alloc] init];
@@ -75,59 +76,52 @@ enum XmlType {
         if(error) {
             // TODO: handle errors
         } else {
-            [self parseXml:data];
+            [self parseJson:data];
         }
     }];
 }
 
-- (void) parseXml:(NSData*) data {
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:data];
-    xmlParser.delegate = self;
-    [xmlParser parse];
+- (void) parseJson:(NSData*) data {
+    NSError *error;
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    
+    [self parseJsonColor:[json objectForKey:@"Color"]];
+    [self parseJsonStops:[json objectForKey:@"Stops"]];
+    [self parseJsonBuses:[json objectForKey:@"Vehicles"]];
+    
+    [self downloadAndParseRouteKmlAtUrl:[json objectForKey:@"RouteTraceFilename"]];
+    
+    [self performSelectorOnMainThread:@selector(notifyRouteStopsDownloadComplete) withObject:nil waitUntilDone:NO];
+}
+
+- (void) parseJsonColor:(NSString*) colorString {
+    NSScanner *scanner = [NSScanner scannerWithString:colorString];
+    NSUInteger hexColor;
+    [scanner scanHexInt:&hexColor];
+    self.color = UIColorFromRGB(hexColor);
+}
+
+- (void) parseJsonStops:(NSArray*) jsonStops {
+    for(NSDictionary *stop in jsonStops) {
+        SPTRouteStop *routeStop = [[SPTRouteStop alloc] initWithDict:stop];
+        [self.stops addObject:routeStop];
+    }
+}
+
+- (void) parseJsonBuses:(NSArray*) jsonBuses {
+    for(NSDictionary *bus in jsonBuses) {
+        SPTRouteBus *routeBus = [[SPTRouteBus alloc] initWithDict:bus];
+        [self.buses addObject:routeBus];
+    }
+}
+
+- (void) downloadAndParseRouteKmlAtUrl:(NSString*) url {
+    NSURL *_url = [NSURL URLWithString:[NSString stringWithFormat:@"%s/InfoPoint/Resources/Traces/%@", kDataUrl, url]];
+    self.routeKml = [KMLParser parseKMLAtURL:_url];
 }
 
 - (void) notifyRouteStopsDownloadComplete {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteStopsDownloadCompleted" object:self];
-}
-
-- (void) notifyRouteBusesDownloadComplete {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteBusesDownloadCompleted" object:self];
-}
-
-- (void) parserDidStartDocument:(NSXMLParser *)parser {}
-
-- (void) parserDidEndDocument:(NSXMLParser *)parser {
-    // Send the notifcation that the requested XML has been downloaded and parsed
-    if(self.currentXml == STOPS) {
-        // Once the stops are downloaded and parsed, the route KML must be downloaded and parsed. Then when that's done
-        // we can send the notification that the route stops are ready
-        [self downloadAndParseRouteKml];
-        
-        [self performSelectorOnMainThread:@selector(notifyRouteStopsDownloadComplete) withObject:nil waitUntilDone:NO];
-    } else if(self.currentXml == BUSES) {
-        [self performSelectorOnMainThread:@selector(notifyRouteBusesDownloadComplete) withObject:nil waitUntilDone:NO];
-    }
-}
-
-- (void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict {
-    // If the element is a stop or vehicle, add it to the stops or buses array
-    if([elementName compare:@"stop"] == 0) {
-        SPTRouteStop *routeStop = [[SPTRouteStop alloc] initWithDict:attributeDict];
-        [self.stops addObject:routeStop];
-    } else if([elementName compare:@"vehicle"] == 0) {
-        SPTRouteBus *routeBus = [[SPTRouteBus alloc] initWithDict:attributeDict];
-        [self.buses addObject:routeBus];
-    } else if([elementName compare:@"info"] == 0) {
-        self.routeKmlUrl = [attributeDict objectForKey:@"trace_kml_url"];
-    }
-}
-
-- (void) parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {}
-
-- (void) parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {}
-
-- (void) downloadAndParseRouteKml {
-    self.routeKml = [KMLParser parseKMLAtURL:[NSURL URLWithString:self.routeKmlUrl]];
 }
 
 @end

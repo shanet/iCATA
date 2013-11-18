@@ -12,7 +12,6 @@
 @property float latitude;
 @property float longitude;
 @property (strong, nonatomic) NSString *name;
-@property NSInteger order;
 
 - (id) initWithDict:(NSDictionary*) dict;
 @end

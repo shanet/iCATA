@@ -14,8 +14,12 @@
     self = [super init];
     
     if(self) {
-        _latitude = [[dict objectForKey:@"lat"] floatValue];
-        _longitude = [[dict objectForKey:@"lng"] floatValue];
+        _latitude = [[dict objectForKey:@"Latidue"] floatValue];
+        _longitude = [[dict objectForKey:@"Longitude"] floatValue];
+        _heading = [[dict objectForKey:@"Heading"] integerValue];
+        _speed = [[dict objectForKey:@"Speed"] integerValue];
+        _riderCount = [[dict objectForKey:@"OnBoard"] integerValue];
+        _status = [dict objectForKey:@"DisplayStatus"];
     }
     
     return self;

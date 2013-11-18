@@ -60,21 +60,30 @@
 
 - (void) addRoutePathOverlay {
     for(KMLPlacemark *placemark in [[self.route routeKml] placemarks]) {
-        KMLAbstractGeometry *geo = placemark.geometry;
-        KMLLineString *line = (KMLLineString*) geo;
-        
-        // Convert the KML coordinates to a Google Maps Path
-        GMSMutablePath *routePath = [[GMSMutablePath alloc] init];
-        for(KMLCoordinate *coordinate in line.coordinates) {
-            CLLocationCoordinate2D cllCoordinate = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
-            [routePath addCoordinate:cllCoordinate];
+        if([placemark.geometry isKindOfClass:[KMLLineString class]]) {
+            [self addKmlLineToMap:(KMLLineString*)placemark.geometry];
+        } else if([placemark.geometry isKindOfClass:[KMLMultiGeometry class]]) {
+            KMLMultiGeometry *multiGeo = (KMLMultiGeometry*)[placemark geometry];
+            for(KMLAbstractGeometry *geometry in multiGeo.geometries) {
+                [self addKmlLineToMap:(KMLLineString*)geometry];
+            }
         }
-        
-        // Convert the path to a line which can be displayed on the map as an overlay
-        GMSPolyline *routeLine = [GMSPolyline polylineWithPath:routePath];
-        routeLine.strokeWidth = 8;
-        routeLine.map = self.mapView;
     }
+}
+
+- (void) addKmlLineToMap:(KMLLineString*)kmlLine {
+    // Convert the KML coordinates to a Google Maps Path
+    GMSMutablePath *routePath = [[GMSMutablePath alloc] init];
+    for(KMLCoordinate *coordinate in kmlLine.coordinates) {
+        CLLocationCoordinate2D cllCoordinate = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
+        [routePath addCoordinate:cllCoordinate];
+    }
+    
+    // Convert the path to a line which can be displayed on the map as an overlay
+    GMSPolyline *routeLine = [GMSPolyline polylineWithPath:routePath];
+    routeLine.strokeWidth = 8;
+    routeLine.strokeColor = [self.route color];
+    routeLine.map = self.mapView;
 }
 
 - (void) routeBusesDownloadCompleted {

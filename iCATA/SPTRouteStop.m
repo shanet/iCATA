@@ -14,10 +14,9 @@
     self = [super init];
     
     if(self) {
-        _latitude = [[dict objectForKey:@"lat"] floatValue];
-        _longitude = [[dict objectForKey:@"lng"] floatValue];
-        _name = [dict objectForKey:@"label"];
-        _order = [[dict objectForKey:@"html"] integerValue];
+        _latitude = [[dict objectForKey:@"Latitude"] floatValue];
+        _longitude = [[dict objectForKey:@"Longitude"] floatValue];
+        _name = [dict objectForKey:@"Name"];
     }
     
     return self;

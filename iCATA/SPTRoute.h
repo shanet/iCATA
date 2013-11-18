@@ -26,6 +26,7 @@ enum RouteType {
 
 @property (strong, nonatomic) NSMutableArray *stops;
 @property (strong, nonatomic) NSMutableArray *buses;
+@property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) KMLRoot *routeKml;
 
 - (UIImage*) getIconImage;
