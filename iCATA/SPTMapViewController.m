@@ -6,12 +6,14 @@
 //  Copyright (c) 2013 shane. All rights reserved.
 //
 
+#import <GoogleMaps/GoogleMaps.h>
 #import "SPTMapViewController.h"
 #import "SPTRouteStopsModel.h"
 
 @interface SPTMapViewController ()
-@property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (strong, nonatomic) SPTRouteStopsModel *routeStopsModel;
+
+@property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @end
 
 @implementation SPTMapViewController
@@ -35,10 +37,24 @@
     
     self.routeStopsModel = [[SPTRouteStopsModel alloc] initWithRouteCode:[self.route code]];
     [self.routeStopsModel downloadStopsForRoute];
+    
+    //[self showTestMap];
 }
 
 - (void) routeStopsDownloadCompleted {
-    self.textView.text = [self.routeStopsModel data];
+    //self.textView.text = [self.routeStopsModel data];
+}
+
+- (void) showTestMap {
+    // Center the map on State College
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.7914 longitude:-77.8586 zoom:10];
+    self.mapView.camera = camera;
+    
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(40.7914, -77.8586);
+    marker.title = @"State College";
+    marker.snippet = @"United States";
+    marker.map = self.mapView;
 }
 
 @end

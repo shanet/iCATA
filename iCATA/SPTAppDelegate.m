@@ -7,10 +7,14 @@
 //
 
 #import "SPTAppDelegate.h"
+#import <GoogleMaps/GoogleMaps.h>
 
 @implementation SPTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    // Set the Google Maps API key
+    [GMSServices provideAPIKey:@"AIzaSyCe-p2VUD2DtwDF_cdITm4x5fO4SmOZPnc"];
+    
     // Set the default prefs
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *defaultPrefsFile = [[NSBundle mainBundle] pathForResource:@"defaultPrefs" ofType:@"plist"];
