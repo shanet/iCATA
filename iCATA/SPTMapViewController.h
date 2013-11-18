@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <GoogleMaps/GoogleMaps.h>
+#import <KML/KML.h>
 #import "SPTRoute.h"
 
 @interface SPTMapViewController : UIViewController

@@ -6,13 +6,9 @@
 //  Copyright (c) 2013 shane. All rights reserved.
 //
 
-#import <GoogleMaps/GoogleMaps.h>
 #import "SPTMapViewController.h"
-#import "SPTRouteStopsModel.h"
 
 @interface SPTMapViewController ()
-@property (strong, nonatomic) SPTRouteStopsModel *routeStopsModel;
-
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @end
 
@@ -23,7 +19,6 @@
     
     if (self) {
         _route = nil;
-        _routeStopsModel = nil;
     }
     
     return self;
@@ -34,27 +29,56 @@
     self.title = [NSString stringWithFormat:@"%@ - %@", [self.route code], [self.route name]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeStopsDownloadCompleted) name:@"RouteStopsDownloadCompleted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeBusesDownloadCompleted) name:@"RouteBusesDownloadCompleted" object:nil];
     
-    self.routeStopsModel = [[SPTRouteStopsModel alloc] initWithRouteCode:[self.route code]];
-    [self.routeStopsModel downloadStopsForRoute];
+    [self.route downloadRouteStops];
     
-    //[self showTestMap];
+    [self centerMapOnRoute];
+}
+
+- (void) centerMapOnRoute {
+    // Center the map on State College
+    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.7914 longitude:-77.8586 zoom:13];
+    self.mapView.camera = camera;
+    self.mapView.myLocationEnabled = YES;
+    self.mapView.settings.myLocationButton = YES;
 }
 
 - (void) routeStopsDownloadCompleted {
-    //self.textView.text = [self.routeStopsModel data];
+    [self addRouteStopOverlays];
+    [self addRoutePathOverlay];
 }
 
-- (void) showTestMap {
-    // Center the map on State College
-    GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.7914 longitude:-77.8586 zoom:10];
-    self.mapView.camera = camera;
+- (void) addRouteStopOverlays {
+    for (SPTRouteStop *routeStop in [self.route stops]) {
+        GMSMarker *marker = [[GMSMarker alloc] init];
+        marker.position = CLLocationCoordinate2DMake(routeStop.latitude, routeStop.longitude);
+        marker.title = routeStop.name;
+        marker.map = self.mapView;
+    }
+}
+
+- (void) addRoutePathOverlay {
+    for(KMLPlacemark *placemark in [[self.route routeKml] placemarks]) {
+        KMLAbstractGeometry *geo = placemark.geometry;
+        KMLLineString *line = (KMLLineString*) geo;
+        
+        // Convert the KML coordinates to a Google Maps Path
+        GMSMutablePath *routePath = [[GMSMutablePath alloc] init];
+        for(KMLCoordinate *coordinate in line.coordinates) {
+            CLLocationCoordinate2D cllCoordinate = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude);
+            [routePath addCoordinate:cllCoordinate];
+        }
+        
+        // Convert the path to a line which can be displayed on the map as an overlay
+        GMSPolyline *routeLine = [GMSPolyline polylineWithPath:routePath];
+        routeLine.strokeWidth = 8;
+        routeLine.map = self.mapView;
+    }
+}
+
+- (void) routeBusesDownloadCompleted {
     
-    GMSMarker *marker = [[GMSMarker alloc] init];
-    marker.position = CLLocationCoordinate2DMake(40.7914, -77.8586);
-    marker.title = @"State College";
-    marker.snippet = @"United States";
-    marker.map = self.mapView;
 }
 
 @end

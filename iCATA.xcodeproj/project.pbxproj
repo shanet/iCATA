@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2518B4441839D20D00435ABC /* SPTRouteBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2518B4431839D20D00435ABC /* SPTRouteBus.m */; };
+		2518B4461839EA0E00435ABC /* KML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2518B4451839EA0E00435ABC /* KML.framework */; };
 		258F1E30181B4FCE007D3ACE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E2F181B4FCE007D3ACE /* UIKit.framework */; };
 		258F1E32181B4FCE007D3ACE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E31181B4FCE007D3ACE /* Foundation.framework */; };
 		258F1E34181B4FCE007D3ACE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E33181B4FCE007D3ACE /* CoreGraphics.framework */; };
@@ -28,7 +30,7 @@
 		25E2989C18332FF700FC033D /* Routes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 25E2989A18332FF700FC033D /* Routes.xcdatamodeld */; };
 		25E2989F183337E900FC033D /* tmp_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25E2989E183337E900FC033D /* tmp_icon.png */; };
 		25E298A21833599300FC033D /* SPTMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298A11833599300FC033D /* SPTMapViewController.m */; };
-		25E298A518335E1C00FC033D /* SPTRouteStopsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298A418335E1C00FC033D /* SPTRouteStopsModel.m */; };
+		25E298A518335E1C00FC033D /* SPTRouteStop.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298A418335E1C00FC033D /* SPTRouteStop.m */; };
 		25E298A71833ED6A00FC033D /* GoogleMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E298A61833ED6A00FC033D /* GoogleMaps.framework */; };
 		25E298A91833EDF000FC033D /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25E298A81833EDF000FC033D /* GoogleMaps.bundle */; };
 		25E298AB1833EE1300FC033D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E298AA1833EE1200FC033D /* AVFoundation.framework */; };
@@ -45,6 +47,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2518B4421839D20D00435ABC /* SPTRouteBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteBus.h; sourceTree = "<group>"; };
+		2518B4431839D20D00435ABC /* SPTRouteBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteBus.m; sourceTree = "<group>"; };
+		2518B4451839EA0E00435ABC /* KML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KML.framework; sourceTree = "<group>"; };
 		258F1E2C181B4FCE007D3ACE /* iCATA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCATA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		258F1E2F181B4FCE007D3ACE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		258F1E31181B4FCE007D3ACE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -78,8 +83,8 @@
 		25E2989E183337E900FC033D /* tmp_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tmp_icon.png; sourceTree = "<group>"; };
 		25E298A01833599300FC033D /* SPTMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTMapViewController.h; sourceTree = "<group>"; };
 		25E298A11833599300FC033D /* SPTMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTMapViewController.m; sourceTree = "<group>"; };
-		25E298A318335E1B00FC033D /* SPTRouteStopsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteStopsModel.h; sourceTree = "<group>"; };
-		25E298A418335E1C00FC033D /* SPTRouteStopsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteStopsModel.m; sourceTree = "<group>"; };
+		25E298A318335E1B00FC033D /* SPTRouteStop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteStop.h; sourceTree = "<group>"; };
+		25E298A418335E1C00FC033D /* SPTRouteStop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteStop.m; sourceTree = "<group>"; };
 		25E298A61833ED6A00FC033D /* GoogleMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMaps.framework; sourceTree = "<group>"; };
 		25E298A81833EDF000FC033D /* GoogleMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = GoogleMaps.framework/Versions/A/Resources/GoogleMaps.bundle; sourceTree = "<group>"; };
 		25E298AA1833EE1200FC033D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -116,6 +121,7 @@
 				258F1E32181B4FCE007D3ACE /* Foundation.framework in Frameworks */,
 				258F1E34181B4FCE007D3ACE /* CoreGraphics.framework in Frameworks */,
 				25E298A71833ED6A00FC033D /* GoogleMaps.framework in Frameworks */,
+				2518B4461839EA0E00435ABC /* KML.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +160,7 @@
 		258F1E2E181B4FCE007D3ACE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2518B4451839EA0E00435ABC /* KML.framework */,
 				25E298A81833EDF000FC033D /* GoogleMaps.bundle */,
 				25E298A61833ED6A00FC033D /* GoogleMaps.framework */,
 				258F1E2F181B4FCE007D3ACE /* UIKit.framework */,
@@ -215,8 +222,10 @@
 		25E2987E183318F400FC033D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				25E298A318335E1B00FC033D /* SPTRouteStopsModel.h */,
-				25E298A418335E1C00FC033D /* SPTRouteStopsModel.m */,
+				2518B4421839D20D00435ABC /* SPTRouteBus.h */,
+				2518B4431839D20D00435ABC /* SPTRouteBus.m */,
+				25E298A318335E1B00FC033D /* SPTRouteStop.h */,
+				25E298A418335E1C00FC033D /* SPTRouteStop.m */,
 				25E298861833194B00FC033D /* SPTRoutesModel.h */,
 				25E298871833194B00FC033D /* SPTRoutesModel.m */,
 				25E2988A1833196700FC033D /* SPTRoute.h */,
@@ -320,7 +329,8 @@
 				258F1E40181B4FCE007D3ACE /* SPTAppDelegate.m in Sources */,
 				25E2989C18332FF700FC033D /* Routes.xcdatamodeld in Sources */,
 				25E298A21833599300FC033D /* SPTMapViewController.m in Sources */,
-				25E298A518335E1C00FC033D /* SPTRouteStopsModel.m in Sources */,
+				25E298A518335E1C00FC033D /* SPTRouteStop.m in Sources */,
+				2518B4441839D20D00435ABC /* SPTRouteBus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
