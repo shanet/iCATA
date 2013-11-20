@@ -28,8 +28,7 @@
     [super viewDidLoad];
     self.title = [NSString stringWithFormat:@"%@ - %@", [self.route code], [self.route name]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeStopsDownloadCompleted) name:@"RouteStopsDownloadCompleted" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeBusesDownloadCompleted) name:@"RouteBusesDownloadCompleted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadCompleted) name:@"RouteDownloadCompleted" object:nil];
     
     [self.route downloadRouteStops];
     
@@ -44,21 +43,29 @@
     self.mapView.settings.myLocationButton = YES;
 }
 
-- (void) routeStopsDownloadCompleted {
+- (void) routeDownloadCompleted {
+    [self addBusesOverlays];
     [self addRouteStopOverlays];
     [self addRoutePathOverlay];
+}
+
+- (void) addBusesOverlays {
+    UIImage *busIcon = [UIImage imageNamed:@"tmp_icon.png"];
+    
+    for(SPTRouteBus *routeBus in [self.route buses]) {
+        GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
+        //marker.icon = busIcon;
+        marker.title = routeBus.status;
+    }
 }
 
 - (void) addRouteStopOverlays {
     UIImage *stopIcon = [UIImage imageNamed:@"stopIcon.png"];
     
-    for (SPTRouteStop *routeStop in [self.route stops]) {
-        GMSMarker *marker = [[GMSMarker alloc] init];
-        marker.position = CLLocationCoordinate2DMake(routeStop.latitude, routeStop.longitude);
+    for(SPTRouteStop *routeStop in [self.route stops]) {
+        GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
         //marker.icon = stopIcon;
-        marker.appearAnimation = kGMSMarkerAnimationPop;
         marker.title = routeStop.name;
-        marker.map = self.mapView;
     }
 }
 
@@ -90,8 +97,13 @@
     routeLine.map = self.mapView;
 }
 
-- (void) routeBusesDownloadCompleted {
+- (GMSMarker*) makeGMSMarkerAtLatitude:(float)latitude Longitude:(float)longitude {
+    GMSMarker *marker = [[GMSMarker alloc] init];
+    marker.position = CLLocationCoordinate2DMake(latitude, longitude);
+    marker.appearAnimation = kGMSMarkerAnimationPop;
+    marker.map = self.mapView;
     
+    return marker;
 }
 
 @end

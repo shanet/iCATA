@@ -91,7 +91,7 @@ enum XmlType {
     
     [self downloadAndParseRouteKmlAtUrl:[json objectForKey:@"RouteTraceFilename"]];
     
-    [self performSelectorOnMainThread:@selector(notifyRouteStopsDownloadComplete) withObject:nil waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(notifyRouteDownloadComplete) withObject:nil waitUntilDone:NO];
 }
 
 - (void) parseJsonColor:(NSString*) colorString {
@@ -120,8 +120,8 @@ enum XmlType {
     self.routeKml = [KMLParser parseKMLAtURL:_url];
 }
 
-- (void) notifyRouteStopsDownloadComplete {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteStopsDownloadCompleted" object:self];
+- (void) notifyRouteDownloadComplete {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteDownloadCompleted" object:self];
 }
 
 @end

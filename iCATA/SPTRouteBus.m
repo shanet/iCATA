@@ -14,7 +14,7 @@
     self = [super init];
     
     if(self) {
-        _latitude = [[dict objectForKey:@"Latidue"] floatValue];
+        _latitude = [[dict objectForKey:@"Latitude"] floatValue];
         _longitude = [[dict objectForKey:@"Longitude"] floatValue];
         _heading = [[dict objectForKey:@"Heading"] integerValue];
         _speed = [[dict objectForKey:@"Speed"] integerValue];
