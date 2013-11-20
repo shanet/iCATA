@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2518B4441839D20D00435ABC /* SPTRouteBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2518B4431839D20D00435ABC /* SPTRouteBus.m */; };
 		2518B4461839EA0E00435ABC /* KML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2518B4451839EA0E00435ABC /* KML.framework */; };
+		2518B448183D27B200435ABC /* stopIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2518B447183D27B200435ABC /* stopIcon.png */; };
 		258F1E30181B4FCE007D3ACE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E2F181B4FCE007D3ACE /* UIKit.framework */; };
 		258F1E32181B4FCE007D3ACE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E31181B4FCE007D3ACE /* Foundation.framework */; };
 		258F1E34181B4FCE007D3ACE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E33181B4FCE007D3ACE /* CoreGraphics.framework */; };
@@ -50,6 +51,7 @@
 		2518B4421839D20D00435ABC /* SPTRouteBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteBus.h; sourceTree = "<group>"; };
 		2518B4431839D20D00435ABC /* SPTRouteBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteBus.m; sourceTree = "<group>"; };
 		2518B4451839EA0E00435ABC /* KML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KML.framework; sourceTree = "<group>"; };
+		2518B447183D27B200435ABC /* stopIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopIcon.png; sourceTree = "<group>"; };
 		258F1E2C181B4FCE007D3ACE /* iCATA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCATA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		258F1E2F181B4FCE007D3ACE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		258F1E31181B4FCE007D3ACE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				25E2989D1833306400FC033D /* Route Icons */,
+				2518B447183D27B200435ABC /* stopIcon.png */,
 				25E29897183326BA00FC033D /* routes.plist */,
 				25E2988E183319B500FC033D /* defaultPrefs.plist */,
 				258F1E37181B4FCE007D3ACE /* iCATA-Info.plist */,
@@ -310,6 +313,7 @@
 				25E29898183326BA00FC033D /* routes.plist in Resources */,
 				25E2989F183337E900FC033D /* tmp_icon.png in Resources */,
 				25E298A91833EDF000FC033D /* GoogleMaps.bundle in Resources */,
+				2518B448183D27B200435ABC /* stopIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

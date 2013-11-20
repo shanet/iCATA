@@ -50,9 +50,13 @@
 }
 
 - (void) addRouteStopOverlays {
+    UIImage *stopIcon = [UIImage imageNamed:@"stopIcon.png"];
+    
     for (SPTRouteStop *routeStop in [self.route stops]) {
         GMSMarker *marker = [[GMSMarker alloc] init];
         marker.position = CLLocationCoordinate2DMake(routeStop.latitude, routeStop.longitude);
+        //marker.icon = stopIcon;
+        marker.appearAnimation = kGMSMarkerAnimationPop;
         marker.title = routeStop.name;
         marker.map = self.mapView;
     }
