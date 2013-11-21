@@ -10,7 +10,8 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import <KML/KML.h>
 #import "SPTRoute.h"
+#import "SPTBusDetailView.h"
 
-@interface SPTMapViewController : UIViewController
+@interface SPTMapViewController : UIViewController <GMSMapViewDelegate>
 @property (strong, nonatomic) SPTRoute *route;
 @end

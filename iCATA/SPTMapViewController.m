@@ -9,6 +9,9 @@
 #import "SPTMapViewController.h"
 
 @interface SPTMapViewController ()
+@property (strong, nonatomic) NSMutableArray *busMarkers;
+@property (strong, nonatomic) NSMutableArray *stopMarkers;
+
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @end
 
@@ -18,7 +21,10 @@
     self = [super initWithCoder:aDecoder];
     
     if (self) {
+        _mapView = nil;
         _route = nil;
+        _busMarkers = [[NSMutableArray alloc] init];
+        _stopMarkers = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -38,6 +44,7 @@
 - (void) centerMapOnRoute {
     // Center the map on State College
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:40.7914 longitude:-77.8586 zoom:13];
+    self.mapView.delegate = self;
     self.mapView.camera = camera;
     self.mapView.myLocationEnabled = YES;
     self.mapView.settings.myLocationButton = YES;
@@ -54,8 +61,12 @@
     
     for(SPTRouteBus *routeBus in [self.route buses]) {
         GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
-        //marker.icon = busIcon;
-        marker.title = routeBus.status;
+        
+        UIColor *color = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:1];
+        marker.icon = [GMSMarker markerImageWithColor:color];
+        marker.infoWindowAnchor = CGPointMake(0.44, 0.45);
+        
+        [self.busMarkers addObject:marker];
     }
 }
 
@@ -66,6 +77,8 @@
         GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
         //marker.icon = stopIcon;
         marker.title = routeStop.name;
+        
+        [self.stopMarkers addObject:marker];
     }
 }
 
@@ -104,6 +117,16 @@
     marker.map = self.mapView;
     
     return marker;
+}
+
+- (UIView*) mapView:(GMSMapView*)mapView markerInfoWindow:(GMSMarker *)marker {
+    if([self.busMarkers containsObject:marker]) {
+        SPTBusDetailView *busDetailView = [[[NSBundle mainBundle] loadNibNamed:@"BusDetailView" owner:self options:nil] objectAtIndex:0];
+        busDetailView.statusLabel.text = @"Hello, bus!";
+        return busDetailView;
+    } else {
+        return nil;
+    }
 }
 
 @end
