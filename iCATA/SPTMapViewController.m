@@ -8,11 +8,17 @@
 
 #import "SPTMapViewController.h"
 
+#define kMapTypeRoads 0
+#define kMapTypeSatellite 1
+
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
 @property (strong, nonatomic) NSMutableArray *stopMarkers;
+@property (strong, nonatomic) NSMutableArray *routes;
 
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
+
+- (IBAction)mapTypeChanged:(id)sender;
 @end
 
 @implementation SPTMapViewController
@@ -22,9 +28,10 @@
     
     if (self) {
         _mapView = nil;
-        _route = nil;
+        _groupName = @"";
         _busMarkers = [[NSMutableArray alloc] init];
         _stopMarkers = [[NSMutableArray alloc] init];
+        _routes = [[NSMutableArray alloc] init];
     }
     
     return self;
@@ -32,13 +39,31 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = [NSString stringWithFormat:@"%@ - %@", [self.route code], [self.route name]];
+    
+    [self setTitle];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadCompleted) name:@"RouteDownloadCompleted" object:nil];
     
-    [self.route downloadRouteStops];
+    for(SPTRoute *route in self.routes) {
+        [route downloadRouteStops];        
+    }
     
     [self centerMapOnRoute];
+}
+
+- (void) addRoute:(SPTRoute*)route {
+    [self.routes addObject:route];
+}
+
+- (void) setTitle {
+    // If there is only one route, use that route as the title
+    // Otherwise, use the given group name as the title
+    if([self.routes count] == 1) {
+        SPTRoute *route = [self.routes objectAtIndex:0];
+        self.title = [NSString stringWithFormat:@"%@ - %@", route.code, route.name];
+    } else {
+        self.title = self.groupName;
+    }
 }
 
 - (void) centerMapOnRoute {
@@ -59,43 +84,53 @@
 - (void) addBusesOverlays {
     UIImage *busIcon = [UIImage imageNamed:@"tmp_icon.png"];
     
-    for(SPTRouteBus *routeBus in [self.route buses]) {
-        GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
-        
-        UIColor *color = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:1];
-        marker.icon = [GMSMarker markerImageWithColor:color];
-        marker.infoWindowAnchor = CGPointMake(0.44, 0.45);
-        
-        [self.busMarkers addObject:marker];
+    for(SPTRoute *route in self.routes) {
+        for(SPTRouteBus *routeBus in route.buses) {
+            GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
+            
+            UIColor *color = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:1];
+            marker.icon = [GMSMarker markerImageWithColor:color];
+            marker.infoWindowAnchor = CGPointMake(0.44, 0.45);
+            
+            [self.busMarkers addObject:marker];
+        }
     }
 }
 
 - (void) addRouteStopOverlays {
     UIImage *stopIcon = [UIImage imageNamed:@"stopIcon.png"];
     
-    for(SPTRouteStop *routeStop in [self.route stops]) {
-        GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
-        //marker.icon = stopIcon;
-        marker.title = routeStop.name;
-        
-        [self.stopMarkers addObject:marker];
+    for(SPTRoute *route in self.routes) {
+        for(SPTRouteStop *routeStop in route.stops) {
+            GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
+            //marker.icon = stopIcon;
+            marker.title = routeStop.name;
+            
+            [self.stopMarkers addObject:marker];
+        }
     }
 }
 
 - (void) addRoutePathOverlay {
-    for(KMLPlacemark *placemark in [[self.route routeKml] placemarks]) {
-        if([placemark.geometry isKindOfClass:[KMLLineString class]]) {
-            [self addKmlLineToMap:(KMLLineString*)placemark.geometry];
-        } else if([placemark.geometry isKindOfClass:[KMLMultiGeometry class]]) {
-            KMLMultiGeometry *multiGeo = (KMLMultiGeometry*)[placemark geometry];
-            for(KMLAbstractGeometry *geometry in multiGeo.geometries) {
-                [self addKmlLineToMap:(KMLLineString*)geometry];
+    for(SPTRoute *route in self.routes) {
+        for(KMLPlacemark *placemark in [route.routeKml placemarks]) {
+            // If the placemark is a single line, draw it to the map
+            if([placemark.geometry isKindOfClass:[KMLLineString class]]) {
+                [self addKmlLineToMap:(KMLLineString*)placemark.geometry ForRoute:route];
+                
+            // If the placemark contains multiple geometries, draw each one to the map individually
+            } else if([placemark.geometry isKindOfClass:[KMLMultiGeometry class]]) {
+                KMLMultiGeometry *multiGeo = (KMLMultiGeometry*)[placemark geometry];
+                
+                for(KMLAbstractGeometry *geometry in multiGeo.geometries) {
+                    [self addKmlLineToMap:(KMLLineString*)geometry ForRoute:route];
+                }
             }
         }
     }
 }
 
-- (void) addKmlLineToMap:(KMLLineString*)kmlLine {
+- (void) addKmlLineToMap:(KMLLineString*)kmlLine ForRoute:(SPTRoute*)route {
     // Convert the KML coordinates to a Google Maps Path
     GMSMutablePath *routePath = [[GMSMutablePath alloc] init];
     for(KMLCoordinate *coordinate in kmlLine.coordinates) {
@@ -106,7 +141,7 @@
     // Convert the path to a line which can be displayed on the map as an overlay
     GMSPolyline *routeLine = [GMSPolyline polylineWithPath:routePath];
     routeLine.strokeWidth = 8;
-    routeLine.strokeColor = [self.route color];
+    routeLine.strokeColor = route.color;
     routeLine.map = self.mapView;
 }
 
@@ -129,4 +164,15 @@
     }
 }
 
+- (IBAction)mapTypeChanged:(id)sender {
+    UISegmentedControl *mapTypeButtons = sender;
+    switch(mapTypeButtons.selectedSegmentIndex) {
+        case kMapTypeRoads:
+            self.mapView.mapType = kGMSTypeNormal;
+            break;
+        case kMapTypeSatellite:
+            self.mapView.mapType = kGMSTypeHybrid;
+        default:;
+    }
+}
 @end

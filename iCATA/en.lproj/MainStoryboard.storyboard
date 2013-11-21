@@ -134,7 +134,13 @@
                                                 <segment title="Roads"/>
                                                 <segment title="Satellite"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="mapTypeChanged:" destination="eV4-sr-4LE" eventType="valueChanged" id="DUQ-eq-VfK"/>
+                                            </connections>
                                         </segmentedControl>
+                                        <connections>
+                                            <action selector="mapTypeChanged:" destination="eV4-sr-4LE" id="ihH-VN-G2C"/>
+                                        </connections>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
@@ -254,6 +260,24 @@
             <point key="canvasLocation" x="163" y="-249"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="GMSMapView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GMSMapView.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SPTMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTMapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="mapTypeChanged:"/>
+                <relationship kind="outlet" name="mapView" candidateClass="GMSMapView"/>
+            </relationships>
+        </class>
+        <class className="SPTRoutesListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTRoutesListViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

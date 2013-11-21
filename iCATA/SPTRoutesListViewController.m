@@ -84,7 +84,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         
         SPTMapViewController *mapController = segue.destinationViewController;
-        mapController.route = [self.dataSource objectAtIndexPath:indexPath];
+        [mapController addRoute:[self.dataSource objectAtIndexPath:indexPath]];
     }
 }
 

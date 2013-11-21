@@ -13,5 +13,7 @@
 #import "SPTBusDetailView.h"
 
 @interface SPTMapViewController : UIViewController <GMSMapViewDelegate>
-@property (strong, nonatomic) SPTRoute *route;
+@property (strong, nonatomic) NSString *groupName;
+
+- (void) addRoute:(SPTRoute*)route;
 @end
