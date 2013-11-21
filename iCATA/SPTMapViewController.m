@@ -107,14 +107,13 @@
 }
 
 - (void) addBusesOverlays {
-    UIImage *busIcon = [UIImage imageNamed:@"tmp_icon.png"];
+    UIImage *busIcon = [self scaleImage:[UIImage imageNamed:@"tmp_icon.png"] toScaleFactor:.05];
     
     for(SPTRoute *route in self.routes) {
         for(SPTRouteBus *routeBus in route.buses) {
             GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
-            
-            UIColor *color = [[UIColor alloc] initWithRed:0 green:1 blue:0 alpha:1];
-            marker.icon = [GMSMarker markerImageWithColor:color];
+
+            marker.icon = busIcon;
             marker.infoWindowAnchor = CGPointMake(0.44, 0.45);
             
             [self.busMarkers addObject:marker];
@@ -123,12 +122,12 @@
 }
 
 - (void) addRouteStopOverlays {
-    UIImage *stopIcon = [UIImage imageNamed:@"stopIcon.png"];
+    UIImage *stopIcon = [self scaleImage:[UIImage imageNamed:@"stopIcon.png"] toScaleFactor:.025];
     
     for(SPTRoute *route in self.routes) {
         for(SPTRouteStop *routeStop in route.stops) {
             GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
-            //marker.icon = stopIcon;
+            marker.icon = stopIcon;
             marker.title = routeStop.name;
             
             [self.stopMarkers addObject:marker];
@@ -199,5 +198,9 @@
             self.mapView.mapType = kGMSTypeHybrid;
         default:;
     }
+}
+
+- (UIImage*) scaleImage:(UIImage*)image toScaleFactor:(float)scaleFactor {
+    return [UIImage imageWithCGImage:image.CGImage scale:(image.scale * 1/scaleFactor) orientation:image.imageOrientation];
 }
 @end
