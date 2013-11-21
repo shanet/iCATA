@@ -126,4 +126,29 @@ enum XmlType {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteDownloadCompleted" object:self];
 }
 
+- (NSDictionary*) getBoundingBoxStops {
+    SPTRouteStop *firstStop = [self.stops objectAtIndex:0];
+    
+    SPTRouteStop *minLatitude = firstStop;
+    SPTRouteStop *maxLatitude = firstStop;
+    SPTRouteStop *minLongitude = firstStop;
+    SPTRouteStop *maxLonitude = firstStop;
+    
+    for(SPTRouteStop *stop in self.stops) {
+        if(stop.latitude > maxLatitude.latitude) {
+            maxLatitude = stop;
+        } else if(stop.latitude < minLatitude.latitude) {
+            minLatitude = stop;
+        }
+        
+        if(stop.longitude > maxLonitude.longitude) {
+            maxLonitude = stop;
+        } else if(stop.longitude < minLongitude.longitude) {
+            minLongitude = stop;
+        }
+    }
+
+    return @{@"minLatitude": minLatitude, @"maxLatitude": maxLatitude, @"minLongitude": minLongitude, @"maxLongitude": maxLonitude};
+}
+
 @end

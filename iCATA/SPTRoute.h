@@ -35,4 +35,5 @@ enum RouteType {
 - (NSString*) getRouteTypeName;
 - (void) downloadRouteStops;
 - (void) downloadBusLocations;
+- (NSDictionary*) getBoundingBoxStops;
 @end
