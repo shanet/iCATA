@@ -28,6 +28,8 @@ enum XmlType {
 
 @dynamic name;
 @dynamic code;
+@dynamic routeId;
+@dynamic hexColor;
 @dynamic type;
 @dynamic weight;
 @dynamic icon;
@@ -61,7 +63,7 @@ enum XmlType {
 }
 
 - (void) downloadRouteStops {
-    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kDataUrl, 42]];
+    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kDataUrl, [self.routeId integerValue]]];
 }
 
 - (void) downloadBusLocations {
@@ -96,9 +98,9 @@ enum XmlType {
 
 - (void) parseJsonColor:(NSString*) colorString {
     NSScanner *scanner = [NSScanner scannerWithString:colorString];
-    NSUInteger hexColor;
-    [scanner scanHexInt:&hexColor];
-    self.color = UIColorFromRGB(hexColor);
+    NSUInteger _hexColor;
+    [scanner scanHexInt:&_hexColor];
+    self.color = UIColorFromRGB(_hexColor);
 }
 
 - (void) parseJsonStops:(NSArray*) jsonStops {

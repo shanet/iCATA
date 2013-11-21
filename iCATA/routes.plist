@@ -11,6 +11,10 @@
 		<string>BL</string>
 		<key>name</key>
 		<string>Blue Loop</string>
+		<key>routeId</key>
+		<integer>55</integer>
+		<key>color</key>
+		<string>0000FF</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -21,16 +25,10 @@
 		<string>WL</string>
 		<key>name</key>
 		<string>White Loop</string>
-	</dict>
-	<dict>
-		<key>weight</key>
-		<integer>3</integer>
-		<key>type</key>
-		<integer>1</integer>
-		<key>code</key>
-		<string>GL</string>
-		<key>name</key>
-		<string>Green Link</string>
+		<key>routeId</key>
+		<integer>57</integer>
+		<key>color</key>
+		<string>000000</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -41,6 +39,24 @@
 		<string>RL</string>
 		<key>name</key>
 		<string>Red Link</string>
+		<key>routeId</key>
+		<integer>51</integer>
+		<key>color</key>
+		<string>000000</string>
+	</dict>
+	<dict>
+		<key>weight</key>
+		<integer>3</integer>
+		<key>type</key>
+		<integer>1</integer>
+		<key>code</key>
+		<string>GL</string>
+		<key>name</key>
+		<string>Green Link</string>
+		<key>routeId</key>
+		<integer>53</integer>
+		<key>color</key>
+		<string>00B050</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -51,6 +67,10 @@
 		<string>A</string>
 		<key>name</key>
 		<string>Park Forest</string>
+		<key>routeId</key>
+		<integer>1</integer>
+		<key>color</key>
+		<string>3399FF</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -61,6 +81,10 @@
 		<string>B</string>
 		<key>name</key>
 		<string>Boalsburg</string>
+		<key>routeId</key>
+		<integer>4</integer>
+		<key>color</key>
+		<string>CCFF99</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -71,6 +95,10 @@
 		<string>C</string>
 		<key>name</key>
 		<string>Houserville</string>
+		<key>routeId</key>
+		<integer>7</integer>
+		<key>color</key>
+		<string>009999</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -81,6 +109,10 @@
 		<string>F</string>
 		<key>name</key>
 		<string>Pine Grove</string>
+		<key>routeId</key>
+		<integer>10</integer>
+		<key>color</key>
+		<string>990000</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -91,6 +123,10 @@
 		<string>G</string>
 		<key>name</key>
 		<string>Stormstown</string>
+		<key>routeId</key>
+		<integer>11</integer>
+		<key>color</key>
+		<string>FFFF00</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -101,6 +137,10 @@
 		<string>HP</string>
 		<key>name</key>
 		<string>Toftrees / Scenery Park</string>
+		<key>routeId</key>
+		<integer>13</integer>
+		<key>color</key>
+		<string>FF9800</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -111,6 +151,10 @@
 		<string>K</string>
 		<key>name</key>
 		<string>Cato Park</string>
+		<key>routeId</key>
+		<integer>16</integer>
+		<key>color</key>
+		<string>002060</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -121,6 +165,10 @@
 		<string>M</string>
 		<key>name</key>
 		<string>Nittany Mall</string>
+		<key>routeId</key>
+		<integer>19</integer>
+		<key>color</key>
+		<string>FF9999</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -131,6 +179,10 @@
 		<string>N</string>
 		<key>name</key>
 		<string>Martin St / Aaron Dr</string>
+		<key>routeId</key>
+		<integer>22</integer>
+		<key>color</key>
+		<string>00FF00</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -141,6 +193,10 @@
 		<string>NE</string>
 		<key>name</key>
 		<string>Martin St / Arron Dr Express</string>
+		<key>routeId</key>
+		<integer>21</integer>
+		<key>color</key>
+		<string>CC3300</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -150,7 +206,11 @@
 		<key>code</key>
 		<string>NV</string>
 		<key>name</key>
-		<string>Martin St / Vairo Blvd / Toftrees Ave</string>
+		<string>Martin St / Vairo Blvd</string>
+		<key>routeId</key>
+		<integer>25</integer>
+		<key>color</key>
+		<string>989898</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -161,6 +221,10 @@
 		<string>R</string>
 		<key>name</key>
 		<string>Waupelani Dr</string>
+		<key>routeId</key>
+		<integer>31</integer>
+		<key>color</key>
+		<string>FF99CC</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -171,6 +235,10 @@
 		<string>RC</string>
 		<key>name</key>
 		<string>Waupelani / Campus</string>
+		<key>routeId</key>
+		<integer>33</integer>
+		<key>color</key>
+		<string>257700</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -181,6 +249,10 @@
 		<string>RP</string>
 		<key>name</key>
 		<string>Waupelani / Downtown</string>
+		<key>routeId</key>
+		<integer>34</integer>
+		<key>color</key>
+		<string>000000</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -191,6 +263,10 @@
 		<string>S</string>
 		<key>name</key>
 		<string>Science Park</string>
+		<key>routeId</key>
+		<integer>37</integer>
+		<key>color</key>
+		<string>FF00FF</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -201,6 +277,10 @@
 		<string>UT</string>
 		<key>name</key>
 		<string>University Terrace</string>
+		<key>routeId</key>
+		<integer>40</integer>
+		<key>color</key>
+		<string>9866FF</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -211,6 +291,10 @@
 		<string>V</string>
 		<key>name</key>
 		<string>Vairo Blvd</string>
+		<key>routeId</key>
+		<integer>43</integer>
+		<key>color</key>
+		<string>990099</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -221,6 +305,10 @@
 		<string>VE</string>
 		<key>name</key>
 		<string>Vairo Blvd Express</string>
+		<key>routeId</key>
+		<integer>42</integer>
+		<key>color</key>
+		<string>FFCC66</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -231,6 +319,10 @@
 		<string>W</string>
 		<key>name</key>
 		<string>Valley Vista</string>
+		<key>routeId</key>
+		<integer>46</integer>
+		<key>color</key>
+		<string>999900</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -241,6 +333,10 @@
 		<string>WE</string>
 		<key>name</key>
 		<string>Valley Vista Express</string>
+		<key>routeId</key>
+		<integer>45</integer>
+		<key>color</key>
+		<string>FF3A9F</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -251,6 +347,10 @@
 		<string>XB</string>
 		<key>name</key>
 		<string>Bellefonte</string>
+		<key>routeId</key>
+		<integer>49</integer>
+		<key>color</key>
+		<string>66FF99</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -261,6 +361,10 @@
 		<string>XG</string>
 		<key>name</key>
 		<string>Pleasant Gap</string>
+		<key>routeId</key>
+		<integer>50</integer>
+		<key>color</key>
+		<string>00FFFF</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -270,7 +374,11 @@
 		<key>code</key>
 		<string>DT</string>
 		<key>name</key>
-		<string>Game Day Shuttle - Downtown</string>
+		<string>Downtown football shuttle</string>
+		<key>routeId</key>
+		<integer>62</integer>
+		<key>color</key>
+		<string>005382</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -280,7 +388,11 @@
 		<key>code</key>
 		<string>SA</string>
 		<key>name</key>
-		<string>Game Day Shuttle - South Atherton</string>
+		<string>South Atherton football shuttle</string>
+		<key>routeId</key>
+		<integer>64</integer>
+		<key>color</key>
+		<string>C00000</string>
 	</dict>
 </array>
 </plist>

@@ -20,6 +20,8 @@ enum RouteType {
 @interface SPTRoute : NSManagedObject <NSXMLParserDelegate>
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *code;
+@property (strong, nonatomic) NSNumber *routeId;
+@property (strong, nonatomic) NSString *hexColor;
 @property (strong, nonatomic) NSNumber *type;
 @property (strong, nonatomic) NSNumber *weight;
 @property (strong, nonatomic) NSData *icon;

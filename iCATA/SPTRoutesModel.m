@@ -25,6 +25,8 @@
         
         route.name = [dict objectForKey:@"name"];
         route.code = [dict objectForKey:@"code"];
+        route.routeId = [dict objectForKey:@"routeId"];
+        route.hexColor = [dict objectForKey:@"color"];
         route.type = [dict objectForKey:@"type"];
         route.weight = [dict objectForKey:@"weight"];
                 
