@@ -118,10 +118,14 @@ dataManagerDelegate:(id<DataManagerDelegate>)dataManagerDelegate {
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    // Make the section name whatever route type the first object in the section is
+    // Make the section name whatever route type the first object in the section is if the objects are routes
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    SPTRoute *route = [[sectionInfo objects] objectAtIndex:0];
-    return [route getRouteTypeName];
+    if([[sectionInfo objects] count] > 0 && [[[sectionInfo objects] objectAtIndex:0] isKindOfClass:[SPTRoute class]]) {
+        SPTRoute *route = [[sectionInfo objects] objectAtIndex:0];
+        return [route getRouteTypeName];
+    } else {
+        return [sectionInfo name];
+    }
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {

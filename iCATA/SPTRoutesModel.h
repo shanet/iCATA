@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "SPTRoute.h"
+#import "SPTRouteGroup.h"
 #import "DataManager.h"
 #import "DataManagerDelegate.h"
 
 @interface SPTRoutesModel : NSObject <DataManagerDelegate>
++ (void) addGroupToDatabase:(NSDictionary*)dict;
 @end

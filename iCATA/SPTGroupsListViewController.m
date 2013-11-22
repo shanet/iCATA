@@ -1,27 +1,26 @@
 //
-//  SPTBuildingsListViewController.m
-//  PSU Directory Search
+//  SPTGroupsListViewController.m
+//  iCATA
 //
-//  Created by shane on 10/5/13.
+//  Created by shane on 11/21/13.
 //  Copyright (c) 2013 shane. All rights reserved.
 //
 
-#import "SPTRoutesListViewController.h"
+#import "SPTGroupsListViewController.h"
 
 #define kSearchOptionContains 0
 #define kSearchOptionExclude  1
 #define kSearchOptionMatch    2
 
-@interface SPTRoutesListViewController ()
+@interface SPTGroupsListViewController ()
 @property (strong, nonatomic) SPTRoutesModel *routesModel;
-//@property (strong, nonatomic) SPTPrefsModel *prefsModel;
 @property (strong, nonatomic) DataSource *dataSource;
 
 @property (strong, nonatomic) NSString *searchString;
 @property NSInteger searchOption;
 @end
 
-@implementation SPTRoutesListViewController
+@implementation SPTGroupsListViewController
 
 - (id) initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
@@ -30,7 +29,7 @@
         _routesModel = [[SPTRoutesModel alloc] init];
         //_prefsModel = [[SPTPrefsModel alloc] init];
         
-        _dataSource = [[DataSource alloc] initForEntity:@"Route" sortKeys:@[@"type", @"weight"] predicate:nil sectionNameKeyPath:@"type" dataManagerDelegate:_routesModel];
+        _dataSource = [[DataSource alloc] initForEntity:@"Group" sortKeys:@[@"name"] predicate:nil sectionNameKeyPath:nil dataManagerDelegate:_routesModel];
         _dataSource.delegate = self;
         
         _searchString = nil;
@@ -42,10 +41,10 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-
+    
     self.tableView.dataSource = self.dataSource;
     self.dataSource.tableView = self.tableView;
-
+    
     // Set the search options and provide the search controller with a data source
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Contains", @"Exclude", @"Match"];
     self.searchDisplayController.searchResultsDataSource = self.dataSource;
@@ -53,14 +52,13 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 -(void) configureCell:(UITableViewCell*)cell withObject:(id)object {
-    // Set the code and name of the route as the text on the cell and the route icon
-    SPTRoute *route = (SPTRoute*) object;
-    // TODO: change this so the route codes all line up (one letter vs. two letter codes)
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", route.code, route.name];
-    cell.imageView.image = [route getIconImage];
+    // Set the text of the cell as the group name
+    SPTRouteGroup *group = (SPTRouteGroup*) object;
+    cell.textLabel.text = group.name;
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {
@@ -68,7 +66,7 @@
 }
 
 - (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return YES;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -78,13 +76,16 @@
     }
 }
 
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
-    // Give the selected route to the map controller
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Give each route in the selected group to the map controller
     if([segue.identifier isEqualToString:@"ShowMapSegue"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        SPTRouteGroup *group = [self.dataSource objectAtIndexPath:indexPath];
         
         SPTMapViewController *mapController = segue.destinationViewController;
-        [mapController addRoute:[self.dataSource objectAtIndexPath:indexPath]];
+        for(SPTRoute *route in group.routes) {
+            [mapController addRoute:route];
+        }
     }
 }
 
@@ -100,7 +101,7 @@
     return YES;
 }
 
-- (void) applySearchFilter {    
+- (void) applySearchFilter {
     NSString *predicateSearchFormat;
     switch(self.searchOption) {
         case kSearchOptionContains:
@@ -139,5 +140,4 @@
     [self.dataSource updateWithPredicate:nil];
     [self.tableView reloadData];
 }
-
 @end

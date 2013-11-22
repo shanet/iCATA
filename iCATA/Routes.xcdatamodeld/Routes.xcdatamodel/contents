@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Group" representedClassName="SPTRouteGroup" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="routes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Route" inverseName="group" inverseEntity="Route" syncable="YES"/>
+    </entity>
     <entity name="Route" representedClassName="SPTRoute" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hexColor" optional="YES" attributeType="String" syncable="YES"/>
@@ -8,8 +12,10 @@
         <attribute name="routeId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="group" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="routes" inverseEntity="Group" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Route" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="Group" positionX="169" positionY="27" width="128" height="73"/>
+        <element name="Route" positionX="-146" positionY="-63" width="128" height="163"/>
     </elements>
 </model>

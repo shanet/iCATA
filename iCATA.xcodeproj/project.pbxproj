@@ -12,6 +12,10 @@
 		2518B448183D27B200435ABC /* stopIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2518B447183D27B200435ABC /* stopIcon.png */; };
 		2518B44A183D781400435ABC /* BusDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2518B449183D781400435ABC /* BusDetailView.xib */; };
 		2518B44D183D7BCD00435ABC /* SPTBusDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2518B44C183D7BCD00435ABC /* SPTBusDetailView.m */; };
+		2518B453183EC42D00435ABC /* SPTGroupsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2518B452183EC42D00435ABC /* SPTGroupsListViewController.m */; };
+		2518B456183EC84700435ABC /* SPTCreateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2518B455183EC84700435ABC /* SPTCreateGroupViewController.m */; };
+		2518B45D183F020200435ABC /* SPTRouteGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2518B45C183F020200435ABC /* SPTRouteGroup.m */; };
+		2518B45F183F265000435ABC /* groups.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2518B45E183F265000435ABC /* groups.plist */; };
 		258F1E30181B4FCE007D3ACE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E2F181B4FCE007D3ACE /* UIKit.framework */; };
 		258F1E32181B4FCE007D3ACE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E31181B4FCE007D3ACE /* Foundation.framework */; };
 		258F1E34181B4FCE007D3ACE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258F1E33181B4FCE007D3ACE /* CoreGraphics.framework */; };
@@ -57,6 +61,13 @@
 		2518B449183D781400435ABC /* BusDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusDetailView.xib; sourceTree = "<group>"; };
 		2518B44B183D7BCD00435ABC /* SPTBusDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTBusDetailView.h; sourceTree = "<group>"; };
 		2518B44C183D7BCD00435ABC /* SPTBusDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTBusDetailView.m; sourceTree = "<group>"; };
+		2518B451183EC42C00435ABC /* SPTGroupsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTGroupsListViewController.h; sourceTree = "<group>"; };
+		2518B452183EC42D00435ABC /* SPTGroupsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTGroupsListViewController.m; sourceTree = "<group>"; };
+		2518B454183EC84700435ABC /* SPTCreateGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTCreateGroupViewController.h; sourceTree = "<group>"; };
+		2518B455183EC84700435ABC /* SPTCreateGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTCreateGroupViewController.m; sourceTree = "<group>"; };
+		2518B45B183F020200435ABC /* SPTRouteGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteGroup.h; sourceTree = "<group>"; };
+		2518B45C183F020200435ABC /* SPTRouteGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteGroup.m; sourceTree = "<group>"; };
+		2518B45E183F265000435ABC /* groups.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = groups.plist; sourceTree = "<group>"; };
 		258F1E2C181B4FCE007D3ACE /* iCATA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iCATA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		258F1E2F181B4FCE007D3ACE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		258F1E31181B4FCE007D3ACE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -135,6 +146,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2518B457183ECA5000435ABC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2518B45B183F020200435ABC /* SPTRouteGroup.h */,
+				2518B45C183F020200435ABC /* SPTRouteGroup.m */,
+				25E2988A1833196700FC033D /* SPTRoute.h */,
+				25E2988B1833196700FC033D /* SPTRoute.m */,
+				2518B4421839D20D00435ABC /* SPTRouteBus.h */,
+				2518B4431839D20D00435ABC /* SPTRouteBus.m */,
+				25E298A318335E1B00FC033D /* SPTRouteStop.h */,
+				25E298A418335E1C00FC033D /* SPTRouteStop.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		258F1E23181B4FCE007D3ACE = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +208,7 @@
 			children = (
 				258F1E3E181B4FCE007D3ACE /* SPTAppDelegate.h */,
 				258F1E3F181B4FCE007D3ACE /* SPTAppDelegate.m */,
+				2518B457183ECA5000435ABC /* Classes */,
 				25E2987E183318F400FC033D /* Models */,
 				25E2987D183318EE00FC033D /* Controllers */,
 				25E2987C183318E100FC033D /* Views */,
@@ -196,6 +223,7 @@
 				25E2989D1833306400FC033D /* Route Icons */,
 				2518B447183D27B200435ABC /* stopIcon.png */,
 				25E29897183326BA00FC033D /* routes.plist */,
+				2518B45E183F265000435ABC /* groups.plist */,
 				25E2988E183319B500FC033D /* defaultPrefs.plist */,
 				258F1E37181B4FCE007D3ACE /* iCATA-Info.plist */,
 				258F1E38181B4FCE007D3ACE /* InfoPlist.strings */,
@@ -226,6 +254,10 @@
 				25E298A11833599300FC033D /* SPTMapViewController.m */,
 				25E2988C1833198000FC033D /* SPTRoutesListViewController.h */,
 				25E2988D1833198000FC033D /* SPTRoutesListViewController.m */,
+				2518B454183EC84700435ABC /* SPTCreateGroupViewController.h */,
+				2518B455183EC84700435ABC /* SPTCreateGroupViewController.m */,
+				2518B451183EC42C00435ABC /* SPTGroupsListViewController.h */,
+				2518B452183EC42D00435ABC /* SPTGroupsListViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -233,14 +265,8 @@
 		25E2987E183318F400FC033D /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2518B4421839D20D00435ABC /* SPTRouteBus.h */,
-				2518B4431839D20D00435ABC /* SPTRouteBus.m */,
-				25E298A318335E1B00FC033D /* SPTRouteStop.h */,
-				25E298A418335E1C00FC033D /* SPTRouteStop.m */,
 				25E298861833194B00FC033D /* SPTRoutesModel.h */,
 				25E298871833194B00FC033D /* SPTRoutesModel.m */,
-				25E2988A1833196700FC033D /* SPTRoute.h */,
-				25E2988B1833196700FC033D /* SPTRoute.m */,
 				25E2987F1833192D00FC033D /* DataManager.h */,
 				25E298801833192D00FC033D /* DataManager.m */,
 				25E298811833192D00FC033D /* DataSource.h */,
@@ -323,6 +349,7 @@
 				25E298A91833EDF000FC033D /* GoogleMaps.bundle in Resources */,
 				2518B448183D27B200435ABC /* stopIcon.png in Resources */,
 				2518B44A183D781400435ABC /* BusDetailView.xib in Resources */,
+				2518B45F183F265000435ABC /* groups.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +372,9 @@
 				25E298A518335E1C00FC033D /* SPTRouteStop.m in Sources */,
 				2518B4441839D20D00435ABC /* SPTRouteBus.m in Sources */,
 				2518B44D183D7BCD00435ABC /* SPTBusDetailView.m in Sources */,
+				2518B453183EC42D00435ABC /* SPTGroupsListViewController.m in Sources */,
+				2518B456183EC84700435ABC /* SPTCreateGroupViewController.m in Sources */,
+				2518B45D183F020200435ABC /* SPTRouteGroup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
