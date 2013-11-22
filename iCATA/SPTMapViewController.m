@@ -21,9 +21,11 @@
 @property (strong, nonatomic) NSMutableArray *busMarkers;
 @property (strong, nonatomic) NSMutableArray *stopMarkers;
 @property (strong, nonatomic) NSMutableArray *routes;
+@property BOOL isRefresh;
 
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 
+- (IBAction)refreshButtonPressed:(id)sender;
 - (IBAction)mapTypeChanged:(id)sender;
 @end
 
@@ -38,6 +40,7 @@
         _busMarkers = [[NSMutableArray alloc] init];
         _stopMarkers = [[NSMutableArray alloc] init];
         _routes = [[NSMutableArray alloc] init];
+        _isRefresh = NO;
     }
     
     return self;
@@ -50,11 +53,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadCompleted) name:@"RouteDownloadCompleted" object:nil];
     
-    for(SPTRoute *route in self.routes) {
-        [route downloadRouteStops];        
-    }
-    
+    [self refreshRoutes];
     [self centerMapOnRoute];
+}
+
+- (void) refreshRoutes {
+    for(SPTRoute *route in self.routes) {
+        [route downloadRouteStops];
+    }
 }
 
 - (void) addRoute:(SPTRoute*)route {
@@ -82,10 +88,20 @@
 }
 
 - (void) routeDownloadCompleted {
-    [self fitRouteOnMap];
+    // Only add the route stops and path if this is the first load (not a refresh)
+    if(!self.isRefresh) {
+        [self fitRouteOnMap];
+        [self addRouteStopOverlays];
+        [self addRoutePathOverlay];
+    } else {
+        // Remove the old bus overlays from the map if a refresh
+        for(GMSMarker *marker in self.busMarkers) {
+            marker.map = nil;
+        }
+[self.busMarkers removeAllObjects];
+    }
+
     [self addBusesOverlays];
-    [self addRouteStopOverlays];
-    [self addRoutePathOverlay];
 }
 
 - (void) fitRouteOnMap {
@@ -172,8 +188,12 @@
 - (GMSMarker*) makeGMSMarkerAtLatitude:(float)latitude Longitude:(float)longitude {
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(latitude, longitude);
-    marker.appearAnimation = kGMSMarkerAnimationPop;
     marker.map = self.mapView;
+    
+    // Only show the somewhat-annoying animation on the first load (not a refresh)
+    if(!self.isRefresh) {
+        marker.appearAnimation = kGMSMarkerAnimationPop;
+    }
     
     return marker;
 }
@@ -186,6 +206,11 @@
     } else {
         return nil;
     }
+}
+
+- (IBAction)refreshButtonPressed:(id)sender {
+    self.isRefresh = YES;
+    [self refreshRoutes];
 }
 
 - (IBAction)mapTypeChanged:(id)sender {

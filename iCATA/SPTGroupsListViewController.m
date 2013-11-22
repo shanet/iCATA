@@ -83,6 +83,7 @@
         SPTRouteGroup *group = [self.dataSource objectAtIndexPath:indexPath];
         
         SPTMapViewController *mapController = segue.destinationViewController;
+        mapController.groupName = group.name;
         for(SPTRoute *route in group.routes) {
             [mapController addRoute:route];
         }
