@@ -113,23 +113,19 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
     
-    // draw original image
     [image drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0f];
     
-    // tint image (loosing alpha).
-    // kCGBlendModeOverlay is the closest I was able to match the
-    // actual process used by apple in navigation bar
+    // Tint the image (looses alpha)
     CGContextSetBlendMode(context, kCGBlendModeOverlay);
     [tintColor setFill];
     CGContextFillRect(context, rect);
     
-    // mask by alpha values of original image
+    // Mask by alpha values of original image
     [image drawInRect:rect blendMode:kCGBlendModeDestinationIn alpha:1.0f];
     
     UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return tintedImage;
 }
-
 
 @end
