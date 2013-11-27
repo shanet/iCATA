@@ -12,7 +12,7 @@
         <attribute name="routeId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="weight" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="group" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="routes" inverseEntity="Group" syncable="YES"/>
+        <relationship name="group" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="routes" inverseEntity="Group" syncable="YES"/>
     </entity>
     <elements>
         <element name="Group" positionX="169" positionY="27" width="128" height="73"/>

@@ -131,29 +131,64 @@ enum XmlType {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteDownloadCompleted" object:self];
 }
 
-- (NSDictionary*) getBoundingBoxStops {
+- (CLLocationCoordinate2D*) getBoundingBoxPoints {
     SPTRouteStop *firstStop = [self.stops objectAtIndex:0];
     
-    SPTRouteStop *minLatitude = firstStop;
-    SPTRouteStop *maxLatitude = firstStop;
-    SPTRouteStop *minLongitude = firstStop;
-    SPTRouteStop *maxLonitude = firstStop;
-    
-    for(SPTRouteStop *stop in self.stops) {
-        if(stop.latitude > maxLatitude.latitude) {
-            maxLatitude = stop;
-        } else if(stop.latitude < minLatitude.latitude) {
-            minLatitude = stop;
-        }
-        
-        if(stop.longitude > maxLonitude.longitude) {
-            maxLonitude = stop;
-        } else if(stop.longitude < minLongitude.longitude) {
-            minLongitude = stop;
+    float minLatitude = firstStop.latitude;
+    float maxLatitude = firstStop.latitude;
+    float minLongitude = firstStop.longitude;
+    float maxLonitude = firstStop.longitude;
+
+    for(KMLPlacemark *placemark in [self.routeKml placemarks]) {
+        // If the placemark is a single line, check if for min/max coordinates
+        if([placemark.geometry isKindOfClass:[KMLLineString class]]) {
+            for(KMLCoordinate *coordinate in ((KMLLineString*)placemark.geometry).coordinates) {
+                if(coordinate.latitude > maxLatitude) {
+                    maxLatitude = coordinate.latitude;
+                } else if(coordinate.latitude < minLatitude) {
+                    minLatitude = coordinate.latitude;
+                }
+                
+                if(coordinate.longitude > maxLonitude) {
+                    maxLonitude = coordinate.longitude;
+                } else if(coordinate.longitude < minLongitude) {
+                    minLongitude = coordinate.longitude;
+                }
+            }
+            
+        // If the placemark contains multiple geometries, check each one for min/max coordinates individually
+        } else if([placemark.geometry isKindOfClass:[KMLMultiGeometry class]]) {
+            KMLMultiGeometry *multiGeo = (KMLMultiGeometry*)[placemark geometry];
+            
+            for(KMLAbstractGeometry *geometry in multiGeo.geometries) {
+                for(KMLCoordinate *coordinate in ((KMLLineString*)geometry).coordinates) {
+                    if(coordinate.latitude > maxLatitude) {
+                        maxLatitude = coordinate.latitude;
+                    } else if(coordinate.latitude < minLatitude) {
+                        minLatitude = coordinate.latitude;
+                    }
+                    
+                    if(coordinate.longitude > maxLonitude) {
+                        maxLonitude = coordinate.longitude;
+                    } else if(coordinate.longitude < minLongitude) {
+                        minLongitude = coordinate.longitude;
+                    }
+                }
+            }
         }
     }
+    
+    CLLocationCoordinate2D *boundingBox = malloc(sizeof(CLLocationCoordinate2D) * 4);
+    boundingBox[0] = CLLocationCoordinate2DMake(minLatitude, minLongitude);
+    boundingBox[1] = CLLocationCoordinate2DMake(maxLatitude, maxLonitude);
 
-    return @{@"minLatitude": minLatitude, @"maxLatitude": maxLatitude, @"minLongitude": minLongitude, @"maxLongitude": maxLonitude};
+    return boundingBox;
+}
+
+- (void) addKmlLineToMap:(KMLLineString*)kmlLine {
+    for(KMLCoordinate *coordinate in kmlLine.coordinates) {
+        //coordinate.latitude, coordinate.longitude
+    }
 }
 
 // http://stackoverflow.com/questions/5423210/how-do-i-change-a-partially-transparent-images-color-in-ios

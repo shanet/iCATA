@@ -45,6 +45,7 @@
                         <sections/>
                     </tableView>
                     <navigationItem key="navigationItem" title="Bus Groups" id="ZTU-uz-dvJ">
+                        <barButtonItem key="backBarButtonItem" title="Groups" id="KQP-IV-hEz"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rBR-Vd-RCn">
                             <connections>
                                 <segue destination="KBB-WS-Cyb" kind="modal" id="3cI-5d-vdg"/>
@@ -278,6 +279,34 @@
             <point key="canvasLocation" x="163" y="-249"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="GMSMapView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GMSMapView.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SPTCreateGroupViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTCreateGroupViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="SPTGroupsListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTGroupsListViewController.h"/>
+        </class>
+        <class className="SPTMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTMapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="mapTypeChanged:"/>
+                <relationship kind="action" name="refreshButtonPressed:"/>
+                <relationship kind="outlet" name="mapView" candidateClass="GMSMapView"/>
+            </relationships>
+        </class>
+        <class className="SPTRoutesListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTRoutesListViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

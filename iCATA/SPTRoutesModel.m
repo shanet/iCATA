@@ -34,7 +34,6 @@
     [self inflateRouteGroupsPlistWithDataManager:dataManager];
     
     [dataManager saveContext];
-
 }
 
 - (void) inflateRoutesPlistWithDataManager:(DataManager*)dataManager {

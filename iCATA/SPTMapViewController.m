@@ -98,28 +98,22 @@
         for(GMSMarker *marker in self.busMarkers) {
             marker.map = nil;
         }
-[self.busMarkers removeAllObjects];
+        [self.busMarkers removeAllObjects];
     }
 
     [self addBusesOverlays];
 }
 
 - (void) fitRouteOnMap {
-    SPTRoute *route = [self.routes objectAtIndex:0];
-    
-    NSDictionary *stops = [route getBoundingBoxStops];
-
-    CLLocationCoordinate2D minLatitude = CLLocationCoordinate2DMake([(SPTRouteStop*)[stops objectForKey:@"minLatitude"] latitude], [(SPTRouteStop*)[stops objectForKey:@"minLatitude"] longitude]);
-    CLLocationCoordinate2D maxLatitude = CLLocationCoordinate2DMake([(SPTRouteStop*)[stops objectForKey:@"maxLatitude"] latitude], [(SPTRouteStop*)[stops objectForKey:@"maxLatitude"] longitude]);
-    CLLocationCoordinate2D minLongitude = CLLocationCoordinate2DMake([(SPTRouteStop*)[stops objectForKey:@"minLongitude"] latitude], [(SPTRouteStop*)[stops objectForKey:@"minLongitude"] longitude]);
-    CLLocationCoordinate2D maxLongitude = CLLocationCoordinate2DMake([(SPTRouteStop*)[stops objectForKey:@"maxLongitude"] latitude], [(SPTRouteStop*)[stops objectForKey:@"maxLongitude"] longitude]);
-
-    GMSCoordinateBounds *routeBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:minLatitude coordinate:minLongitude];
-    routeBounds = [routeBounds includingCoordinate:maxLatitude];
-    routeBounds = [routeBounds includingCoordinate:maxLongitude];
-    
-    GMSCameraUpdate *cameraUpdate = [GMSCameraUpdate fitBounds:routeBounds withPadding:kMapCameraPadding];
-    [self.mapView animateWithCameraUpdate:cameraUpdate];
+    for(SPTRoute *route in self.routes) {
+        CLLocationCoordinate2D *boundingBox = [route getBoundingBoxPoints];
+        GMSCoordinateBounds *routeBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:boundingBox[0] coordinate:boundingBox[1]];
+        
+        GMSCameraUpdate *cameraUpdate = [GMSCameraUpdate fitBounds:routeBounds withPadding:kMapCameraPadding];
+        [self.mapView animateWithCameraUpdate:cameraUpdate];
+        
+        free(boundingBox);
+    }
 }
 
 - (void) addBusesOverlays {
