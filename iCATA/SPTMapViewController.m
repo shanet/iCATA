@@ -22,8 +22,10 @@
 @property (strong, nonatomic) NSMutableArray *stopMarkers;
 @property (strong, nonatomic) NSMutableArray *routes;
 @property BOOL isRefresh;
+@property NSInteger numberOfInProgressDownloads;
 
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIconView;
 
 - (IBAction)refreshButtonPressed:(id)sender;
 - (IBAction)mapTypeChanged:(id)sender;
@@ -41,6 +43,7 @@
         _stopMarkers = [[NSMutableArray alloc] init];
         _routes = [[NSMutableArray alloc] init];
         _isRefresh = NO;
+        _numberOfInProgressDownloads = 0;
     }
     
     return self;
@@ -54,10 +57,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadCompleted) name:@"RouteDownloadCompleted" object:nil];
     
     [self refreshRoutes];
-    [self centerMapOnRoute];
+    [self setInitialMapState];
 }
 
 - (void) refreshRoutes {
+    [self.loadingIconView startAnimating];
+    self.numberOfInProgressDownloads = [self.routes count];
+    
     for(SPTRoute *route in self.routes) {
         [route downloadRouteStops];
     }
@@ -78,7 +84,7 @@
     }
 }
 
-- (void) centerMapOnRoute {
+- (void) setInitialMapState {
     // Center the map on State College
     GMSCameraPosition *camera = [GMSCameraPosition cameraWithLatitude:kStateCollegeLatitude longitude:kStateCollegeLongitude zoom:kStateCollegeZoomLevel];
     self.mapView.delegate = self;
@@ -88,11 +94,19 @@
 }
 
 - (void) routeDownloadCompleted {
+    // Only draw to the map when all the downloads finish
+    self.numberOfInProgressDownloads--;
+    if(self.numberOfInProgressDownloads != 0) {
+        return;
+    }
+    
+    [self.loadingIconView stopAnimating];
+
     // Only add the route stops and path if this is the first load (not a refresh)
     if(!self.isRefresh) {
-        [self fitRouteOnMap];
-        [self addRouteStopOverlays];
-        [self addRoutePathOverlay];
+        [self addRoutesStopsOverlays];
+        [self addRoutesPathOverlay];
+        [self fitRoutesOnMap];
     } else {
         // Remove the old bus overlays from the map if a refresh
         for(GMSMarker *marker in self.busMarkers) {
@@ -104,16 +118,51 @@
     [self addBusesOverlays];
 }
 
-- (void) fitRouteOnMap {
-    for(SPTRoute *route in self.routes) {
-        CLLocationCoordinate2D *boundingBox = [route getBoundingBoxPoints];
-        GMSCoordinateBounds *routeBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:boundingBox[0] coordinate:boundingBox[1]];
-        
-        GMSCameraUpdate *cameraUpdate = [GMSCameraUpdate fitBounds:routeBounds withPadding:kMapCameraPadding];
-        [self.mapView animateWithCameraUpdate:cameraUpdate];
-        
-        free(boundingBox);
+- (void) fitRoutesOnMap {
+    // This is really messy because we're passing around struct rather than objects
+    
+    // Keep an array of the min and max coordinates for each each
+    CLLocationCoordinate2D *minCoords = calloc(sizeof(CLLocationCoordinate2D) * [self.routes count], sizeof(CLLocationCoordinate2D));
+    CLLocationCoordinate2D *maxCoords = calloc(sizeof(CLLocationCoordinate2D) * [self.routes count], sizeof(CLLocationCoordinate2D));
+
+    for(NSInteger i=0; i<[self.routes count]; i++) {
+        CLLocationCoordinate2D *coords = [[self.routes objectAtIndex:i] getBoundingBoxPoints];
+        minCoords[i] = coords[0];
+        maxCoords[i] = coords[1];
     }
+        
+    // Find the min and max of the min/max coordinates arrays
+    float minLatitude = minCoords[0].latitude;
+    float maxLatitude = maxCoords[0].latitude;
+    float minLongitude = minCoords[0].longitude;
+    float maxLongitude = minCoords[0].longitude;
+    
+    for(NSInteger i=0; i<[self.routes count]; i++) {
+        NSLog(@"%f | %f", maxCoords[i].latitude, maxCoords[i].longitude);
+        if(minCoords[i].latitude < minLatitude) {
+            minLatitude = minCoords[i].latitude;
+        }
+        if(maxCoords[i].latitude > maxLatitude) {
+            maxLatitude = maxCoords[i].latitude;
+        }
+        
+        if(minCoords[i].longitude < minLongitude) {
+            minLongitude = minCoords[i].longitude;
+        }
+        if(maxCoords[i].longitude > maxLongitude) {
+            maxLongitude = maxCoords[i].longitude;
+        }
+    }
+    
+    free(minCoords);
+    free(maxCoords);
+    
+    // Set the bounding box of the map as the min/max coordinates
+    GMSCoordinateBounds *routeBounds = [[GMSCoordinateBounds alloc] initWithCoordinate:CLLocationCoordinate2DMake(minLatitude, minLongitude)
+                                                                            coordinate:CLLocationCoordinate2DMake(maxLatitude, maxLongitude)];
+    
+    GMSCameraUpdate *cameraUpdate = [GMSCameraUpdate fitBounds:routeBounds withPadding:kMapCameraPadding];
+    [self.mapView animateWithCameraUpdate:cameraUpdate];
 }
 
 - (void) addBusesOverlays {
@@ -131,7 +180,7 @@
     }
 }
 
-- (void) addRouteStopOverlays {
+- (void) addRoutesStopsOverlays {
     UIImage *stopIcon = [self scaleImage:[UIImage imageNamed:@"stopIcon.png"] toScaleFactor:.025];
     
     for(SPTRoute *route in self.routes) {
@@ -145,7 +194,7 @@
     }
 }
 
-- (void) addRoutePathOverlay {
+- (void) addRoutesPathOverlay {
     for(SPTRoute *route in self.routes) {
         for(KMLPlacemark *placemark in [route.routeKml placemarks]) {
             // If the placemark is a single line, draw it to the map

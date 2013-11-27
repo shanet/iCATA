@@ -125,26 +125,15 @@ enum XmlType {
 - (CLLocationCoordinate2D*) getBoundingBoxPoints {
     SPTRouteStop *firstStop = [self.stops objectAtIndex:0];
     
-    float minLatitude = firstStop.latitude;
-    float maxLatitude = firstStop.latitude;
-    float minLongitude = firstStop.longitude;
-    float maxLonitude = firstStop.longitude;
+    CLLocationCoordinate2D *boundingBox = malloc(sizeof(CLLocationCoordinate2D) * 2);
+    boundingBox[0] = CLLocationCoordinate2DMake(firstStop.latitude, firstStop.longitude);
+    boundingBox[1] = CLLocationCoordinate2DMake(firstStop.latitude, firstStop.longitude);
 
     for(KMLPlacemark *placemark in [self.routeKml placemarks]) {
         // If the placemark is a single line, check if for min/max coordinates
         if([placemark.geometry isKindOfClass:[KMLLineString class]]) {
             for(KMLCoordinate *coordinate in ((KMLLineString*)placemark.geometry).coordinates) {
-                if(coordinate.latitude > maxLatitude) {
-                    maxLatitude = coordinate.latitude;
-                } else if(coordinate.latitude < minLatitude) {
-                    minLatitude = coordinate.latitude;
-                }
-                
-                if(coordinate.longitude > maxLonitude) {
-                    maxLonitude = coordinate.longitude;
-                } else if(coordinate.longitude < minLongitude) {
-                    minLongitude = coordinate.longitude;
-                }
+                [self checkBoundingBoxCoordinates:boundingBox ForCoordinate:coordinate];
             }
             
         // If the placemark contains multiple geometries, check each one for min/max coordinates individually
@@ -153,27 +142,31 @@ enum XmlType {
             
             for(KMLAbstractGeometry *geometry in multiGeo.geometries) {
                 for(KMLCoordinate *coordinate in ((KMLLineString*)geometry).coordinates) {
-                    if(coordinate.latitude > maxLatitude) {
-                        maxLatitude = coordinate.latitude;
-                    } else if(coordinate.latitude < minLatitude) {
-                        minLatitude = coordinate.latitude;
-                    }
-                    
-                    if(coordinate.longitude > maxLonitude) {
-                        maxLonitude = coordinate.longitude;
-                    } else if(coordinate.longitude < minLongitude) {
-                        minLongitude = coordinate.longitude;
-                    }
+                    [self checkBoundingBoxCoordinates:boundingBox ForCoordinate:coordinate];
                 }
             }
         }
     }
-    
-    CLLocationCoordinate2D *boundingBox = malloc(sizeof(CLLocationCoordinate2D) * 4);
-    boundingBox[0] = CLLocationCoordinate2DMake(minLatitude, minLongitude);
-    boundingBox[1] = CLLocationCoordinate2DMake(maxLatitude, maxLonitude);
 
     return boundingBox;
+}
+
+- (void) checkBoundingBoxCoordinates:(CLLocationCoordinate2D*)boundingBox ForCoordinate:(KMLCoordinate*)coordinate {
+    // Max latitude
+    if(coordinate.latitude > boundingBox[1].latitude) {
+        boundingBox[1].latitude = coordinate.latitude;
+    // Min latitude
+    } else if(coordinate.latitude < boundingBox[0].latitude) {
+        boundingBox[0].latitude = coordinate.latitude;
+    }
+    
+    // Max longitude
+    if(coordinate.longitude > boundingBox[1].longitude) {
+        boundingBox[1].longitude = coordinate.longitude;
+    // Min longitude
+    } else if(coordinate.longitude < boundingBox[0].longitude) {
+        boundingBox[0].longitude = coordinate.longitude;
+    }
 }
 
 - (void) addKmlLineToMap:(KMLLineString*)kmlLine {
