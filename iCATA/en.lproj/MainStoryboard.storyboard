@@ -111,11 +111,11 @@
             </objects>
             <point key="canvasLocation" x="576" y="1077"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller - Groups-->
         <scene sceneID="nwm-wq-plX">
             <objects>
                 <navigationController definesPresentationContext="YES" id="9Bw-K6-LCD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="bNN-o4-UFd"/>
+                    <tabBarItem key="tabBarItem" title="Groups" image="groupsTabIcon.png" id="bNN-o4-UFd"/>
                     <navigationItem key="navigationItem" id="wko-H5-exB"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="52H-rS-JvI">
                         <autoresizingMask key="autoresizingMask"/>
@@ -261,11 +261,11 @@
             </objects>
             <point key="canvasLocation" x="576" y="-249"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller - Routes-->
         <scene sceneID="oRY-I1-WOk">
             <objects>
                 <navigationController definesPresentationContext="YES" id="mBL-gh-qNx" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="69F-gc-iZH"/>
+                    <tabBarItem key="tabBarItem" title="Routes" image="routeTabIcon.png" id="69F-gc-iZH"/>
                     <navigationItem key="navigationItem" id="Ux1-fx-Dl8"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rfd-Kj-X4i">
                         <autoresizingMask key="autoresizingMask"/>
@@ -279,6 +279,10 @@
             <point key="canvasLocation" x="163" y="-249"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="groupsTabIcon.png" width="30" height="18"/>
+        <image name="routeTabIcon.png" width="25" height="30"/>
+    </resources>
     <classes>
         <class className="GMSMapView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GMSMapView.h"/>

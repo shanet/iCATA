@@ -50,8 +50,7 @@
         route.type = [dict objectForKey:@"type"];
         route.weight = [dict objectForKey:@"weight"];
         
-        //UIImage *routeIcon = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [dict objectForKey:@"icon"]]];
-        UIImage *routeIcon = [UIImage imageNamed:@"tmp_icon.png"];
+        UIImage *routeIcon = [UIImage imageNamed:@"routeIcon.png"];
         route.icon = UIImagePNGRepresentation(routeIcon);
         
         [self.routes addObject:route];
