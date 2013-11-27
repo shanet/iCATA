@@ -53,8 +53,17 @@
 -(void) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the code and name of the route as the text on the cell and the route icon
     SPTRoute *route = (SPTRoute*) object;
-    // TODO: change this so the route codes all line up (one letter vs. two letter codes)
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", route.code, route.name];
+    
+    ((UILabel*)[cell viewWithTag:1]).text = route.code;
+    ((UILabel*)[cell viewWithTag:2]).text = route.name;
+    ((UIImageView*)[cell viewWithTag:3]).image = [UIImage imageWithData:route.icon];
+    
+    // If the route is selected, set the accessory type as a checkmark
+    if([self.selectedRoutes containsObject:route]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {
