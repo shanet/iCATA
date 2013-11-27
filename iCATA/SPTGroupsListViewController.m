@@ -106,13 +106,13 @@
     NSString *predicateSearchFormat;
     switch(self.searchOption) {
         case kSearchOptionContains:
-            predicateSearchFormat = [NSString stringWithFormat:@"ANY name CONTAINS[c] '%@' OR ANY code CONTAINS[c] '%@'", self.searchString, self.searchString];
+            predicateSearchFormat = [NSString stringWithFormat:@"ANY name CONTAINS[c] '%@'", self.searchString];
             break;
         case kSearchOptionExclude:
-            predicateSearchFormat = [NSString stringWithFormat:@"!(ANY name CONTAINS[c] '%@' OR ANY code CONTAINS[c] '%@')", self.searchString, self.searchString];
+            predicateSearchFormat = [NSString stringWithFormat:@"!(ANY name CONTAINS[c] '%@')", self.searchString];
             break;
         case kSearchOptionMatch:
-            predicateSearchFormat = [NSString stringWithFormat: @"ANY name LIKE[c] '%@' OR ANY code CONTAINS[c] '%@'", self.searchString, self.searchString];
+            predicateSearchFormat = [NSString stringWithFormat: @"ANY name LIKE[c] '%@'", self.searchString];
             break;
         default:
             return;
