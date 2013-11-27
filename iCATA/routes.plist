@@ -28,7 +28,7 @@
 		<key>routeId</key>
 		<integer>57</integer>
 		<key>color</key>
-		<string>000000</string>
+		<string>DDDDDD</string>
 	</dict>
 	<dict>
 		<key>weight</key>
@@ -42,7 +42,7 @@
 		<key>routeId</key>
 		<integer>51</integer>
 		<key>color</key>
-		<string>000000</string>
+		<string>B00000</string>
 	</dict>
 	<dict>
 		<key>weight</key>
