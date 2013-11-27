@@ -59,8 +59,11 @@
     // Set the code and name of the route as the text on the cell and the route icon
     SPTRoute *route = (SPTRoute*) object;
     // TODO: change this so the route codes all line up (one letter vs. two letter codes)
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ - %@", route.code, route.name];
-    cell.imageView.image = [route getIconImage];
+    ((UIImageView*)[cell viewWithTag:3]).image = [UIImage imageWithData:route.icon];
+    ((UILabel*)[cell viewWithTag:1]).text = route.code;
+    ((UILabel*)[cell viewWithTag:2]).text = route.name;
+    //[NSString stringWithFormat:@"%@ - %@", route.code, route.name];
+    //cell.imageView.image = [UIImage imageWithData:route.icon];
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {

@@ -30,7 +30,7 @@
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Group name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wi9-cL-1Yc">
                                             <rect key="frame" x="10" y="0.0" width="260" height="43"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
@@ -228,8 +228,47 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="10" y="1" width="280" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="Co" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRR-6v-fEz">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="29" id="1yk-Nh-zLt"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GL6-l6-Oio">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="19" id="ihW-4D-n2D"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2S-DK-3ko">
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" image="routeIcon@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="gtC-z1-Qdl">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="36" id="cJw-z9-BWe"/>
+                                                <constraint firstAttribute="height" constant="37" id="rOd-g5-yoE"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="GL6-l6-Oio" firstAttribute="leading" secondItem="r4A-DK-a18" secondAttribute="leading" constant="85" id="ADQ-fB-eh2"/>
+                                    <constraint firstItem="KRR-6v-fEz" firstAttribute="leading" secondItem="r4A-DK-a18" secondAttribute="leading" constant="55" id="Afw-Gb-gpP"/>
+                                    <constraint firstItem="n2S-DK-3ko" firstAttribute="leading" secondItem="r4A-DK-a18" secondAttribute="leading" constant="102" id="L0J-3r-f70"/>
+                                    <constraint firstItem="gtC-z1-Qdl" firstAttribute="leading" secondItem="r4A-DK-a18" secondAttribute="leading" constant="13" id="Qa8-4s-uIf"/>
+                                    <constraint firstItem="KRR-6v-fEz" firstAttribute="top" secondItem="r4A-DK-a18" secondAttribute="top" constant="12" id="RiD-EP-rI7"/>
+                                    <constraint firstItem="GL6-l6-Oio" firstAttribute="baseline" secondItem="KRR-6v-fEz" secondAttribute="baseline" type="default" id="Sep-kA-WXr"/>
+                                    <constraint firstItem="gtC-z1-Qdl" firstAttribute="centerY" secondItem="r4A-DK-a18" secondAttribute="centerY" type="default" id="llu-I0-BOx"/>
+                                    <constraint firstItem="n2S-DK-3ko" firstAttribute="baseline" secondItem="GL6-l6-Oio" secondAttribute="baseline" type="default" id="yLu-me-9Hd"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="eV4-sr-4LE" kind="push" identifier="ShowMapSegue" id="loD-mY-SBb"/>
                                 </connections>
@@ -280,7 +319,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="groupsTabIcon.png" width="30" height="18"/>
+        <image name="groupsTabIcon.png" width="50" height="30"/>
+        <image name="routeIcon@2x.png" width="65" height="80"/>
         <image name="routeTabIcon.png" width="25" height="30"/>
     </resources>
     <classes>
@@ -317,6 +357,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="CiS-Lz-2ET"/>
+        <segue reference="loD-mY-SBb"/>
     </inferredMetricsTieBreakers>
 </document>

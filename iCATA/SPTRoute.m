@@ -54,15 +54,6 @@ enum XmlType {
     return self;
 }
 
-- (UIImage*) getIconImage {
-    UIImage *icon = [[UIImage alloc] initWithData:self.icon];
-    NSScanner *scanner = [NSScanner scannerWithString:self.hexColor];
-    NSUInteger _hexColor;
-    [scanner scanHexInt:&_hexColor];
-    UIColor *color2 = UIColorFromRGB(_hexColor);
-    return [SPTRoute newImageFromMaskImage:icon inColor:color2];
-}
-
 - (NSString*) getRouteTypeName {
     return ([self.type integerValue] == CAMPUS ? @"Campus" : @"Community");
 }
@@ -189,26 +180,6 @@ enum XmlType {
     for(KMLCoordinate *coordinate in kmlLine.coordinates) {
         //coordinate.latitude, coordinate.longitude
     }
-}
-
-// http://stackoverflow.com/questions/5423210/how-do-i-change-a-partially-transparent-images-color-in-ios
-+(UIImage *) newImageFromMaskImage:(UIImage *)mask inColor:(UIColor *) color {
-    CGImageRef maskImage = mask.CGImage;
-    CGFloat width = mask.size.width;
-    CGFloat height = mask.size.height;
-    CGRect bounds = CGRectMake(0,0,width,height);
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef bitmapContext = CGBitmapContextCreate(NULL, width, height, 8, 0, colorSpace, kCGImageAlphaPremultipliedLast);
-    CGContextClipToMask(bitmapContext, bounds, maskImage);
-    CGContextSetFillColorWithColor(bitmapContext, color.CGColor);
-    CGContextFillRect(bitmapContext, bounds);
-    
-    CGImageRef mainViewContentBitmapContext = CGBitmapContextCreateImage(bitmapContext);
-    CGContextRelease(bitmapContext);
-    
-    UIImage *result = [UIImage imageWithCGImage:mainViewContentBitmapContext];
-    return result;
 }
 
 @end

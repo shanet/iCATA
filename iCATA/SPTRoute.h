@@ -31,7 +31,6 @@ enum RouteType {
 @property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) KMLRoot *routeKml;
 
-- (UIImage*) getIconImage;
 - (NSString*) getRouteTypeName;
 - (void) downloadRouteStops;
 - (void) downloadBusLocations;
