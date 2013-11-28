@@ -36,6 +36,7 @@ enum XmlType {
 @synthesize color;
 @synthesize downloadQueue;
 @synthesize routeKml;
+@synthesize downloadError;
 
 - (id) initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
     self = [super initWithEntity:entity insertIntoManagedObjectContext:context];
@@ -46,6 +47,7 @@ enum XmlType {
         self.color = nil;
         self.downloadQueue = nil;
         self.routeKml = nil;
+        self.downloadError = nil;
     }
     
     return self;
@@ -69,7 +71,8 @@ enum XmlType {
     self.downloadQueue = [[NSOperationQueue alloc] init];
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:self.downloadQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         if(error) {
-            // TODO: handle errors
+            self.downloadError = error;
+            [self performSelectorOnMainThread:@selector(notifyRouteDownloadError) withObject:nil waitUntilDone:NO];
         } else {
             [self parseJson:data];
         }
@@ -114,6 +117,10 @@ enum XmlType {
 
 - (void) notifyRouteDownloadComplete {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteDownloadCompleted" object:self];
+}
+
+- (void) notifyRouteDownloadError {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteDownloadError" object:self];
 }
 
 - (CLLocationCoordinate2D*) getBoundingBoxPoints {

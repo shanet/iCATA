@@ -63,6 +63,7 @@
     [self setTitle];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadCompleted) name:@"RouteDownloadCompleted" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadError) name:@"RouteDownloadError" object:nil];
     
     [self refreshRoutes];
     [self setInitialMapState];
@@ -291,6 +292,14 @@
     }
     
     return nil;
+}
+
+- (void) routeDownloadError {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Getting Bus Info"
+                                                        message:@"An error occured while fetching bus location info. Try again later."
+                                                       delegate:nil cancelButtonTitle:@"Okay :(" otherButtonTitles:nil, nil];
+    
+    [alert show];
 }
 
 - (IBAction)refreshButtonPressed:(id)sender {
