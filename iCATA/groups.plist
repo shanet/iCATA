@@ -5,12 +5,50 @@
 	<dict>
 		<key>name</key>
 		<string>Campus</string>
+        <key>weight</key>
+        <integer>0</integer>
 		<key>routes</key>
 		<array>
 			<integer>55</integer>
 			<integer>57</integer>
 			<integer>51</integer>
 			<integer>53</integer>
+		</array>
+	</dict>
+    <dict>
+		<key>name</key>
+		<string>Vairo Blvd</string>
+        <key>weight</key>
+        <integer>1</integer>
+		<key>routes</key>
+		<array>
+			<integer>25</integer>
+			<integer>43</integer>
+			<integer>42</integer>
+		</array>
+	</dict>
+    <dict>
+		<key>name</key>
+		<string>Waupelani</string>
+        <key>weight</key>
+        <integer>2</integer>
+		<key>routes</key>
+		<array>
+			<integer>31</integer>
+			<integer>33</integer>
+			<integer>34</integer>
+		</array>
+	</dict>
+    <dict>
+		<key>name</key>
+		<string>Martin St</string>
+        <key>weight</key>
+        <integer>3</integer>
+		<key>routes</key>
+		<array>
+			<integer>21</integer>
+			<integer>22</integer>
+			<integer>25</integer>
 		</array>
 	</dict>
 </array>

@@ -67,6 +67,7 @@
         SPTRouteGroup *group = [NSEntityDescription insertNewObjectForEntityForName:@"Group" inManagedObjectContext:dataManager.managedObjectContext];
         
         group.name = [dict objectForKey:@"name"];
+        group.weight = [dict objectForKey:@"weight"];
         
         for(NSNumber *routeId in [dict objectForKey:@"routes"]) {
             SPTRoute *route = [self getRouteWithId:routeId];
