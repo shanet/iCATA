@@ -10,5 +10,6 @@
 
 @interface SPTRouteGroup : NSManagedObject
 @property (strong, nonatomic) NSString *name;
+@property (strong, nonatomic) NSNumber *weight;
 @property (strong, nonatomic) NSMutableArray *routes;
 @end

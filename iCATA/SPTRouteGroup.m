@@ -11,6 +11,7 @@
 @implementation SPTRouteGroup
 
 @dynamic name;
+@dynamic weight;
 @dynamic routes;
 
 @end

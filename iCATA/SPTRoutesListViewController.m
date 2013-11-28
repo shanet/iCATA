@@ -45,6 +45,8 @@
 
     self.tableView.dataSource = self.dataSource;
     self.dataSource.tableView = self.tableView;
+    
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     // Set the search options and provide the search controller with a data source
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Contains", @"Exclude", @"Match"];
@@ -62,14 +64,40 @@
     ((UILabel*)[cell viewWithTag:1]).text = route.code;
     ((UILabel*)[cell viewWithTag:2]).text = route.name;
     ((UIImageView*)[cell viewWithTag:3]).image = [UIImage imageWithData:route.icon];
+    
+    cell.showsReorderControl = YES;
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {
     return @"cell";
 }
 
-- (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
+}
+
+- (BOOL)tableView:(UITableView *)tableview shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+- (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL) tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void) tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    SPTRoute *source = [self.dataSource objectAtIndexPath:sourceIndexPath];
+    SPTRoute *destination = [self.dataSource objectAtIndexPath:destinationIndexPath];
+    
+    NSNumber *tmpWeight = source.weight;
+    source.weight = destination.weight;
+    destination.weight = tmpWeight;
+    
+    [self.tableView reloadData];
+    [[DataManager sharedInstance] saveContext];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

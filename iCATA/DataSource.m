@@ -139,8 +139,20 @@ dataManagerDelegate:(id<DataManagerDelegate>)dataManagerDelegate {
 
 
 // support editing the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.delegate tableView:tableView canEditRowAtIndexPath:indexPath];
+- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.delegate tableView:tableView editingStyleForRowAtIndexPath:indexPath];
+}
+
+- (BOOL) tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.delegate tableView:tableView shouldIndentWhileEditingRowAtIndexPath:indexPath];
+}
+
+- (BOOL) tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.delegate tableView:tableView canMoveRowAtIndexPath:indexPath];
+}
+
+- (void) tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    return [self.delegate tableView:tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

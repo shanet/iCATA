@@ -27,9 +27,8 @@
     
     if (self) {
         _routesModel = [[SPTRoutesModel alloc] init];
-        //_prefsModel = [[SPTPrefsModel alloc] init];
         
-        _dataSource = [[DataSource alloc] initForEntity:@"Group" sortKeys:@[@"name"] predicate:nil sectionNameKeyPath:nil dataManagerDelegate:_routesModel];
+        _dataSource = [[DataSource alloc] initForEntity:@"Group" sortKeys:@[@"weight", @"name"] predicate:nil sectionNameKeyPath:nil dataManagerDelegate:_routesModel];
         _dataSource.delegate = self;
         
         _searchString = nil;
@@ -44,6 +43,8 @@
     
     self.tableView.dataSource = self.dataSource;
     self.dataSource.tableView = self.tableView;
+    
+    self.navigationItem.rightBarButtonItems = @[self.navigationItem.rightBarButtonItem, self.editButtonItem];
     
     // Set the search options and provide the search controller with a data source
     self.searchDisplayController.searchBar.scopeButtonTitles = @[@"Contains", @"Exclude", @"Match"];
@@ -65,8 +66,32 @@
     return @"cell";
 }
 
+- (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleNone;
+}
+
+- (BOOL)tableView:(UITableView *)tableview shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
 - (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
+}
+
+- (BOOL) tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void) tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    SPTRouteGroup *source = [self.dataSource objectAtIndexPath:sourceIndexPath];
+    SPTRouteGroup *destination = [self.dataSource objectAtIndexPath:destinationIndexPath];
+    
+    NSNumber *tmpWeight = source.weight;
+    source.weight = destination.weight;
+    destination.weight = tmpWeight;
+    
+    [self.tableView reloadData];
+    [[DataManager sharedInstance] saveContext];
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

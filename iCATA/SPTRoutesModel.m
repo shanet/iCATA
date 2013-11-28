@@ -89,9 +89,15 @@
 
 + (void) addGroupToDatabase:(NSDictionary*)dict {
     DataManager *dataManager = [DataManager sharedInstance];
+    
+    // Find the heaviest weight already being used
+    NSArray *routeGroups = [dataManager fetchManagedObjectsForEntity:@"Group" sortKeys:nil predicate:nil];
+    NSNumber *heaviestWeight = ((SPTRouteGroup*)[routeGroups objectAtIndex:[routeGroups count]-1]).weight;
+    
     SPTRouteGroup *group = [NSEntityDescription insertNewObjectForEntityForName:@"Group" inManagedObjectContext:dataManager.managedObjectContext];
     
     group.name = [dict objectForKey:@"name"];
+    group.weight = [NSNumber numberWithInteger:[heaviestWeight integerValue] +1];
     
     for(SPTRoute *route in [dict objectForKey:@"routes"]) {
         [group.routes addObject:route];
