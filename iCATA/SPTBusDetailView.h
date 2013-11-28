@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SPTBusDetailView : UIView
+@property (weak, nonatomic) IBOutlet UILabel *routeNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *onBoardLabel;
+@property (weak, nonatomic) IBOutlet UILabel *directionLabel;
 @end

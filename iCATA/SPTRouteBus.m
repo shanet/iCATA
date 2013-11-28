@@ -20,6 +20,18 @@
         _speed = [[dict objectForKey:@"Speed"] integerValue];
         _riderCount = [[dict objectForKey:@"OnBoard"] integerValue];
         _status = [dict objectForKey:@"DisplayStatus"];
+        
+        // Translate the direction to a human-readable direction
+        NSString *direction = [dict objectForKey:@"Direction"];
+        if([direction compare:@"L"] == 0) {
+            _direction = @"Loop";
+        } else if([direction compare:@"O"] == 0) {
+            _direction = @"Outbound";
+        } else if([direction compare:@"I"] == 0) {
+            _direction = @"Inbound";
+        } else {
+            _direction = @"Link";
+        }
     }
     
     return self;

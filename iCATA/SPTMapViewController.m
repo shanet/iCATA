@@ -12,15 +12,21 @@
 #define kStateCollegeLongitude -77.8586
 #define kStateCollegeZoomLevel 13
 
+#define kBusIconOffset 0.5
+#define kBusIconScaleFactor 0.125
 #define kMapCameraPadding 20
+
+// The max rider count is estimated from the given specs of the new Flyer Xcelsior buses according to the manufacturer
+// This number may not be accurate for older buses, but should provided a good estimate at least
+#define kBusMaxRiderCount 90
 
 #define kMapTypeRoads 0
 #define kMapTypeSatellite 1
 
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
-@property (strong, nonatomic) NSMutableArray *stopMarkers;
 @property (strong, nonatomic) NSMutableArray *routes;
+
 @property BOOL isRefresh;
 @property NSInteger numberOfInProgressDownloads;
 
@@ -40,7 +46,6 @@
         _mapView = nil;
         _groupName = @"";
         _busMarkers = [[NSMutableArray alloc] init];
-        _stopMarkers = [[NSMutableArray alloc] init];
         _routes = [[NSMutableArray alloc] init];
         _isRefresh = NO;
         _numberOfInProgressDownloads = 0;
@@ -109,8 +114,8 @@
         [self fitRoutesOnMap];
     } else {
         // Remove the old bus overlays from the map if a refresh
-        for(GMSMarker *marker in self.busMarkers) {
-            marker.map = nil;
+        for(NSDictionary *dict in self.busMarkers) {
+            ((GMSMarker*)[dict objectForKey:@"marker"]).map = nil;
         }
         [self.busMarkers removeAllObjects];
     }
@@ -138,7 +143,6 @@
     float maxLongitude = minCoords[0].longitude;
     
     for(NSInteger i=0; i<[self.routes count]; i++) {
-        NSLog(@"%f | %f", maxCoords[i].latitude, maxCoords[i].longitude);
         if(minCoords[i].latitude < minLatitude) {
             minLatitude = minCoords[i].latitude;
         }
@@ -165,19 +169,29 @@
     [self.mapView animateWithCameraUpdate:cameraUpdate];
 }
 
-- (void) addBusesOverlays {
-    UIImage *busIcon = [self scaleImage:[UIImage imageNamed:@"tmp_icon.png"] toScaleFactor:.05];
-    
+- (void) addBusesOverlays {    
     for(SPTRoute *route in self.routes) {
+        UIImage *busIcon = [self scaleImage:[UIImage imageWithData:route.icon] toScaleFactor:kBusIconScaleFactor];
+
         for(SPTRouteBus *routeBus in route.buses) {
             GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
-
             marker.icon = busIcon;
-            marker.infoWindowAnchor = CGPointMake(0.44, 0.45);
             
-            [self.busMarkers addObject:marker];
+            // Keep track of which markers belong to which buses so the marker detail views can be populated with info about the bus
+            [self.busMarkers addObject:@{@"marker": marker, @"bus": routeBus, @"routeCode": route.code, @"routeName": route.name}];
         }
     }
+    
+    // Test code if it's late at night and there's no buses running
+    /*GMSMarker *marker = [self makeGMSMarkerAtLatitude:kStateCollegeLatitude Longitude:kStateCollegeLongitude];
+    marker.icon = [self scaleImage:[UIImage imageWithData:((SPTRoute*)[self.routes objectAtIndex:0]).icon] toScaleFactor:kBusIconScaleFactor];
+    marker.infoWindowAnchor = CGPointMake(kBusIconScaleFactor, kBusIconScaleFactor);
+    SPTRouteBus *routeBus = [[SPTRouteBus alloc] init];
+    routeBus.speed = 88;
+    routeBus.status = @"On time";
+    routeBus.riderCount = 42;
+    routeBus.direction = @"Outbound";
+    [self.busMarkers addObject:@{@"marker": marker, @"bus": routeBus, @"routeCode": @"GL", @"routeName": @"Green Link"}];*/
 }
 
 - (void) addRoutesStopsOverlays {
@@ -188,8 +202,6 @@
             GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
             marker.icon = stopIcon;
             marker.title = routeStop.name;
-            
-            [self.stopMarkers addObject:marker];
         }
     }
 }
@@ -242,13 +254,29 @@
 }
 
 - (UIView*) mapView:(GMSMapView*)mapView markerInfoWindow:(GMSMarker *)marker {
-    if([self.busMarkers containsObject:marker]) {
-        SPTBusDetailView *busDetailView = [[[NSBundle mainBundle] loadNibNamed:@"BusDetailView" owner:self options:nil] objectAtIndex:0];
-        busDetailView.statusLabel.text = @"Hello, bus!";
-        return busDetailView;
-    } else {
-        return nil;
+    for(NSDictionary *dict in self.busMarkers) {
+        if([dict objectForKey:@"marker"] == marker) {
+            SPTBusDetailView *busDetailView = [[[NSBundle mainBundle] loadNibNamed:@"BusDetailView" owner:self options:nil] objectAtIndex:0];
+            SPTRouteBus *bus = [dict objectForKey:@"bus"];
+            
+            busDetailView.routeNameLabel.text = [NSString stringWithFormat:@"%@ - %@", [dict objectForKey:@"routeCode"], [dict objectForKey:@"routeName"]];
+            
+            busDetailView.statusLabel.text = bus.status;
+            
+            // Change the color of the status label to green for on time and red for late
+            if([bus.status compare:@"ON TIME"] == 0) {
+                busDetailView.statusLabel.textColor = [UIColor colorWithRed:.25 green:1 blue:.25 alpha:1];
+            } else if([bus.status compare:@"LATE"] == 0) {
+                busDetailView.statusLabel.textColor = [UIColor colorWithRed:1 green:.25 blue:.25 alpha:1];
+            }
+            
+            busDetailView.onBoardLabel.text = [NSString stringWithFormat:@"%d / %d", bus.riderCount, kBusMaxRiderCount];
+            busDetailView.directionLabel.text = [NSString stringWithFormat:@"%@ @ %dmph", bus.direction, bus.speed];
+            return busDetailView;
+        }
     }
+    
+    return nil;
 }
 
 - (IBAction)refreshButtonPressed:(id)sender {

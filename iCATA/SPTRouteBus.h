@@ -15,6 +15,7 @@
 @property NSInteger riderCount;
 @property NSInteger speed;
 @property (strong, nonatomic) NSString *status;
+@property (strong, nonatomic) NSString *direction;
 
 - (id) initWithDict:(NSDictionary*) dict;
 @end
