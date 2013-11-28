@@ -11,6 +11,7 @@
 #import <KML/KML.h>
 #import "SPTRoute.h"
 #import "SPTBusDetailView.h"
+#import "SPTImageUtils.h"
 
 @interface SPTMapViewController : UIViewController <GMSMapViewDelegate>
 @property (strong, nonatomic) NSString *groupName;

@@ -11,10 +11,13 @@
 #define kStateCollegeLatitude 40.7914
 #define kStateCollegeLongitude -77.8586
 #define kStateCollegeZoomLevel 13
-
-#define kBusIconOffset 0.5
-#define kBusIconScaleFactor 0.125
 #define kMapCameraPadding 20
+
+#define kStopIconScaleFactor 0.025
+#define kBusIconOffset 0.5
+#define kBusIconScaleFactor 0.6
+#define kHeadingIconScaleFactor 0.1
+#define kHeadingFactor 3
 
 // The max rider count is estimated from the given specs of the new Flyer Xcelsior buses according to the manufacturer
 // This number may not be accurate for older buses, but should provided a good estimate at least
@@ -171,31 +174,42 @@
 
 - (void) addBusesOverlays {    
     for(SPTRoute *route in self.routes) {
-        UIImage *busIcon = [self scaleImage:[UIImage imageWithData:route.icon] toScaleFactor:kBusIconScaleFactor];
-
         for(SPTRouteBus *routeBus in route.buses) {
-            GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
-            marker.icon = busIcon;
+            GMSMarker *busMarker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
             
+            // Round the heading to the nearest factor of kHeadingFactor
+            NSInteger roundedHeading = [SPTMapViewController getNearestMultipleOfNumber:routeBus.heading ToFactor:kHeadingFactor];
+            
+            // Scale and tint the bus icon to use as the marker icon
+            UIImage *busIcon = [UIImage imageNamed:[NSString stringWithFormat:@"bus_icons/busIcon-%d.png", roundedHeading]];
+            busIcon = [SPTImageUtils tintImage:busIcon withColor:route.color];
+            busIcon = [SPTImageUtils scaleImage:busIcon toScaleFactor:kBusIconScaleFactor];
+            busMarker.icon = busIcon;
+
             // Keep track of which markers belong to which buses so the marker detail views can be populated with info about the bus
-            [self.busMarkers addObject:@{@"marker": marker, @"bus": routeBus, @"routeCode": route.code, @"routeName": route.name}];
+            [self.busMarkers addObject:@{@"marker": busMarker, @"bus": routeBus, @"routeCode": route.code, @"routeName": route.name}];
         }
     }
     
     // Test code if it's late at night and there's no buses running
     /*GMSMarker *marker = [self makeGMSMarkerAtLatitude:kStateCollegeLatitude Longitude:kStateCollegeLongitude];
-    marker.icon = [self scaleImage:[UIImage imageWithData:((SPTRoute*)[self.routes objectAtIndex:0]).icon] toScaleFactor:kBusIconScaleFactor];
-    marker.infoWindowAnchor = CGPointMake(kBusIconScaleFactor, kBusIconScaleFactor);
+
+    UIImage *busIcon = [UIImage imageNamed:[NSString stringWithFormat:@"bus_icons/busIcon-%d.png", 39]];
+    busIcon = [SPTImageUtils tintImage:busIcon withColor:((SPTRoute*)[self.routes objectAtIndex:0]).color];
+    busIcon = [SPTImageUtils scaleImage:busIcon toScaleFactor:kBusIconScaleFactor];
+    marker.icon = busIcon;
+    
     SPTRouteBus *routeBus = [[SPTRouteBus alloc] init];
     routeBus.speed = 88;
     routeBus.status = @"On time";
     routeBus.riderCount = 42;
     routeBus.direction = @"Outbound";
+    
     [self.busMarkers addObject:@{@"marker": marker, @"bus": routeBus, @"routeCode": @"GL", @"routeName": @"Green Link"}];*/
 }
 
 - (void) addRoutesStopsOverlays {
-    UIImage *stopIcon = [self scaleImage:[UIImage imageNamed:@"stopIcon.png"] toScaleFactor:.025];
+    UIImage *stopIcon = [SPTImageUtils scaleImage:[UIImage imageNamed:@"stopIcon.png"] toScaleFactor:kStopIconScaleFactor];
     
     for(SPTRoute *route in self.routes) {
         for(SPTRouteStop *routeStop in route.stops) {
@@ -296,7 +310,10 @@
     }
 }
 
-- (UIImage*) scaleImage:(UIImage*)image toScaleFactor:(float)scaleFactor {
-    return [UIImage imageWithCGImage:image.CGImage scale:(image.scale * 1/scaleFactor) orientation:image.imageOrientation];
++ (NSInteger) getNearestMultipleOfNumber:(NSInteger)number ToFactor:(NSInteger)factor {
+    NSInteger roundUp = (factor - (number % factor)) + number;
+    NSInteger roundDown = number - (number %factor);
+    return (roundUp - number < number - roundDown) ? roundUp : roundDown;
 }
+
 @end

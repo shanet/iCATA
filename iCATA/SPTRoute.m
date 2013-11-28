@@ -12,9 +12,6 @@
 // This constant will need updated at that time.
 #define kDataUrl "http://50.203.43.19"
 
-// http://stackoverflow.com/questions/1560081/how-can-i-create-a-uicolor-from-a-hex-string
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-
 @interface SPTRoute ()
 enum XmlType {
     STOPS = 1,
@@ -93,10 +90,7 @@ enum XmlType {
 }
 
 - (void) parseJsonColor:(NSString*) colorString {
-    NSScanner *scanner = [NSScanner scannerWithString:colorString];
-    NSUInteger _hexColor;
-    [scanner scanHexInt:&_hexColor];
-    self.color = UIColorFromRGB(_hexColor);
+    self.color = [SPTImageUtils UIColorFromHexString:colorString];
 }
 
 - (void) parseJsonStops:(NSArray*) jsonStops {

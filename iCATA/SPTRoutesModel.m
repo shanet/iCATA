@@ -8,9 +8,6 @@
 
 #import "SPTRoutesModel.h"
 
-// http://stackoverflow.com/questions/1560081/how-can-i-create-a-uicolor-from-a-hex-string
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
-
 @interface SPTRoutesModel()
 @property (strong, nonatomic) NSMutableArray *routes;
 @end
@@ -54,12 +51,9 @@
         route.weight = [dict objectForKey:@"weight"];
         
         // Tint the icon according to the color of the route
-        NSScanner *scanner = [NSScanner scannerWithString:[dict objectForKey:@"color"]];
-        NSUInteger hexColor;
-        [scanner scanHexInt:&hexColor];
-        UIColor *tintColor = UIColorFromRGB(hexColor);
+        UIColor *tintColor = [SPTImageUtils UIColorFromHexString:[dict objectForKey:@"color"]];
         UIImage *routeIcon = [UIImage imageNamed:@"routeIcon@2x.png"];
-        route.icon = UIImagePNGRepresentation([SPTRoutesModel tintImage:routeIcon withColor:tintColor]);
+        route.icon = UIImagePNGRepresentation([SPTImageUtils tintImage:routeIcon withColor:tintColor]);
         
         [self.routes addObject:route];
     }
@@ -104,28 +98,6 @@
     }
     
     [dataManager saveContext];
-}
-
-// http://stackoverflow.com/questions/3514066/how-to-tint-a-transparent-png-image-in-iphone
-+ (UIImage *) tintImage:(UIImage*)image withColor:(UIColor *)tintColor {
-    UIGraphicsBeginImageContextWithOptions (image.size, NO, [[UIScreen mainScreen] scale]);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
-    
-    [image drawInRect:rect blendMode:kCGBlendModeNormal alpha:1.0f];
-    
-    // Tint the image (looses alpha)
-    CGContextSetBlendMode(context, kCGBlendModeOverlay);
-    [tintColor setFill];
-    CGContextFillRect(context, rect);
-    
-    // Mask by alpha values of original image
-    [image drawInRect:rect blendMode:kCGBlendModeDestinationIn alpha:1.0f];
-    
-    UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return tintedImage;
 }
 
 @end

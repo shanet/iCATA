@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SPTRoute.h"
 #import "SPTRouteGroup.h"
+#import "SPTImageUtils.h"
 #import "DataManager.h"
 #import "DataManagerDelegate.h"
 

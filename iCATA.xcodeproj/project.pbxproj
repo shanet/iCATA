@@ -34,6 +34,9 @@
 		25AEDC7318459E35009D5C65 /* routeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AEDC7118459E35009D5C65 /* routeIcon.png */; };
 		25AEDC7418459E35009D5C65 /* routeIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AEDC7218459E35009D5C65 /* routeIcon@2x.png */; };
 		25AEDC7C1846D266009D5C65 /* busDetailBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AEDC7B1846D266009D5C65 /* busDetailBackground.png */; };
+		25AEDC851846E18B009D5C65 /* busIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25AEDC841846E18B009D5C65 /* busIcon.png */; };
+		25AEDC891846E41D009D5C65 /* bus_icons in Resources */ = {isa = PBXBuildFile; fileRef = 25AEDC881846E41C009D5C65 /* bus_icons */; };
+		25AEDC8C1846EF4D009D5C65 /* SPTImageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AEDC8B1846EF4D009D5C65 /* SPTImageUtils.m */; };
 		25E2988F183319B500FC033D /* defaultPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25E2988E183319B500FC033D /* defaultPrefs.plist */; };
 		25E2989018331C0900FC033D /* SPTRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298871833194B00FC033D /* SPTRoutesModel.m */; };
 		25E2989118331C0D00FC033D /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298801833192D00FC033D /* DataManager.m */; };
@@ -97,6 +100,10 @@
 		25AEDC7118459E35009D5C65 /* routeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = routeIcon.png; sourceTree = "<group>"; };
 		25AEDC7218459E35009D5C65 /* routeIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "routeIcon@2x.png"; sourceTree = "<group>"; };
 		25AEDC7B1846D266009D5C65 /* busDetailBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = busDetailBackground.png; sourceTree = "<group>"; };
+		25AEDC841846E18B009D5C65 /* busIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = busIcon.png; sourceTree = "<group>"; };
+		25AEDC881846E41C009D5C65 /* bus_icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bus_icons; sourceTree = "<group>"; };
+		25AEDC8A1846EF4D009D5C65 /* SPTImageUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTImageUtils.h; sourceTree = "<group>"; };
+		25AEDC8B1846EF4D009D5C65 /* SPTImageUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTImageUtils.m; sourceTree = "<group>"; };
 		25E2987F1833192D00FC033D /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		25E298801833192D00FC033D /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		25E298811833192D00FC033D /* DataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
@@ -222,6 +229,8 @@
 			children = (
 				258F1E3E181B4FCE007D3ACE /* SPTAppDelegate.h */,
 				258F1E3F181B4FCE007D3ACE /* SPTAppDelegate.m */,
+				25AEDC8A1846EF4D009D5C65 /* SPTImageUtils.h */,
+				25AEDC8B1846EF4D009D5C65 /* SPTImageUtils.m */,
 				2518B457183ECA5000435ABC /* Classes */,
 				25E2987E183318F400FC033D /* Models */,
 				25E2987D183318EE00FC033D /* Controllers */,
@@ -234,6 +243,8 @@
 		258F1E36181B4FCE007D3ACE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				25AEDC881846E41C009D5C65 /* bus_icons */,
+				25AEDC841846E18B009D5C65 /* busIcon.png */,
 				25AEDC7B1846D266009D5C65 /* busDetailBackground.png */,
 				25AEDC7118459E35009D5C65 /* routeIcon.png */,
 				25AEDC7218459E35009D5C65 /* routeIcon@2x.png */,
@@ -370,6 +381,8 @@
 				25AEDC7318459E35009D5C65 /* routeIcon.png in Resources */,
 				25AEDC7418459E35009D5C65 /* routeIcon@2x.png in Resources */,
 				25AEDC7C1846D266009D5C65 /* busDetailBackground.png in Resources */,
+				25AEDC851846E18B009D5C65 /* busIcon.png in Resources */,
+				25AEDC891846E41D009D5C65 /* bus_icons in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +408,7 @@
 				2518B453183EC42D00435ABC /* SPTGroupsListViewController.m in Sources */,
 				2518B456183EC84700435ABC /* SPTCreateGroupViewController.m in Sources */,
 				2518B45D183F020200435ABC /* SPTRouteGroup.m in Sources */,
+				25AEDC8C1846EF4D009D5C65 /* SPTImageUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

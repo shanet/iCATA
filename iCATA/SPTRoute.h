@@ -11,6 +11,7 @@
 #import <KML/KML.h>
 #import "SPTRouteStop.h"
 #import "SPTRouteBus.h"
+#import "SPTImageUtils.h"
 
 enum RouteType {
   CAMPUS = 1,
