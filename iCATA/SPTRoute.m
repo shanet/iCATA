@@ -176,4 +176,21 @@ enum XmlType {
     }
 }
 
+- (SPTRouteStop*) getClosestStopToCoordinate:(CLLocationCoordinate2D)coordinate {
+    float minDistance = FLT_MAX;
+    SPTRouteStop *closestStop = [self.stops objectAtIndex:0];
+    
+    for(SPTRouteStop *stop in self.stops) {
+        // Find the distance between the current stop and the given coordinate via the distance formula
+        float distance = sqrtf(powf(stop.latitude - coordinate.latitude, 2) + powf(stop.longitude - coordinate.longitude, 2));
+
+        if(distance < minDistance) {
+            minDistance = distance;
+            closestStop = stop;
+        }
+    }
+    
+    return closestStop;
+}
+
 @end

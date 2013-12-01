@@ -38,4 +38,5 @@ enum RouteType {
 - (void) downloadRouteStops;
 - (void) downloadBusLocations;
 - (CLLocationCoordinate2D*) getBoundingBoxPoints;
+- (SPTRouteStop*) getClosestStopToCoordinate:(CLLocationCoordinate2D)coordinate;
 @end

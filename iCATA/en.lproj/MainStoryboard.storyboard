@@ -289,6 +289,7 @@
                     </tableView>
                     <connections>
                         <outlet property="defaultRouteLabel" destination="XAi-Uo-LtH" id="GPR-0b-o3d"/>
+                        <outlet property="highlightClosestStopSwitch" destination="83H-dp-oeS" id="Bum-YW-ukh"/>
                         <outlet property="showGroupsByDefaultSwitch" destination="W3n-rP-jam" id="LUh-XR-n4I"/>
                     </connections>
                 </tableViewController>
@@ -622,6 +623,53 @@
         <image name="routeIcon@2x.png" width="65" height="80"/>
         <image name="routeTabIcon.png" width="25" height="30"/>
     </resources>
+    <classes>
+        <class className="GMSMapView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GMSMapView.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="SPTCreateGroupViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTCreateGroupViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="doneButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="SPTDefaultRouteListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTDefaultRouteListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelButtonPressed:"/>
+                <relationship kind="action" name="deletedButtonPressed:"/>
+            </relationships>
+        </class>
+        <class className="SPTGroupsListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTGroupsListViewController.h"/>
+        </class>
+        <class className="SPTMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTMapViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="mapTypeChanged:"/>
+                <relationship kind="action" name="refreshButtonPressed:"/>
+                <relationship kind="outlet" name="loadingIconView" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="GMSMapView"/>
+            </relationships>
+        </class>
+        <class className="SPTRoutesListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTRoutesListViewController.h"/>
+        </class>
+        <class className="SPTSettingsViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="closestStopSwitchToggled:"/>
+                <relationship kind="action" name="doneButtonPressed:"/>
+                <relationship kind="action" name="showGroupsSwitchToggled:"/>
+                <relationship kind="outlet" name="defaultRouteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="highlightClosestStopSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="showGroupsByDefaultSwitch" candidateClass="UISwitch"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

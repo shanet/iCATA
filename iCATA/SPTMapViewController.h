@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
 #import <KML/KML.h>
+#import "SPTPrefsModel.h"
 #import "SPTRoute.h"
 #import "SPTBusDetailView.h"
 #import "SPTImageUtils.h"

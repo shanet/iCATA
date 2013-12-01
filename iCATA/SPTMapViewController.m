@@ -20,7 +20,7 @@
 #define kHeadingFactor 3
 
 // The max rider count is estimated from the given specs of the new Flyer Xcelsior buses according to the manufacturer
-// This number may not be accurate for older buses, but should provided a good estimate at least
+// This number may not be accurate for older buses, but should provided a good upper bound at least
 #define kBusMaxRiderCount 90
 
 #define kMapTypeRoads 0
@@ -28,7 +28,10 @@
 
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
+@property (strong, nonatomic) NSMutableArray *stopMarkers;
 @property (strong, nonatomic) NSMutableArray *routes;
+
+@property (strong, nonatomic) SPTPrefsModel *prefsModel;
 
 @property BOOL isRefresh;
 @property NSInteger numberOfInProgressDownloads;
@@ -49,7 +52,9 @@
         _mapView = nil;
         _groupName = @"";
         _busMarkers = [[NSMutableArray alloc] init];
+        _stopMarkers = [[NSMutableArray alloc] init];
         _routes = [[NSMutableArray alloc] init];
+        _prefsModel = [[SPTPrefsModel alloc] init];
         _isRefresh = NO;
         _numberOfInProgressDownloads = 0;
     }
@@ -114,6 +119,7 @@
     // Only add the route stops and path if this is the first load (not a refresh)
     if(!self.isRefresh) {
         [self addRoutesStopsOverlays];
+        [self highlightClosestStop];
         [self addRoutesPathOverlay];
         [self fitRoutesOnMap];
     } else {
@@ -188,7 +194,7 @@
             busMarker.icon = busIcon;
 
             // Keep track of which markers belong to which buses so the marker detail views can be populated with info about the bus
-            [self.busMarkers addObject:@{@"marker": busMarker, @"bus": routeBus, @"routeCode": route.code, @"routeName": route.name}];
+            [self.busMarkers addObject:@{@"marker": busMarker, @"bus": routeBus, @"route": route}];
         }
     }
     
@@ -214,9 +220,33 @@
     
     for(SPTRoute *route in self.routes) {
         for(SPTRouteStop *routeStop in route.stops) {
-            GMSMarker *marker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
-            marker.icon = stopIcon;
-            marker.title = routeStop.name;
+            GMSMarker *stopMarker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
+            stopMarker.icon = stopIcon;
+            stopMarker.title = routeStop.name;
+            
+            // Keep track of which markers belong to which routes so the closest stop on the route can be updated as the user's location changes
+            [self.stopMarkers addObject:@{@"marker": stopMarker, @"stop": routeStop}];
+        }
+    }
+}
+
+- (void) highlightClosestStop {
+    // Don't do anything if the highlight closest stop pref is set to false
+    if(![self.prefsModel readBoolPrefForKey:kHighlightClosestStopKey]) {
+        return;
+    }
+    
+    CLLocationCoordinate2D currentLocation = self.mapView.myLocation.coordinate;
+    
+    for(SPTRoute *route in self.routes) {
+        SPTRouteStop *closestStop = [route getClosestStopToCoordinate:currentLocation];
+        
+        // Replace the icon on the closest stop's marker with the closest stop icon
+        for(NSDictionary *dict in self.stopMarkers) {
+            if([dict objectForKey:@"stop"] == closestStop) {
+                GMSMarker *stopMarker = [dict objectForKey:@"marker"];
+                stopMarker.icon = [GMSMarker markerImageWithColor:nil];
+            }
         }
     }
 }
@@ -272,10 +302,11 @@
     for(NSDictionary *dict in self.busMarkers) {
         if([dict objectForKey:@"marker"] == marker) {
             SPTBusDetailView *busDetailView = [[[NSBundle mainBundle] loadNibNamed:@"BusDetailView" owner:self options:nil] objectAtIndex:0];
+            
             SPTRouteBus *bus = [dict objectForKey:@"bus"];
+            SPTRoute *route = [dict objectForKey:@"route"];
             
-            busDetailView.routeNameLabel.text = [NSString stringWithFormat:@"%@ - %@", [dict objectForKey:@"routeCode"], [dict objectForKey:@"routeName"]];
-            
+            busDetailView.routeNameLabel.text = [NSString stringWithFormat:@"%@ - %@", route.code, route.name];
             busDetailView.statusLabel.text = bus.status;
             
             // Change the color of the status label to green for on time and red for late
