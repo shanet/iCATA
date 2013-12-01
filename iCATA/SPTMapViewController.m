@@ -26,6 +26,8 @@
 #define kMapTypeRoads 0
 #define kMapTypeSatellite 1
 
+#define kAutoRefreshTime 10.0
+
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
 @property (strong, nonatomic) NSMutableArray *stopMarkers;
@@ -35,6 +37,7 @@
 
 @property BOOL isRefresh;
 @property NSInteger numberOfInProgressDownloads;
+@property (strong, nonatomic) NSTimer *refreshTimer;
 
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIconView;
@@ -51,12 +54,16 @@
     if (self) {
         _mapView = nil;
         _groupName = @"";
+        
         _busMarkers = [[NSMutableArray alloc] init];
         _stopMarkers = [[NSMutableArray alloc] init];
         _routes = [[NSMutableArray alloc] init];
+        
         _prefsModel = [[SPTPrefsModel alloc] init];
+        
         _isRefresh = NO;
         _numberOfInProgressDownloads = 0;
+        _refreshTimer = nil;
     }
     
     return self;
@@ -69,12 +76,30 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadCompleted) name:@"RouteDownloadCompleted" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadError) name:@"RouteDownloadError" object:nil];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
-    [self refreshRoutes];
+    [self downloadRouteInfo];
     [self setInitialMapState];
 }
 
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self cancelRefreshTimer];
+}
+
 - (void) refreshRoutes {
+    self.isRefresh = YES;
+    
+    // Cancel the refresh timer (to be restarted when done downloading route info)
+    [self cancelRefreshTimer];
+    
+    [self downloadRouteInfo];
+}
+
+- (void) downloadRouteInfo {
     [self.loadingIconView startAnimating];
     self.numberOfInProgressDownloads = [self.routes count];
     
@@ -131,10 +156,11 @@
     }
 
     [self addBusesOverlays];
+    [self startRefreshTimer];
 }
 
 - (void) fitRoutesOnMap {
-    // This is really messy because we're passing around struct rather than objects
+    // This is really messy because we're passing around arrays of structs rather than objects
     
     // Keep an array of the min and max coordinates for each each
     CLLocationCoordinate2D *minCoords = calloc(sizeof(CLLocationCoordinate2D) * [self.routes count], sizeof(CLLocationCoordinate2D));
@@ -333,12 +359,11 @@
     [alert show];
 }
 
-- (IBAction)refreshButtonPressed:(id)sender {
-    self.isRefresh = YES;
+- (IBAction) refreshButtonPressed:(id)sender {
     [self refreshRoutes];
 }
 
-- (IBAction)mapTypeChanged:(id)sender {
+- (IBAction) mapTypeChanged:(id)sender {
     UISegmentedControl *mapTypeButtons = sender;
     switch(mapTypeButtons.selectedSegmentIndex) {
         case kMapTypeRoads:
@@ -348,6 +373,16 @@
             self.mapView.mapType = kGMSTypeHybrid;
         default:;
     }
+}
+
+- (void) startRefreshTimer {
+    // Refresh automatically every few seconds
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:kAutoRefreshTime target:self selector:@selector(refreshRoutes) userInfo:nil repeats:YES];
+}
+
+- (void) cancelRefreshTimer {
+    [self.refreshTimer invalidate];
+    self.refreshTimer = nil;
 }
 
 + (NSInteger) getNearestMultipleOfNumber:(NSInteger)number ToFactor:(NSInteger)factor {
