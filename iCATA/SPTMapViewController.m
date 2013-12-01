@@ -76,6 +76,15 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadCompleted) name:@"RouteDownloadCompleted" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeDownloadError) name:@"RouteDownloadError" object:nil];
+    
+    // Ensure that the routes are sorted by weight
+    [self sortRoutesArray];
+}
+
+- (void) sortRoutesArray {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"weight" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    [self.routes sortUsingDescriptors:sortDescriptors];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
