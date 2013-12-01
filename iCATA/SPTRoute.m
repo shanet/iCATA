@@ -97,6 +97,8 @@ enum XmlType {
 }
 
 - (void) parseJsonStops:(NSArray*) jsonStops {
+    [self.stops removeAllObjects];
+    
     for(NSDictionary *stop in jsonStops) {
         SPTRouteStop *routeStop = [[SPTRouteStop alloc] initWithDict:stop];
         [self.stops addObject:routeStop];
@@ -104,6 +106,8 @@ enum XmlType {
 }
 
 - (void) parseJsonBuses:(NSArray*) jsonBuses {
+    [self.buses removeAllObjects];
+    
     for(NSDictionary *bus in jsonBuses) {
         SPTRouteBus *routeBus = [[SPTRouteBus alloc] initWithDict:bus];
         [self.buses addObject:routeBus];
