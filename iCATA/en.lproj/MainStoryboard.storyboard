@@ -190,7 +190,7 @@
                                             <rect key="frame" x="10" y="1" width="300" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Highlight closest stop:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaA-fQ-sEV">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Show groups by default:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FaA-fQ-sEV">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="195" id="7w3-3M-rLw"/>
                                                     </constraints>
@@ -198,9 +198,9 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W3n-rP-jam">
+                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="W3n-rP-jam">
                                                     <connections>
-                                                        <action selector="closedStopSwitchToggled:" destination="pEf-aP-gVU" eventType="valueChanged" id="wWF-zW-J9R"/>
+                                                        <action selector="showGroupsSwitchToggled:" destination="pEf-aP-gVU" eventType="valueChanged" id="QbI-a7-hrx"/>
                                                     </connections>
                                                 </switch>
                                             </subviews>
@@ -213,8 +213,38 @@
                                             <constraint firstItem="W3n-rP-jam" firstAttribute="centerY" secondItem="FaA-fQ-sEV" secondAttribute="centerY" type="default" id="eL6-Bm-yeB"/>
                                         </constraints>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="7TB-1w-5mm">
+                                        <rect key="frame" x="0.0" y="99" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Highlight closest stop:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fEn-K6-Bjp">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="195" id="Vjs-q5-kJN"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="83H-dp-oeS">
+                                                    <connections>
+                                                        <action selector="closestStopSwitchToggled:" destination="pEf-aP-gVU" eventType="valueChanged" id="NbS-7Q-yHj"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="83H-dp-oeS" secondAttribute="trailing" constant="16" id="98z-6l-bh5"/>
+                                            <constraint firstItem="fEn-K6-Bjp" firstAttribute="leading" secondItem="7TB-1w-5mm" secondAttribute="leading" constant="17" id="Olu-LX-sDZ"/>
+                                            <constraint firstItem="fEn-K6-Bjp" firstAttribute="centerY" secondItem="7TB-1w-5mm" secondAttribute="centerY" type="default" id="i7t-eU-Rsp"/>
+                                            <constraint firstItem="83H-dp-oeS" firstAttribute="centerY" secondItem="fEn-K6-Bjp" secondAttribute="centerY" type="default" id="q8w-VS-mRd"/>
+                                        </constraints>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="sn7-VS-pKO">
-                                        <rect key="frame" x="0.0" y="99" width="320" height="45"/>
+                                        <rect key="frame" x="0.0" y="143" width="320" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="10" y="0.0" width="280" height="43"/>
@@ -257,28 +287,93 @@
                             <outlet property="delegate" destination="pEf-aP-gVU" id="WbA-ie-Jfo"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="defaultRouteLabel" destination="XAi-Uo-LtH" id="GPR-0b-o3d"/>
+                        <outlet property="showGroupsByDefaultSwitch" destination="W3n-rP-jam" id="LUh-XR-n4I"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ch2-Bq-Cum" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1115" y="1076"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Default Route List View Controller-->
         <scene sceneID="3zH-Zw-vr7">
             <objects>
-                <tableViewController id="obH-8y-Aac" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tSU-T9-FkG">
+                <tableViewController id="obH-8y-Aac" customClass="SPTDefaultRouteListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="tSU-T9-FkG">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="omc-r1-Hvs">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <items>
+                                <navigationItem title="Default Route" id="2Xs-aE-Q4W">
+                                    <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="jp9-Re-K7N">
+                                        <connections>
+                                            <action selector="cancelButtonPressed:" destination="obH-8y-Aac" id="NMP-GH-RKt"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem key="rightBarButtonItem" systemItem="trash" id="Er1-1R-m4L">
+                                        <connections>
+                                            <action selector="deletedButtonPressed:" destination="obH-8y-Aac" id="jJa-AK-bXG"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </navigationItem>
+                            </items>
+                        </navigationBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="fzQ-rm-MdA">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" editingAccessoryType="checkmark" id="X1G-Kp-pJn">
+                                <rect key="frame" x="0.0" y="80" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" image="routeIcon@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="zkA-VO-fRc">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="36" id="IZT-oE-Bi4"/>
+                                                <constraint firstAttribute="height" constant="37" id="SHk-hp-kfG"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" text="Co" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mpH-rt-a0P">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="29" id="LTk-VU-WgD"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="-" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iVx-y5-hOB">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="19" id="rsU-8X-aBF"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" text="Name" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="182" translatesAutoresizingMaskIntoConstraints="NO" id="gMV-or-spK">
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="43" id="KZV-qV-Jq3"/>
+                                                <constraint firstAttribute="width" constant="182" id="lbp-X0-7uN"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <constraints>
+                                    <constraint firstItem="iVx-y5-hOB" firstAttribute="baseline" secondItem="mpH-rt-a0P" secondAttribute="baseline" type="default" id="Av2-xI-wVD"/>
+                                    <constraint firstItem="zkA-VO-fRc" firstAttribute="leading" secondItem="X1G-Kp-pJn" secondAttribute="leading" constant="15" id="Izf-Pr-sug"/>
+                                    <constraint firstItem="gMV-or-spK" firstAttribute="centerY" secondItem="iVx-y5-hOB" secondAttribute="centerY" type="default" id="Kks-Fl-jtG"/>
+                                    <constraint firstItem="mpH-rt-a0P" firstAttribute="leading" secondItem="X1G-Kp-pJn" secondAttribute="leading" constant="56" id="gQS-9k-3VU"/>
+                                    <constraint firstItem="gMV-or-spK" firstAttribute="leading" secondItem="X1G-Kp-pJn" secondAttribute="leading" constant="97" id="h6F-7I-2E4"/>
+                                    <constraint firstItem="iVx-y5-hOB" firstAttribute="leading" secondItem="X1G-Kp-pJn" secondAttribute="leading" constant="83" id="hgP-dg-8n8"/>
+                                    <constraint firstItem="gMV-or-spK" firstAttribute="top" secondItem="X1G-Kp-pJn" secondAttribute="top" constant="1" id="mRR-Ig-09V"/>
+                                    <constraint firstItem="zkA-VO-fRc" firstAttribute="centerY" secondItem="X1G-Kp-pJn" secondAttribute="centerY" type="default" id="xLA-vf-i3k"/>
+                                </constraints>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -286,8 +381,19 @@
                             <outlet property="delegate" destination="obH-8y-Aac" id="1nq-Zq-XlD"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="8si-5L-Tgh" id="Ruu-Rt-Qus"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r3h-F6-fEI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="8si-5L-Tgh">
+                    <connections>
+                        <outlet property="delegate" destination="obH-8y-Aac" id="dPm-6f-Pdh"/>
+                        <outlet property="searchContentsController" destination="obH-8y-Aac" id="MkJ-oG-jjs"/>
+                        <outlet property="searchResultsDataSource" destination="obH-8y-Aac" id="B7p-ht-HyS"/>
+                        <outlet property="searchResultsDelegate" destination="obH-8y-Aac" id="bp8-Il-gbg"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="1516" y="1076"/>
         </scene>
@@ -408,7 +514,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="r4A-DK-a18">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" showsReorderControl="YES" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="cell" id="r4A-DK-a18">
                                 <rect key="frame" x="0.0" y="80" width="320" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -459,9 +565,6 @@
                                     <constraint firstItem="GL6-l6-Oio" firstAttribute="baseline" secondItem="KRR-6v-fEz" secondAttribute="baseline" type="default" id="Sep-kA-WXr"/>
                                     <constraint firstItem="gtC-z1-Qdl" firstAttribute="centerY" secondItem="r4A-DK-a18" secondAttribute="centerY" type="default" id="llu-I0-BOx"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="eV4-sr-4LE" kind="push" identifier="ShowMapSegue" id="loD-mY-SBb"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -480,6 +583,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="wrK-9q-247" id="Ljr-Xd-Fc2"/>
+                        <segue destination="eV4-sr-4LE" kind="push" identifier="ShowMapSegue" id="XR6-wY-3QJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPG-To-iDF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -518,42 +622,6 @@
         <image name="routeIcon@2x.png" width="65" height="80"/>
         <image name="routeTabIcon.png" width="25" height="30"/>
     </resources>
-    <classes>
-        <class className="GMSMapView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GMSMapView.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="SPTCreateGroupViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTCreateGroupViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doneButtonPressed:"/>
-            </relationships>
-        </class>
-        <class className="SPTGroupsListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTGroupsListViewController.h"/>
-        </class>
-        <class className="SPTMapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTMapViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="mapTypeChanged:"/>
-                <relationship kind="action" name="refreshButtonPressed:"/>
-                <relationship kind="outlet" name="loadingIconView" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="mapView" candidateClass="GMSMapView"/>
-            </relationships>
-        </class>
-        <class className="SPTRoutesListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTRoutesListViewController.h"/>
-        </class>
-        <class className="SPTSettingsViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SPTSettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="closedStopSwitchToggled:"/>
-                <relationship kind="action" name="doneButtonPressed:"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
@@ -561,6 +629,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="JMW-Iu-dCh"/>
-        <segue reference="loD-mY-SBb"/>
+        <segue reference="XR6-wY-3QJ"/>
     </inferredMetricsTieBreakers>
 </document>

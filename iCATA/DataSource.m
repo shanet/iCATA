@@ -166,8 +166,10 @@ dataManagerDelegate:(id<DataManagerDelegate>)dataManagerDelegate {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         // Not supported yet!
     }
-    
-    
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.delegate tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 

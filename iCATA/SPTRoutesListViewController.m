@@ -14,8 +14,10 @@
 
 @interface SPTRoutesListViewController ()
 @property (strong, nonatomic) SPTRoutesModel *routesModel;
-//@property (strong, nonatomic) SPTPrefsModel *prefsModel;
+@property (strong, nonatomic) SPTPrefsModel *prefsModel;
 @property (strong, nonatomic) DataSource *dataSource;
+@property (strong, nonatomic) SPTRoute *selectedRoute;
+@property BOOL didCheckStartupPrefs;
 
 @property (strong, nonatomic) NSString *searchString;
 @property NSInteger searchOption;
@@ -28,11 +30,13 @@
     
     if (self) {
         _routesModel = [[SPTRoutesModel alloc] init];
-        //_prefsModel = [[SPTPrefsModel alloc] init];
+        _prefsModel = [[SPTPrefsModel alloc] init];
         
         _dataSource = [[DataSource alloc] initForEntity:@"Route" sortKeys:@[@"type", @"weight"] predicate:nil sectionNameKeyPath:@"type" dataManagerDelegate:_routesModel];
         _dataSource.delegate = self;
         
+        _selectedRoute = nil;
+        _didCheckStartupPrefs = NO;
         _searchString = nil;
         _searchOption = 0;
     }
@@ -42,7 +46,7 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-
+    
     self.tableView.dataSource = self.dataSource;
     self.dataSource.tableView = self.tableView;
     
@@ -55,9 +59,35 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    if(!self.didCheckStartupPrefs) {
+        [self checkShowGroupsDefaultPref];
+        [self checkDefaultRoutePref];
+        self.didCheckStartupPrefs = YES;
+    }
 }
 
--(void) configureCell:(UITableViewCell*)cell withObject:(id)object {
+- (void) checkShowGroupsDefaultPref {
+    if([self.prefsModel readBoolPrefForKey:kShowGroupsByDefaultKey]) {
+        self.tabBarController.selectedIndex = 1;
+    }
+}
+
+- (void) checkDefaultRoutePref {
+    // Check if a default route is set. If so, get the route from the database, set it as the selected object and fire the show map segue
+    NSInteger defaultRouteId = [self.prefsModel readIntPrefForKey:kDefaultRouteIdKey];
+    if(defaultRouteId != kNoDefaultRoute) {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"routeId == %d", defaultRouteId];
+        NSArray *routes = [[DataManager sharedInstance] fetchManagedObjectsForEntity:@"Route" sortKeys:nil predicate:predicate];
+        
+        if([routes count] == 1) {
+            self.selectedRoute = [routes objectAtIndex:0];
+            [self performSegueWithIdentifier:@"ShowMapSegue" sender:nil];
+        }
+    }
+}
+
+- (void) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the code and name of the route as the text on the cell and the route icon
     SPTRoute *route = (SPTRoute*) object;
     
@@ -68,7 +98,7 @@
     cell.showsReorderControl = YES;
 }
 
--(NSString *) cellIdentifierForObject:(id)object {
+- (NSString *) cellIdentifierForObject:(id)object {
     return @"cell";
 }
 
@@ -101,19 +131,15 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // If a cell in the search results table was selected, fire a show map info segue
-    if(tableView == self.searchDisplayController.searchResultsTableView) {
-        [self performSegueWithIdentifier:@"ShowMapSegue" sender:nil];
-    }
+    self.selectedRoute = [self.dataSource objectAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"ShowMapSegue" sender:nil];
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {    
     // Give the selected route to the map controller
     if([segue.identifier isEqualToString:@"ShowMapSegue"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        
         SPTMapViewController *mapController = segue.destinationViewController;
-        [mapController addRoute:[self.dataSource objectAtIndexPath:indexPath]];
+        [mapController addRoute:self.selectedRoute];
     }
 }
 

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SPTRoutesModel.h"
-//#import "SPTPrefsModel.h"
+#import "SPTPrefsModel.h"
 #import "SPTMapViewController.h"
 #import "SPTRoute.h"
 #import "DataSource.h"
