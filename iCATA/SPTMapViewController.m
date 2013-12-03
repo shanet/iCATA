@@ -26,6 +26,7 @@
 #define kMapTypeRoads 0
 #define kMapTypeSatellite 1
 
+#define kToastDuration 2
 #define kAutoRefreshTime 10.0
 #define kShowLoadingViewTime 1
 
@@ -222,6 +223,11 @@
 
 - (void) addBusesOverlays {    
     for(SPTRoute *route in self.routes) {
+        // Show a toast if there are no buses running (and this is the first load)
+        if([route.buses count] == 0 && !self.isRefresh) {
+            [self.view makeToast:[NSString stringWithFormat:@"There are no %@ buses running", route.name] duration:kToastDuration position:@"bottom"];
+        }
+        
         for(SPTRouteBus *routeBus in route.buses) {
             GMSMarker *busMarker = [self makeGMSMarkerAtLatitude:routeBus.latitude Longitude:routeBus.longitude];
             
@@ -238,22 +244,6 @@
             [self.busMarkers addObject:@{@"marker": busMarker, @"bus": routeBus, @"route": route}];
         }
     }
-    
-    // Test code if it's late at night and there's no buses running
-    /*GMSMarker *marker = [self makeGMSMarkerAtLatitude:kStateCollegeLatitude Longitude:kStateCollegeLongitude];
-
-    UIImage *busIcon = [UIImage imageNamed:[NSString stringWithFormat:@"bus_icons/busIcon-%d.png", 39]];
-    busIcon = [SPTImageUtils tintImage:busIcon withColor:((SPTRoute*)[self.routes objectAtIndex:0]).color];
-    busIcon = [SPTImageUtils scaleImage:busIcon toScaleFactor:kBusIconScaleFactor];
-    marker.icon = busIcon;
-    
-    SPTRouteBus *routeBus = [[SPTRouteBus alloc] init];
-    routeBus.speed = 88;
-    routeBus.status = @"On time";
-    routeBus.riderCount = 42;
-    routeBus.direction = @"Outbound";
-    
-    [self.busMarkers addObject:@{@"marker": marker, @"bus": routeBus, @"routeCode": @"GL", @"routeName": @"Green Link"}];*/
 }
 
 - (void) addRoutesStopsOverlays {

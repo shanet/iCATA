@@ -64,6 +64,7 @@
 		25E298BF1833EE6500FC033D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E298BE1833EE6500FC033D /* SystemConfiguration.framework */; };
 		25FC87DD184B55EB0087213B /* SPTPrefsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87DC184B55EB0087213B /* SPTPrefsModel.m */; };
 		25FC87E2184BED680087213B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87E1184BED680087213B /* MBProgressHUD.m */; };
+		25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87E5184D78E00087213B /* Toast+UIView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -147,6 +148,8 @@
 		25FC87DC184B55EB0087213B /* SPTPrefsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTPrefsModel.m; sourceTree = "<group>"; };
 		25FC87E0184BED680087213B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		25FC87E1184BED680087213B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		25FC87E4184D78E00087213B /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
+		25FC87E5184D78E00087213B /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +256,7 @@
 		258F1E36181B4FCE007D3ACE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				25FC87E7184D78E70087213B /* Toast */,
 				25FC87E3184BED8E0087213B /* MBProgressHUD */,
 				25AEDC881846E41C009D5C65 /* bus_icons */,
 				25AEDC7B1846D266009D5C65 /* busDetailBackground.png */,
@@ -333,6 +337,15 @@
 				25FC87E1184BED680087213B /* MBProgressHUD.m */,
 			);
 			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		25FC87E7184D78E70087213B /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				25FC87E4184D78E00087213B /* Toast+UIView.h */,
+				25FC87E5184D78E00087213B /* Toast+UIView.m */,
+			);
+			name = Toast;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,6 +450,7 @@
 				25AEDC921847E914009D5C65 /* SPTDefaultRouteListViewController.m in Sources */,
 				25FC87DD184B55EB0087213B /* SPTPrefsModel.m in Sources */,
 				25FC87E2184BED680087213B /* MBProgressHUD.m in Sources */,
+				25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

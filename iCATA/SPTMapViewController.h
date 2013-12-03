@@ -14,6 +14,7 @@
 #import "SPTBusDetailView.h"
 #import "SPTImageUtils.h"
 #import "MBProgressHUD.h"
+#import "Toast+UIView.h"
 
 @interface SPTMapViewController : UIViewController <GMSMapViewDelegate>
 @property (strong, nonatomic) NSString *groupName;
