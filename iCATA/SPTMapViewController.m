@@ -40,6 +40,7 @@
 
 @property BOOL didFoundApproachingBus;
 @property BOOL isRefresh;
+@property BOOL didShowErrorDialog;
 @property NSInteger numberOfInProgressDownloads;
 
 @property (strong, nonatomic) NSTimer *refreshTimer;
@@ -69,6 +70,7 @@
         
         _didFoundApproachingBus = NO;
         _isRefresh = NO;
+        _didShowErrorDialog = NO;
         _numberOfInProgressDownloads = 0;
         _loadingView = nil;
         
@@ -102,6 +104,7 @@
     
     // Reset the found approaching bus flag whenever the view is shown
     self.didFoundApproachingBus = NO;
+    self.didShowErrorDialog = NO;
         
     [self downloadRouteInfo];
     [self setInitialMapState];
@@ -395,12 +398,18 @@
 }
 
 - (void) routeDownloadError {
+    // If there was a download error, and multiple routes are being displayed, it's annoying to show multiple error dialogs so only show it once
+    if(self.didShowErrorDialog) {
+        return;
+    }
+    
     [self hideLoadingView];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Getting Bus Info"
                                                         message:@"An error occured while fetching bus location info. Try again later."
                                                        delegate:nil cancelButtonTitle:@"Okay :(" otherButtonTitles:nil, nil];
     
     [alert show];
+    self.didShowErrorDialog = YES;
 }
 
 - (IBAction) refreshButtonPressed:(id)sender {
