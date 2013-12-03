@@ -29,6 +29,7 @@
 #define kToastDuration 2
 #define kAutoRefreshTime 10.0
 #define kShowLoadingViewTime 1.5
+#define kApproachingBusThreshold 0.02
 
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
@@ -37,6 +38,7 @@
 
 @property (strong, nonatomic) SPTPrefsModel *prefsModel;
 
+@property BOOL didFoundApproachingBus;
 @property BOOL isRefresh;
 @property NSInteger numberOfInProgressDownloads;
 
@@ -65,6 +67,7 @@
         
         _prefsModel = [[SPTPrefsModel alloc] init];
         
+        _didFoundApproachingBus = NO;
         _isRefresh = NO;
         _numberOfInProgressDownloads = 0;
         _loadingView = nil;
@@ -96,6 +99,9 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    // Reset the found approaching bus flag whenever the view is shown
+    self.didFoundApproachingBus = NO;
         
     [self downloadRouteInfo];
     [self setInitialMapState];
@@ -120,7 +126,7 @@
     self.numberOfInProgressDownloads = [self.routes count];
     
     for(SPTRoute *route in self.routes) {
-        [route downloadRouteStops];
+        [route downloadRouteData];
     }
 }
 
@@ -167,6 +173,8 @@
             ((GMSMarker*)[dict objectForKey:@"marker"]).map = nil;
         }
         [self.busMarkers removeAllObjects];
+        
+        [self checkForApproachingBuses];
     }
 
     [self addBusesOverlays];
@@ -334,6 +342,31 @@
     return marker;
 }
 
+- (void) checkForApproachingBuses {
+    // If an approaching bus was already found, don't spam the user with notifications
+    if(self.didFoundApproachingBus) {
+        return;
+    }
+    
+    CLLocationCoordinate2D currentLocation = self.mapView.myLocation.coordinate;
+    
+    for(SPTRoute *route in self.routes) {
+        for(SPTRouteBus *bus in route.buses) {
+            // Calculate the distance between the user's location and the bus' location
+            float distance = sqrtf(powf(bus.latitude - currentLocation.latitude, 2) + powf(bus.longitude - currentLocation.longitude, 2));
+            
+            if(distance < kApproachingBusThreshold) {
+                UILocalNotification *notifcation = [[UILocalNotification alloc] init];
+                notifcation.alertBody = [NSString stringWithFormat:@"%@ is approaching", route.name];
+                [[UIApplication sharedApplication] scheduleLocalNotification:notifcation];
+                
+                self.didFoundApproachingBus = YES;
+                return;
+            }
+        }
+    }
+}
+
 - (UIView*) mapView:(GMSMapView*)mapView markerInfoWindow:(GMSMarker *)marker {
     for(NSDictionary *dict in self.busMarkers) {
         if([dict objectForKey:@"marker"] == marker) {
@@ -362,6 +395,7 @@
 }
 
 - (void) routeDownloadError {
+    [self hideLoadingView];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error Getting Bus Info"
                                                         message:@"An error occured while fetching bus location info. Try again later."
                                                        delegate:nil cancelButtonTitle:@"Okay :(" otherButtonTitles:nil, nil];

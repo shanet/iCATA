@@ -26,8 +26,7 @@
 
 @property (strong, nonatomic) NSError *downloadError;
 
-- (void) downloadRouteStops;
-- (void) downloadBusLocations;
+- (void) downloadRouteData;
 - (CLLocationCoordinate2D*) getBoundingBoxPoints;
 - (SPTRouteStop*) getClosestStopToCoordinate:(CLLocationCoordinate2D)coordinate;
 @end

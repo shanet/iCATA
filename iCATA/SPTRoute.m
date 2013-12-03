@@ -8,16 +8,13 @@
 
 #import "SPTRoute.h"
 
+#define kHttpOk 200
+
 // This is the new API currently in testing. This IP is expected to change to a domain sometime in the future.
 // This constant will need updated at that time.
 #define kDataUrl "http://50.203.43.19"
 
 @interface SPTRoute ()
-enum XmlType {
-    STOPS = 1,
-    BUSES = 2
-};
-
 @property (strong, nonatomic) NSOperationQueue *downloadQueue;
 @end
 
@@ -52,12 +49,8 @@ enum XmlType {
     return self;
 }
 
-- (void) downloadRouteStops {
+- (void) downloadRouteData {
     [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kDataUrl, [self.id integerValue]]];
-}
-
-- (void) downloadBusLocations {
-    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/map/GetVehicleXml.ashx?RouteId=%@", kDataUrl, self.code]];
 }
 
 - (void) downloadJsonAtUrl:(NSString*) url {
@@ -65,7 +58,7 @@ enum XmlType {
     NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:_url];
     self.downloadQueue = [[NSOperationQueue alloc] init];
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:self.downloadQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if(error) {
+        if(error || ((NSHTTPURLResponse*)response).statusCode != kHttpOk) {
             self.downloadError = error;
             [self performSelectorOnMainThread:@selector(notifyRouteDownloadError) withObject:nil waitUntilDone:NO];
         } else {

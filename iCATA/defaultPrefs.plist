@@ -5,7 +5,7 @@
 	<key>showGroupsByDefault</key>
 	<false/>
 	<key>highlightClosestStop</key>
-	<true/>
+	<false/>
 	<key>defaultRouteId</key>
 	<integer>-1</integer>
 </dict>
