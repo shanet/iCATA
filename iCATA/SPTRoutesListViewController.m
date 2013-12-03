@@ -47,6 +47,8 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
+    [self.tableView registerNib:[UINib nibWithNibName:@"RouteCell" bundle:nil] forCellReuseIdentifier:[self cellIdentifierForObject:nil]];
+    
     self.tableView.dataSource = self.dataSource;
     self.dataSource.tableView = self.tableView;
     
@@ -87,19 +89,25 @@
     }
 }
 
-- (void) configureCell:(UITableViewCell*)cell withObject:(id)object {
+- (UITableViewCell*) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the code and name of the route as the text on the cell and the route icon
     SPTRoute *route = (SPTRoute*) object;
     
-    ((UILabel*)[cell viewWithTag:1]).text = route.code;
-    ((UILabel*)[cell viewWithTag:2]).text = route.name;
-    ((UIImageView*)[cell viewWithTag:3]).image = [UIImage imageWithData:route.icon];
+    if(![cell isKindOfClass:[SPTRouteCell class]]) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"RouteCell" owner:self options:nil] objectAtIndex:0];
+    }
+    
+    ((SPTRouteCell*)cell).routeCodeLabel.text = route.code;
+    ((SPTRouteCell*)cell).routeNameLabel.text = route.name;
+    ((SPTRouteCell*)cell).iconView.image = [UIImage imageWithData:route.icon];
     
     cell.showsReorderControl = YES;
+    
+    return cell;
 }
 
 - (NSString *) cellIdentifierForObject:(id)object {
-    return @"cell";
+    return @"routeCell";
 }
 
 - (UITableViewCellEditingStyle) tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {

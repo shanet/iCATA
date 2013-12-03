@@ -65,6 +65,8 @@
 		25FC87DD184B55EB0087213B /* SPTPrefsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87DC184B55EB0087213B /* SPTPrefsModel.m */; };
 		25FC87E2184BED680087213B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87E1184BED680087213B /* MBProgressHUD.m */; };
 		25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87E5184D78E00087213B /* Toast+UIView.m */; };
+		25FC87EB184D89540087213B /* RouteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FC87EA184D89540087213B /* RouteCell.xib */; };
+		25FC87EE184D899F0087213B /* SPTRouteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87ED184D899F0087213B /* SPTRouteCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -150,6 +152,9 @@
 		25FC87E1184BED680087213B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		25FC87E4184D78E00087213B /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
 		25FC87E5184D78E00087213B /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
+		25FC87EA184D89540087213B /* RouteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RouteCell.xib; path = ../RouteCell.xib; sourceTree = "<group>"; };
+		25FC87EC184D899F0087213B /* SPTRouteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteCell.h; sourceTree = "<group>"; };
+		25FC87ED184D899F0087213B /* SPTRouteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +293,9 @@
 				2518B44B183D7BCD00435ABC /* SPTBusDetailView.h */,
 				2518B44C183D7BCD00435ABC /* SPTBusDetailView.m */,
 				2518B449183D781400435ABC /* BusDetailView.xib */,
+				25FC87EC184D899F0087213B /* SPTRouteCell.h */,
+				25FC87ED184D899F0087213B /* SPTRouteCell.m */,
+				25FC87EA184D89540087213B /* RouteCell.xib */,
 				258F1E47181B4FCE007D3ACE /* MainStoryboard.storyboard */,
 			);
 			name = Views;
@@ -420,6 +428,7 @@
 				25AEDC7418459E35009D5C65 /* routeIcon@2x.png in Resources */,
 				25AEDC7C1846D266009D5C65 /* busDetailBackground.png in Resources */,
 				25AEDC891846E41D009D5C65 /* bus_icons in Resources */,
+				25FC87EB184D89540087213B /* RouteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,6 +460,7 @@
 				25FC87DD184B55EB0087213B /* SPTPrefsModel.m in Sources */,
 				25FC87E2184BED680087213B /* MBProgressHUD.m in Sources */,
 				25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */,
+				25FC87EE184D899F0087213B /* SPTRouteCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

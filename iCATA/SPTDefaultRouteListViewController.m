@@ -41,13 +41,15 @@
 }
 
 
--(void) configureCell:(UITableViewCell*)cell withObject:(id)object {
+-(UITableViewCell*) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the code and name of the route as the text on the cell and the route icon
     SPTRoute *route = (SPTRoute*) object;
     
     ((UILabel*)[cell viewWithTag:1]).text = route.code;
     ((UILabel*)[cell viewWithTag:2]).text = route.name;
     ((UIImageView*)[cell viewWithTag:3]).image = [UIImage imageWithData:route.icon];
+    
+    return cell;
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {

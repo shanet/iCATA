@@ -14,13 +14,13 @@
 @protocol DataSourceCellConfigurer <NSObject>
 
 // customize the appearance of the tableview cell using the managed object's data
--(void)configureCell:(UITableViewCell*)cell withObject:(id)object;
+-(UITableViewCell*) configureCell:(UITableViewCell*)cell withObject:(id)object;
 
 // provide the cell identifier for the given managed object
--(NSString *)cellIdentifierForObject:(id)object;
+-(NSString *) cellIdentifierForObject:(id)object;
 
 // provide the method to see whether or not the user can edit the cell at the given index path
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath;
+- (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath;
 
 - (BOOL) tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath;
 

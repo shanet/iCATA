@@ -10,6 +10,7 @@
 #import "DataManagerDelegate.h"
 #import "DataSourceCellConfigurer.h"
 #import "SPTRoute.h"
+#import "SPTRouteCell.h"
 #import <CoreData/CoreData.h>
 
 @interface DataSource () <NSFetchedResultsControllerDelegate>
@@ -102,17 +103,17 @@ dataManagerDelegate:(id<DataManagerDelegate>)dataManagerDelegate {
     // get the object for this index path
     NSManagedObject *managedObject = [self.fetchedResultsController objectAtIndexPath:indexPath];
     // ask delegate for the cell identifier for this object
-    NSString *CellIdentifier = [self.delegate cellIdentifierForObject:managedObject];
+    NSString *cellIdentifier = [self.delegate cellIdentifierForObject:managedObject];
     // get the cell
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     // Just in case Storyboards not in use
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
     // ask delegate to configure the cell
-    [self.delegate configureCell:cell withObject:managedObject];
+    cell = [self.delegate configureCell:cell withObject:managedObject];
     
     return cell;
 }

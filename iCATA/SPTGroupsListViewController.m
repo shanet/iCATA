@@ -56,10 +56,14 @@
     [self.tableView reloadData];
 }
 
--(void) configureCell:(UITableViewCell*)cell withObject:(id)object {
+-(UITableViewCell*) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the text of the cell as the group name
     SPTRouteGroup *group = (SPTRouteGroup*) object;
     cell.textLabel.text = group.name;
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    return cell;
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {
@@ -97,14 +101,20 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // If a cell in the search results table was selected, fire a show map info segue
     if(tableView == self.searchDisplayController.searchResultsTableView) {
-        [self performSegueWithIdentifier:@"ShowMapSegue" sender:nil];
+        [self performSegueWithIdentifier:@"ShowMapSegue" sender:indexPath];
     }
 }
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Give each route in the selected group to the map controller
     if([segue.identifier isEqualToString:@"ShowMapSegue"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSIndexPath *indexPath;
+        if([sender isKindOfClass:[NSIndexPath class]]) {
+            indexPath = (NSIndexPath*)sender;
+        } else {
+            indexPath = [self.tableView indexPathForSelectedRow];
+        }
+        
         SPTRouteGroup *group = [self.dataSource objectAtIndexPath:indexPath];
         
         SPTMapViewController *mapController = segue.destinationViewController;

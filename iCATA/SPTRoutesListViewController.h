@@ -11,6 +11,7 @@
 #import "SPTPrefsModel.h"
 #import "SPTMapViewController.h"
 #import "SPTRoute.h"
+#import "SPTRouteCell.h"
 #import "DataSource.h"
 #import "DataSourceCellConfigurer.h"
 

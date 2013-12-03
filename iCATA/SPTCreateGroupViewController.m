@@ -50,7 +50,7 @@
     [super viewWillAppear:animated];
 }
 
--(void) configureCell:(UITableViewCell*)cell withObject:(id)object {
+-(UITableViewCell*) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the code and name of the route as the text on the cell and the route icon
     SPTRoute *route = (SPTRoute*) object;
     
@@ -64,6 +64,8 @@
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
+    
+    return cell;
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {
