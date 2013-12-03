@@ -27,6 +27,7 @@
 #define kMapTypeSatellite 1
 
 #define kAutoRefreshTime 10.0
+#define kShowLoadingViewTime 1
 
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
@@ -37,10 +38,12 @@
 
 @property BOOL isRefresh;
 @property NSInteger numberOfInProgressDownloads;
-@property (strong, nonatomic) NSTimer *refreshTimer;
 
+@property (strong, nonatomic) NSTimer *refreshTimer;
+@property (strong, nonatomic) NSTimer *loadingViewTimer;
+
+@property (strong, nonatomic) MBProgressHUD *loadingView;
 @property (weak, nonatomic) IBOutlet GMSMapView *mapView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIconView;
 
 - (IBAction)refreshButtonPressed:(id)sender;
 - (IBAction)mapTypeChanged:(id)sender;
@@ -63,7 +66,10 @@
         
         _isRefresh = NO;
         _numberOfInProgressDownloads = 0;
+        _loadingView = nil;
+        
         _refreshTimer = nil;
+        _loadingViewTimer = nil;
     }
     
     return self;
@@ -89,7 +95,7 @@
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+        
     [self downloadRouteInfo];
     [self setInitialMapState];
 }
@@ -109,7 +115,7 @@
 }
 
 - (void) downloadRouteInfo {
-    [self.loadingIconView startAnimating];
+    [self startLoadingViewTimer];
     self.numberOfInProgressDownloads = [self.routes count];
     
     for(SPTRoute *route in self.routes) {
@@ -148,8 +154,6 @@
         return;
     }
     
-    [self.loadingIconView stopAnimating];
-
     // Only add the route stops and path if this is the first load (not a refresh)
     if(!self.isRefresh) {
         [self addRoutesStopsOverlays];
@@ -165,6 +169,8 @@
     }
 
     [self addBusesOverlays];
+    
+    [self hideLoadingView];
     [self startRefreshTimer];
 }
 
@@ -392,6 +398,22 @@
 - (void) cancelRefreshTimer {
     [self.refreshTimer invalidate];
     self.refreshTimer = nil;
+}
+
+- (void) startLoadingViewTimer {
+    // Show the loading view after a given time. Normally getting route data from the server is pretty fast, but in the event of a slow network
+    // connection, show a loading icon to let the user know something is happening
+    self.loadingViewTimer = [NSTimer scheduledTimerWithTimeInterval:kShowLoadingViewTime target:self selector:@selector(showLoadingView) userInfo:nil repeats:NO];
+}
+
+- (void) hideLoadingView {
+    [self.loadingView hide:YES];
+    [self.loadingViewTimer invalidate];
+    self.loadingViewTimer = nil;
+}
+
+- (void) showLoadingView {
+    self.loadingView = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 }
 
 + (NSInteger) getNearestMultipleOfNumber:(NSInteger)number ToFactor:(NSInteger)factor {
