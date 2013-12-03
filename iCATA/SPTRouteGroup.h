@@ -7,9 +7,8 @@
 //
 
 #import <CoreData/CoreData.h>
+#import "SPTRouteParent.h"
 
-@interface SPTRouteGroup : NSManagedObject
-@property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSNumber *weight;
+@interface SPTRouteGroup : SPTRouteParent
 @property (strong, nonatomic) NSMutableArray *routes;
 @end

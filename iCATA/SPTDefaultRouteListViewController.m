@@ -26,7 +26,7 @@
         _routesModel = [[SPTRoutesModel alloc] init];
         _prefsModel = [[ SPTPrefsModel alloc] init];
         
-        _dataSource = [[DataSource alloc] initForEntity:@"Route" sortKeys:@[@"type", @"weight"] predicate:nil sectionNameKeyPath:@"type" dataManagerDelegate:_routesModel];
+        _dataSource = [[DataSource alloc] initForEntity:@"Parent" sortKeys:@[@"type", @"weight"] predicate:nil sectionNameKeyPath:@"type" dataManagerDelegate:_routesModel];
         _dataSource.delegate = self;
     }
     
@@ -43,17 +43,29 @@
 
 -(UITableViewCell*) configureCell:(UITableViewCell*)cell withObject:(id)object {
     // Set the code and name of the route as the text on the cell and the route icon
-    SPTRoute *route = (SPTRoute*) object;
     
-    ((UILabel*)[cell viewWithTag:1]).text = route.code;
-    ((UILabel*)[cell viewWithTag:2]).text = route.name;
-    ((UIImageView*)[cell viewWithTag:3]).image = [UIImage imageWithData:route.icon];
+    if([object isKindOfClass:[SPTRoute class]]) {
+        SPTRoute *route = (SPTRoute*)object;
+        ((UILabel*)[cell viewWithTag:1]).text = route.code;
+        ((UILabel*)[cell viewWithTag:2]).text = route.name;
+        ((UIImageView*)[cell viewWithTag:3]).image = [UIImage imageWithData:route.icon];
+    } else if([object isKindOfClass:[SPTRouteGroup class]]) {
+        SPTRouteGroup *group = (SPTRouteGroup*)object;
+        cell.textLabel.text = group.name;
+        cell.textLabel.font = [UIFont fontWithName:@"System" size:17];
+    }
     
     return cell;
 }
 
 -(NSString *) cellIdentifierForObject:(id)object {
-    return @"cell";
+    if([object isKindOfClass:[SPTRoute class]]) {
+        return @"defaultRouteCell";
+    } else if([object isKindOfClass:[SPTRouteGroup class]]) {
+        return @"defualtGroupCell";
+    } else {
+        return nil;
+    }
 }
 
 - (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -62,8 +74,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Save the route ID in the prefs on cell selection
-    SPTRoute *selectedRoute = [self.dataSource objectAtIndexPath:indexPath];
-    [self.prefsModel writeIntPref:[selectedRoute.routeId integerValue] ForKey:kDefaultRouteIdKey];
+    SPTRouteParent *selected = [self.dataSource objectAtIndexPath:indexPath];
+    [self.prefsModel writeIntPref:[selected.id integerValue] ForKey:kDefaultRouteIdKey];
     
     // Since a group cannot be selected as default, when a route is selected as default, turn off the show groups by default pref
     [self.prefsModel writeBoolPref:NO ForKey:kShowGroupsByDefaultKey];

@@ -12,19 +12,11 @@
 #import "SPTRouteStop.h"
 #import "SPTRouteBus.h"
 #import "SPTImageUtils.h"
-
-enum RouteType {
-  CAMPUS = 1,
-  COMMUNITY = 2
-};
-    
-@interface SPTRoute : NSManagedObject <NSXMLParserDelegate>
-@property (strong, nonatomic) NSString *name;
+#import "SPTRouteParent.h"
+ 
+@interface SPTRoute : SPTRouteParent
 @property (strong, nonatomic) NSString *code;
-@property (strong, nonatomic) NSNumber *routeId;
 @property (strong, nonatomic) NSString *hexColor;
-@property (strong, nonatomic) NSNumber *type;
-@property (strong, nonatomic) NSNumber *weight;
 @property (strong, nonatomic) NSData *icon;
 
 @property (strong, nonatomic) NSMutableArray *stops;
@@ -34,7 +26,6 @@ enum RouteType {
 
 @property (strong, nonatomic) NSError *downloadError;
 
-- (NSString*) getRouteTypeName;
 - (void) downloadRouteStops;
 - (void) downloadBusLocations;
 - (CLLocationCoordinate2D*) getBoundingBoxPoints;

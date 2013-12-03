@@ -49,12 +49,17 @@ NSString* const kNoDefaultRouteText = @"None set";
         self.defaultRouteLabel.text = kNoDefaultRouteText;
     } else {
         // Fetch the route with the given route ID from the database and set its name as the default route label text
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"routeId == %d", defaultRouteId];
-        NSArray *routes = [[DataManager sharedInstance] fetchManagedObjectsForEntity:@"Route" sortKeys:nil predicate:predicate];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %d", defaultRouteId];
+        NSArray *routes = [[DataManager sharedInstance] fetchManagedObjectsForEntity:@"Parent" sortKeys:nil predicate:predicate];
         
         if([routes count] == 1) {
-            SPTRoute *selectedRoute = [routes objectAtIndex:0];
-            self.defaultRouteLabel.text = [NSString stringWithFormat:@"%@ - %@", selectedRoute.code, selectedRoute.name];
+            SPTRouteParent *selectedRoute = [routes objectAtIndex:0];
+            if([selectedRoute isKindOfClass:[SPTRoute class]]) {
+                self.defaultRouteLabel.text = [NSString stringWithFormat:@"%@ - %@", ((SPTRoute*)selectedRoute).code, selectedRoute.name];
+            } else if([selectedRoute isKindOfClass:[SPTRouteGroup class]]) {
+                self.defaultRouteLabel.text = [NSString stringWithFormat:@"%@ group", selectedRoute.name];
+
+            }
         }
     }
 }

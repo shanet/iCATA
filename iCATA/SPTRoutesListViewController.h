@@ -10,6 +10,7 @@
 #import "SPTRoutesModel.h"
 #import "SPTPrefsModel.h"
 #import "SPTMapViewController.h"
+#import "SPTRouteParent.h"
 #import "SPTRoute.h"
 #import "SPTRouteCell.h"
 #import "DataSource.h"

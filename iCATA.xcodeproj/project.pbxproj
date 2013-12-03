@@ -67,6 +67,7 @@
 		25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87E5184D78E00087213B /* Toast+UIView.m */; };
 		25FC87EB184D89540087213B /* RouteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FC87EA184D89540087213B /* RouteCell.xib */; };
 		25FC87EE184D899F0087213B /* SPTRouteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87ED184D899F0087213B /* SPTRouteCell.m */; };
+		25FC87F1184DA9AB0087213B /* SPTRouteParent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87F0184DA9AB0087213B /* SPTRouteParent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +156,8 @@
 		25FC87EA184D89540087213B /* RouteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RouteCell.xib; path = ../RouteCell.xib; sourceTree = "<group>"; };
 		25FC87EC184D899F0087213B /* SPTRouteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteCell.h; sourceTree = "<group>"; };
 		25FC87ED184D899F0087213B /* SPTRouteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteCell.m; sourceTree = "<group>"; };
+		25FC87EF184DA9AB0087213B /* SPTRouteParent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteParent.h; sourceTree = "<group>"; };
+		25FC87F0184DA9AB0087213B /* SPTRouteParent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteParent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +195,8 @@
 				2518B45C183F020200435ABC /* SPTRouteGroup.m */,
 				25E2988A1833196700FC033D /* SPTRoute.h */,
 				25E2988B1833196700FC033D /* SPTRoute.m */,
+				25FC87EF184DA9AB0087213B /* SPTRouteParent.h */,
+				25FC87F0184DA9AB0087213B /* SPTRouteParent.m */,
 				2518B4421839D20D00435ABC /* SPTRouteBus.h */,
 				2518B4431839D20D00435ABC /* SPTRouteBus.m */,
 				25E298A318335E1B00FC033D /* SPTRouteStop.h */,
@@ -461,6 +466,7 @@
 				25FC87E2184BED680087213B /* MBProgressHUD.m in Sources */,
 				25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */,
 				25FC87EE184D899F0087213B /* SPTRouteCell.m in Sources */,
+				25FC87F1184DA9AB0087213B /* SPTRouteParent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

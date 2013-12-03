@@ -16,7 +16,7 @@
 @property (strong, nonatomic) SPTRoutesModel *routesModel;
 @property (strong, nonatomic) SPTPrefsModel *prefsModel;
 @property (strong, nonatomic) DataSource *dataSource;
-@property (strong, nonatomic) SPTRoute *selectedRoute;
+@property (strong, nonatomic) SPTRouteParent *selectedRoute;
 @property BOOL didCheckStartupPrefs;
 
 @property (strong, nonatomic) NSString *searchString;
@@ -79,8 +79,8 @@
     // Check if a default route is set. If so, get the route from the database, set it as the selected object and fire the show map segue
     NSInteger defaultRouteId = [self.prefsModel readIntPrefForKey:kDefaultRouteIdKey];
     if(defaultRouteId != kNoDefaultRoute) {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"routeId == %d", defaultRouteId];
-        NSArray *routes = [[DataManager sharedInstance] fetchManagedObjectsForEntity:@"Route" sortKeys:nil predicate:predicate];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %d", defaultRouteId];
+        NSArray *routes = [[DataManager sharedInstance] fetchManagedObjectsForEntity:@"Parent" sortKeys:nil predicate:predicate];
         
         if([routes count] == 1) {
             self.selectedRoute = [routes objectAtIndex:0];
@@ -147,7 +147,16 @@
     // Give the selected route to the map controller
     if([segue.identifier isEqualToString:@"ShowMapSegue"]) {
         SPTMapViewController *mapController = segue.destinationViewController;
-        [mapController addRoute:self.selectedRoute];
+        
+        // The default route/group is handled by this segue so the selected route may be a group
+        if([self.selectedRoute isKindOfClass:[SPTRoute class]]) {
+            [mapController addRoute:(SPTRoute*)self.selectedRoute];
+        } else if([self.selectedRoute isKindOfClass:[SPTRouteGroup class]]) {
+            mapController.groupName = self.selectedRoute.name;
+            for(SPTRoute *route in ((SPTRouteGroup*)self.selectedRoute).routes) {
+                [mapController addRoute:route];
+            }
+        }
     }
 }
 

@@ -8,6 +8,8 @@
 
 #import "SPTRoutesModel.h"
 
+#define kGroupsStartingId 1000
+
 @interface SPTRoutesModel()
 @property (strong, nonatomic) NSMutableArray *routes;
 @end
@@ -45,7 +47,7 @@
         
         route.name = [dict objectForKey:@"name"];
         route.code = [dict objectForKey:@"code"];
-        route.routeId = [dict objectForKey:@"routeId"];
+        route.id = [dict objectForKey:@"routeId"];
         route.hexColor = [dict objectForKey:@"color"];
         route.type = [dict objectForKey:@"type"];
         route.weight = [dict objectForKey:@"weight"];
@@ -63,10 +65,13 @@
     NSString *groupsPlistPath = [[NSBundle mainBundle]pathForResource:@"groups" ofType:@"plist"];
     NSArray *groupsPlist = [NSArray arrayWithContentsOfFile:groupsPlistPath];
     
+    NSInteger currentId = kGroupsStartingId;
     for(NSDictionary *dict in groupsPlist) {
         SPTRouteGroup *group = [NSEntityDescription insertNewObjectForEntityForName:@"Group" inManagedObjectContext:dataManager.managedObjectContext];
         
         group.name = [dict objectForKey:@"name"];
+        group.id = [NSNumber numberWithInteger:currentId];
+        group.type = GROUP;
         group.weight = [dict objectForKey:@"weight"];
         
         for(NSNumber *routeId in [dict objectForKey:@"routes"]) {
@@ -75,12 +80,14 @@
                 [group.routes addObject:route];
             }
         }
+        
+        currentId++;
     }
 }
 
 - (SPTRoute*) getRouteWithId:(NSNumber*)routeId {
     for(SPTRoute *route in self.routes) {
-        if([routeId isEqualToNumber:route.routeId]) {
+        if([routeId isEqualToNumber:route.id]) {
             return route;
         }
     }

@@ -9,7 +9,7 @@
 #import "DataManager.h"
 #import "DataManagerDelegate.h"
 #import "DataSourceCellConfigurer.h"
-#import "SPTRoute.h"
+#import "SPTRouteParent.h"
 #import "SPTRouteCell.h"
 #import <CoreData/CoreData.h>
 
@@ -121,9 +121,9 @@ dataManagerDelegate:(id<DataManagerDelegate>)dataManagerDelegate {
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     // Make the section name whatever route type the first object in the section is if the objects are routes
     id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
-    if([[sectionInfo objects] count] > 0 && [[[sectionInfo objects] objectAtIndex:0] isKindOfClass:[SPTRoute class]]) {
-        SPTRoute *route = [[sectionInfo objects] objectAtIndex:0];
-        return [route getRouteTypeName];
+    if([[sectionInfo objects] count] > 0 && [[[sectionInfo objects] objectAtIndex:0] isKindOfClass:[SPTRouteParent class]]) {
+        SPTRouteParent *routeParent = [[sectionInfo objects] objectAtIndex:0];
+        return [routeParent getTypeName];
     } else {
         return [sectionInfo name];
     }

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SPTPrefsModel.h"
 #import "SPTRoute.h"
+#import "SPTRouteGroup.h"
+#import "SPTRouteParent.h"
 #import "DataManager.h"
 
 @interface SPTSettingsViewController : UITableViewController

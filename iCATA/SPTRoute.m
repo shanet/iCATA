@@ -25,7 +25,6 @@ enum XmlType {
 
 @dynamic name;
 @dynamic code;
-@dynamic routeId;
 @dynamic hexColor;
 @dynamic type;
 @dynamic weight;
@@ -53,12 +52,8 @@ enum XmlType {
     return self;
 }
 
-- (NSString*) getRouteTypeName {
-    return ([self.type integerValue] == CAMPUS ? @"Campus" : @"Community");
-}
-
 - (void) downloadRouteStops {
-    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kDataUrl, [self.routeId integerValue]]];
+    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kDataUrl, [self.id integerValue]]];
 }
 
 - (void) downloadBusLocations {
