@@ -13,7 +13,7 @@
 #define kStateCollegeZoomLevel 13
 #define kMapCameraPadding 20
 
-#define kStopIconScaleFactor 0.025
+#define kStopIconScaleFactor 0.05
 #define kBusIconOffset 0.5
 #define kBusIconScaleFactor 0.6
 #define kHeadingIconScaleFactor 0.1
@@ -28,7 +28,7 @@
 
 #define kToastDuration 2
 #define kAutoRefreshTime 10.0
-#define kShowLoadingViewTime 1
+#define kShowLoadingViewTime 1.5
 
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
