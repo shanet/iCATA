@@ -13,7 +13,7 @@
 #define kStateCollegeZoomLevel 13
 #define kMapCameraPadding 20
 
-#define kStopIconScaleFactor 0.05
+#define kStopIconScaleFactor 0.035
 #define kBusIconOffset 0.5
 #define kBusIconScaleFactor 0.6
 #define kHeadingIconScaleFactor 0.1
@@ -268,6 +268,11 @@
     }
     
     CLLocationCoordinate2D currentLocation = self.mapView.myLocation.coordinate;
+    
+    // If the user's location is (0,0), then the location isn't available so we can't highlight stops
+    if(currentLocation.latitude == 0 && currentLocation.longitude == 0) {
+        return;
+    }
     
     for(SPTRoute *route in self.routes) {
         SPTRouteStop *closestStop = [route getClosestStopToCoordinate:currentLocation];
