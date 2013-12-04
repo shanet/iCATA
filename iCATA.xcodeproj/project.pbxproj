@@ -68,6 +68,7 @@
 		25FC87EB184D89540087213B /* RouteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25FC87EA184D89540087213B /* RouteCell.xib */; };
 		25FC87EE184D899F0087213B /* SPTRouteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87ED184D899F0087213B /* SPTRouteCell.m */; };
 		25FC87F1184DA9AB0087213B /* SPTRouteParent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87F0184DA9AB0087213B /* SPTRouteParent.m */; };
+		25FC87F4184F9A0F0087213B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87F3184F9A0F0087213B /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +159,8 @@
 		25FC87ED184D899F0087213B /* SPTRouteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteCell.m; sourceTree = "<group>"; };
 		25FC87EF184DA9AB0087213B /* SPTRouteParent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTRouteParent.h; sourceTree = "<group>"; };
 		25FC87F0184DA9AB0087213B /* SPTRouteParent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTRouteParent.m; sourceTree = "<group>"; };
+		25FC87F2184F9A0E0087213B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		25FC87F3184F9A0F0087213B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -266,6 +269,7 @@
 		258F1E36181B4FCE007D3ACE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				25FC87F5184F9A140087213B /* Reachability */,
 				25FC87E7184D78E70087213B /* Toast */,
 				25FC87E3184BED8E0087213B /* MBProgressHUD */,
 				25AEDC881846E41C009D5C65 /* bus_icons */,
@@ -359,6 +363,15 @@
 				25FC87E5184D78E00087213B /* Toast+UIView.m */,
 			);
 			name = Toast;
+			sourceTree = "<group>";
+		};
+		25FC87F5184F9A140087213B /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				25FC87F2184F9A0E0087213B /* Reachability.h */,
+				25FC87F3184F9A0F0087213B /* Reachability.m */,
+			);
+			name = Reachability;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,6 +480,7 @@
 				25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */,
 				25FC87EE184D899F0087213B /* SPTRouteCell.m in Sources */,
 				25FC87F1184DA9AB0087213B /* SPTRouteParent.m in Sources */,
+				25FC87F4184F9A0F0087213B /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
