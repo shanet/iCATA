@@ -358,10 +358,15 @@
             // Calculate the distance between the user's location and the bus' location
             float distance = sqrtf(powf(bus.latitude - currentLocation.latitude, 2) + powf(bus.longitude - currentLocation.longitude, 2));
             
+            // If within the approaching threshold, show a toast and a local notification
             if(distance < kApproachingBusThreshold) {
+                NSString *approachingBusString = [NSString stringWithFormat:@"%@ is approaching", route.name];
+                
                 UILocalNotification *notifcation = [[UILocalNotification alloc] init];
-                notifcation.alertBody = [NSString stringWithFormat:@"%@ is approaching", route.name];
+                notifcation.alertBody = approachingBusString;
                 [[UIApplication sharedApplication] scheduleLocalNotification:notifcation];
+                
+                [self.view makeToast:approachingBusString duration:kToastDuration position:@"bottom"];
                 
                 self.didFoundApproachingBus = YES;
                 return;
