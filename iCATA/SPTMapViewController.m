@@ -106,8 +106,8 @@
     self.didFoundApproachingBus = NO;
     self.didShowErrorDialog = NO;
         
-    [self downloadRouteInfo];
     [self setInitialMapState];
+    [self downloadRouteInfo];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -335,13 +335,15 @@
 - (GMSMarker*) makeGMSMarkerAtLatitude:(float)latitude Longitude:(float)longitude {
     GMSMarker *marker = [[GMSMarker alloc] init];
     marker.position = CLLocationCoordinate2DMake(latitude, longitude);
-    marker.map = self.mapView;
     
     // Only show the somewhat-annoying animation on the first load (not a refresh)
     if(!self.isRefresh) {
         marker.appearAnimation = kGMSMarkerAnimationPop;
     }
-    
+
+    // Add the marker to the map after the animation type is defined, otherwise the animation won't show
+    marker.map = self.mapView;
+
     return marker;
 }
 
