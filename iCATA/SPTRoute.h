@@ -13,8 +13,14 @@
 #import "SPTRouteBus.h"
 #import "SPTImageUtils.h"
 #import "SPTRouteParent.h"
+#import "SPTServerApiModel.h"
+
+@protocol SPTRouteDownloadDelegate <NSObject>
+- (void) routeDownloadComplete;
+- (void) routeDownloadError:(NSError*)error;
+@end
  
-@interface SPTRoute : SPTRouteParent
+@interface SPTRoute : SPTRouteParent <SPTDownloadDelegate>
 @property (strong, nonatomic) NSString *code;
 @property (strong, nonatomic) NSString *hexColor;
 @property (strong, nonatomic) NSData *icon;
@@ -24,7 +30,8 @@
 @property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) KMLRoot *routeKml;
 
-@property (strong, nonatomic) NSError *downloadError;
+@property (strong, nonatomic) SPTServerApiModel *serverApiModel;
+@property (strong, nonatomic) id<SPTRouteDownloadDelegate> delegate;
 
 - (void) downloadRouteData;
 - (CLLocationCoordinate2D*) getBoundingBoxPoints;

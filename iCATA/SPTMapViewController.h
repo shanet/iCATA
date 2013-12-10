@@ -17,7 +17,7 @@
 #import "MBProgressHUD.h"
 #import "Toast+UIView.h"
 
-@interface SPTMapViewController : UIViewController <GMSMapViewDelegate>
+@interface SPTMapViewController : UIViewController <GMSMapViewDelegate, SPTRouteDownloadDelegate>
 @property (strong, nonatomic) NSString *groupName;
 
 - (void) addRoute:(SPTRoute*)route;

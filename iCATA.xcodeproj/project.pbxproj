@@ -40,6 +40,7 @@
 		25AEDC921847E914009D5C65 /* SPTDefaultRouteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AEDC911847E914009D5C65 /* SPTDefaultRouteListViewController.m */; };
 		25D6BBD818567DF20099A49D /* StopDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D6BBD718567DF20099A49D /* StopDetailView.xib */; };
 		25D6BBDD18567EEA0099A49D /* SPTStopDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D6BBDC18567EEA0099A49D /* SPTStopDetailView.m */; };
+		25D6BBE01856935C0099A49D /* SPTServerApiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D6BBDF1856935C0099A49D /* SPTServerApiModel.m */; };
 		25E2988F183319B500FC033D /* defaultPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25E2988E183319B500FC033D /* defaultPrefs.plist */; };
 		25E2989018331C0900FC033D /* SPTRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298871833194B00FC033D /* SPTRoutesModel.m */; };
 		25E2989118331C0D00FC033D /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298801833192D00FC033D /* DataManager.m */; };
@@ -120,6 +121,8 @@
 		25D6BBD718567DF20099A49D /* StopDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StopDetailView.xib; sourceTree = "<group>"; };
 		25D6BBDB18567EEA0099A49D /* SPTStopDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTStopDetailView.h; sourceTree = "<group>"; };
 		25D6BBDC18567EEA0099A49D /* SPTStopDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTStopDetailView.m; sourceTree = "<group>"; };
+		25D6BBDE1856935C0099A49D /* SPTServerApiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTServerApiModel.h; sourceTree = "<group>"; };
+		25D6BBDF1856935C0099A49D /* SPTServerApiModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTServerApiModel.m; sourceTree = "<group>"; };
 		25E2987F1833192D00FC033D /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		25E298801833192D00FC033D /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		25E298811833192D00FC033D /* DataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
@@ -340,6 +343,8 @@
 		25E2987E183318F400FC033D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				25D6BBDE1856935C0099A49D /* SPTServerApiModel.h */,
+				25D6BBDF1856935C0099A49D /* SPTServerApiModel.m */,
 				25E298861833194B00FC033D /* SPTRoutesModel.h */,
 				25E298871833194B00FC033D /* SPTRoutesModel.m */,
 				25FC87DB184B55EB0087213B /* SPTPrefsModel.h */,
@@ -491,6 +496,7 @@
 				25FC87F1184DA9AB0087213B /* SPTRouteParent.m in Sources */,
 				25FC87F4184F9A0F0087213B /* Reachability.m in Sources */,
 				25D6BBDD18567EEA0099A49D /* SPTStopDetailView.m in Sources */,
+				25D6BBE01856935C0099A49D /* SPTServerApiModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

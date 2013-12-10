@@ -129,6 +129,7 @@
     self.numberOfInProgressDownloads = [self.routes count];
     
     for(SPTRoute *route in self.routes) {
+        route.delegate = self;
         [route downloadRouteData];
     }
 }
@@ -157,7 +158,7 @@
     self.mapView.settings.myLocationButton = YES;
 }
 
-- (void) routeDownloadCompleted {
+- (void) routeDownloadComplete {
     // Only draw to the map when all the downloads finish
     self.numberOfInProgressDownloads--;
     if(self.numberOfInProgressDownloads != 0) {
@@ -436,7 +437,7 @@
     }
 }
 
-- (void) routeDownloadError {
+- (void) routeDownloadError:(NSError*)error {
     // If there was a download error, and multiple routes are being displayed, it's annoying to show multiple error dialogs so only show it once
     if(self.didShowErrorDialog) {
         return;

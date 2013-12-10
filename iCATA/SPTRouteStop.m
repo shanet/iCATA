@@ -17,6 +17,7 @@
         _latitude = [[dict objectForKey:@"Latitude"] floatValue];
         _longitude = [[dict objectForKey:@"Longitude"] floatValue];
         _name = [dict objectForKey:@"Name"];
+        _stopId = [[dict objectForKey:@"StopId"] integerValue];
     }
     
     return self;

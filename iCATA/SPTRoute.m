@@ -8,14 +8,8 @@
 
 #import "SPTRoute.h"
 
-#define kHttpOk 200
-
-// This is the new API currently in testing. This IP is expected to change to a domain sometime in the future.
-// This constant will need updated at that time.
-#define kDataUrl "http://50.203.43.19"
-
-@interface SPTRoute ()
-@property (strong, nonatomic) NSOperationQueue *downloadQueue;
+@interface SPTRoute()
+@property enum DownloadType downloadType;
 @end
 
 @implementation SPTRoute
@@ -30,9 +24,9 @@
 @synthesize stops;
 @synthesize buses;
 @synthesize color;
-@synthesize downloadQueue;
 @synthesize routeKml;
-@synthesize downloadError;
+@synthesize serverApiModel;
+@synthesize delegate;
 
 - (id) initWithEntity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
     self = [super initWithEntity:entity insertIntoManagedObjectContext:context];
@@ -41,30 +35,27 @@
         self.stops = [[NSMutableArray alloc] init];
         self.buses = [[NSMutableArray alloc] init];
         self.color = nil;
-        self.downloadQueue = nil;
         self.routeKml = nil;
-        self.downloadError = nil;
+        
+        self.serverApiModel = [[SPTServerApiModel alloc] init];
+        self.serverApiModel.delegate = self;
+        self.delegate = nil;
     }
     
     return self;
 }
 
 - (void) downloadRouteData {
-    [self downloadJsonAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kDataUrl, [self.id integerValue]]];
+    [self.serverApiModel downloadDataForRoute:[self.id integerValue]];
 }
 
-- (void) downloadJsonAtUrl:(NSString*) url {
-    NSURL *_url = [NSURL URLWithString:url];
-    NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:_url];
-    self.downloadQueue = [[NSOperationQueue alloc] init];
-    [NSURLConnection sendAsynchronousRequest:urlRequest queue:self.downloadQueue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if(error || ((NSHTTPURLResponse*)response).statusCode != kHttpOk) {
-            self.downloadError = error;
-            [self performSelectorOnMainThread:@selector(notifyRouteDownloadError) withObject:nil waitUntilDone:NO];
-        } else {
-            [self parseJson:data];
-        }
-    }];
+- (void) downloadCompletedWithData:(NSData*)data {
+    [self parseJson:[self.serverApiModel downloadedData]];
+    [self.delegate routeDownloadComplete];
+}
+
+- (void) downloadCompletedWithError:(NSError*)error {
+    [self.delegate routeDownloadError:error];
 }
 
 - (void) parseJson:(NSData*) data {
@@ -75,9 +66,13 @@
     [self parseJsonStops:[json objectForKey:@"Stops"]];
     [self parseJsonBuses:[json objectForKey:@"Vehicles"]];
     
-    [self downloadAndParseRouteKmlAtUrl:[json objectForKey:@"RouteTraceFilename"]];
-    
-    [self performSelectorOnMainThread:@selector(notifyRouteDownloadComplete) withObject:nil waitUntilDone:NO];
+    [self downloadAndParseRouteKmlForFile:[json objectForKey:@"RouteTraceFilename"]];
+}
+
+- (void) downloadAndParseRouteKmlForFile:(NSString*)filename {
+    // It would be nice to download the KML file with the server API model, but the KML parser doesn't like it when it isn't responsible for
+    // pulling the KML file from the server
+    self.routeKml = [KMLParser parseKMLAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"%s/InfoPoint/Resources/Traces/%@", kServerHostname, filename]]];
 }
 
 - (void) parseJsonColor:(NSString*) colorString {
@@ -100,19 +95,6 @@
         SPTRouteBus *routeBus = [[SPTRouteBus alloc] initWithDict:bus];
         [self.buses addObject:routeBus];
     }
-}
-
-- (void) downloadAndParseRouteKmlAtUrl:(NSString*) url {
-    NSURL *_url = [NSURL URLWithString:[NSString stringWithFormat:@"%s/InfoPoint/Resources/Traces/%@", kDataUrl, url]];
-    self.routeKml = [KMLParser parseKMLAtURL:_url];
-}
-
-- (void) notifyRouteDownloadComplete {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteDownloadCompleted" object:self];
-}
-
-- (void) notifyRouteDownloadError {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"RouteDownloadError" object:self];
 }
 
 - (CLLocationCoordinate2D*) getBoundingBoxPoints {
