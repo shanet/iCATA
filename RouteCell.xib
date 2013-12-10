@@ -560,8 +560,8 @@
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<reference key="11.IBUserGuides" ref="0"/>
 				<array key="11.IBViewMetadataConstraints">
-					<reference ref="818686852"/>
 					<reference ref="392316760"/>
+					<reference ref="818686852"/>
 				</array>
 				<boolean value="NO" key="11.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<boolean value="NO" key="11.showNotes"/>
@@ -569,8 +569,8 @@
 				<real value="182" key="12.IBUILabelPreferredMaxLayoutWidthAtFirstLayout"/>
 				<reference key="12.IBUserGuides" ref="0"/>
 				<array key="12.IBViewMetadataConstraints">
-					<reference ref="454981429"/>
 					<reference ref="116185688"/>
+					<reference ref="454981429"/>
 				</array>
 				<boolean value="NO" key="12.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<boolean value="NO" key="12.showNotes"/>

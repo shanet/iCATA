@@ -12,6 +12,7 @@
 #import "SPTPrefsModel.h"
 #import "SPTRoute.h"
 #import "SPTBusDetailView.h"
+#import "SPTStopDetailView.h"
 #import "SPTImageUtils.h"
 #import "MBProgressHUD.h"
 #import "Toast+UIView.h"

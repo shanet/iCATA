@@ -264,10 +264,9 @@
         for(SPTRouteStop *routeStop in route.stops) {
             GMSMarker *stopMarker = [self makeGMSMarkerAtLatitude:routeStop.latitude Longitude:routeStop.longitude];
             stopMarker.icon = stopIcon;
-            stopMarker.title = routeStop.name;
             
             // Keep track of which markers belong to which routes so the closest stop on the route can be updated as the user's location changes
-            [self.stopMarkers addObject:@{@"marker": stopMarker, @"stop": routeStop}];
+            [self.stopMarkers addObject:@{@"marker": stopMarker, @"stop": routeStop, @"route": route}];
         }
     }
 }
@@ -378,6 +377,15 @@
 }
 
 - (UIView*) mapView:(GMSMapView*)mapView markerInfoWindow:(GMSMarker *)marker {
+    UIView *stopView = [self getStopMarkerViewForMarker:marker];
+    if(stopView != nil) {
+        return stopView;
+    }
+    
+    return [self getBusMarkerViewForMarker:marker];
+}
+
+- (UIView*) getBusMarkerViewForMarker:(GMSMarker*)marker {
     for(NSDictionary *dict in self.busMarkers) {
         if([dict objectForKey:@"marker"] == marker) {
             SPTBusDetailView *busDetailView = [[[NSBundle mainBundle] loadNibNamed:@"BusDetailView" owner:self options:nil] objectAtIndex:0];
@@ -402,6 +410,30 @@
     }
     
     return nil;
+}
+
+- (UIView*) getStopMarkerViewForMarker:(GMSMarker*)marker {
+    for(NSDictionary *dict in self.stopMarkers) {
+        if([dict objectForKey:@"marker"] == marker) {
+            SPTStopDetailView *stopDetailView = [[[NSBundle mainBundle] loadNibNamed:@"StopDetailView" owner:self options:nil] objectAtIndex:0];
+            
+            SPTRouteStop *stop = [dict objectForKey:@"stop"];
+            
+            // Put the stop name on the view
+            stopDetailView.stopNameLabel.text = stop.name;            
+
+            return stopDetailView;
+        }
+    }
+    return nil;
+}
+
+- (void) mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
+    for(NSDictionary *dict in self.stopMarkers) {
+        if([dict objectForKey:@"marker"] == marker) {
+            
+        }
+    }
 }
 
 - (void) routeDownloadError {

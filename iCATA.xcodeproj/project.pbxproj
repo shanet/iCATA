@@ -38,6 +38,8 @@
 		25AEDC8C1846EF4D009D5C65 /* SPTImageUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AEDC8B1846EF4D009D5C65 /* SPTImageUtils.m */; };
 		25AEDC8F1847164C009D5C65 /* SPTSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AEDC8E1847164C009D5C65 /* SPTSettingsViewController.m */; };
 		25AEDC921847E914009D5C65 /* SPTDefaultRouteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AEDC911847E914009D5C65 /* SPTDefaultRouteListViewController.m */; };
+		25D6BBD818567DF20099A49D /* StopDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D6BBD718567DF20099A49D /* StopDetailView.xib */; };
+		25D6BBDD18567EEA0099A49D /* SPTStopDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D6BBDC18567EEA0099A49D /* SPTStopDetailView.m */; };
 		25E2988F183319B500FC033D /* defaultPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25E2988E183319B500FC033D /* defaultPrefs.plist */; };
 		25E2989018331C0900FC033D /* SPTRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298871833194B00FC033D /* SPTRoutesModel.m */; };
 		25E2989118331C0D00FC033D /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298801833192D00FC033D /* DataManager.m */; };
@@ -115,6 +117,9 @@
 		25AEDC8E1847164C009D5C65 /* SPTSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTSettingsViewController.m; sourceTree = "<group>"; };
 		25AEDC901847E914009D5C65 /* SPTDefaultRouteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTDefaultRouteListViewController.h; sourceTree = "<group>"; };
 		25AEDC911847E914009D5C65 /* SPTDefaultRouteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTDefaultRouteListViewController.m; sourceTree = "<group>"; };
+		25D6BBD718567DF20099A49D /* StopDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StopDetailView.xib; sourceTree = "<group>"; };
+		25D6BBDB18567EEA0099A49D /* SPTStopDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTStopDetailView.h; sourceTree = "<group>"; };
+		25D6BBDC18567EEA0099A49D /* SPTStopDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTStopDetailView.m; sourceTree = "<group>"; };
 		25E2987F1833192D00FC033D /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		25E298801833192D00FC033D /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		25E298811833192D00FC033D /* DataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
@@ -302,6 +307,9 @@
 				2518B44B183D7BCD00435ABC /* SPTBusDetailView.h */,
 				2518B44C183D7BCD00435ABC /* SPTBusDetailView.m */,
 				2518B449183D781400435ABC /* BusDetailView.xib */,
+				25D6BBDB18567EEA0099A49D /* SPTStopDetailView.h */,
+				25D6BBDC18567EEA0099A49D /* SPTStopDetailView.m */,
+				25D6BBD718567DF20099A49D /* StopDetailView.xib */,
 				25FC87EC184D899F0087213B /* SPTRouteCell.h */,
 				25FC87ED184D899F0087213B /* SPTRouteCell.m */,
 				25FC87EA184D89540087213B /* RouteCell.xib */,
@@ -447,6 +455,7 @@
 				25AEDC7C1846D266009D5C65 /* busDetailBackground.png in Resources */,
 				25AEDC891846E41D009D5C65 /* bus_icons in Resources */,
 				25FC87EB184D89540087213B /* RouteCell.xib in Resources */,
+				25D6BBD818567DF20099A49D /* StopDetailView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -481,6 +490,7 @@
 				25FC87EE184D899F0087213B /* SPTRouteCell.m in Sources */,
 				25FC87F1184DA9AB0087213B /* SPTRouteParent.m in Sources */,
 				25FC87F4184F9A0F0087213B /* Reachability.m in Sources */,
+				25D6BBDD18567EEA0099A49D /* SPTStopDetailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
