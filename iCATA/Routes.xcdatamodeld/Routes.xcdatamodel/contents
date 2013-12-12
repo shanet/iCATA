@@ -17,8 +17,8 @@
         <relationship name="group" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="routes" inverseEntity="Group" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Group" positionX="169" positionY="27" width="128" height="60"/>
-        <element name="Route" positionX="-146" positionY="-63" width="128" height="120"/>
-        <element name="Parent" positionX="160" positionY="192" width="128" height="105"/>
+        <element name="Group" positionX="151" positionY="-63" width="128" height="60"/>
+        <element name="Parent" positionX="18" positionY="-216" width="128" height="105"/>
+        <element name="Route" positionX="-108" positionY="-93" width="128" height="120"/>
     </elements>
 </model>

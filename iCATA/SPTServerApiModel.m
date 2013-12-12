@@ -32,6 +32,10 @@
     [self downloadDataAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/RouteDetails/Get/%d", kServerHostname, routeId]];
 }
 
+- (void) downloadScheduleForStop:(NSInteger)stopId {
+    [self downloadDataAtUrl:[NSString stringWithFormat:@"%s/InfoPoint/rest/StopDepartures/Get/%d", kServerHostname, stopId]];
+}
+
 - (void) downloadDataAtUrl:(NSString*) url {
     NSURL *_url = [NSURL URLWithString:url];
     NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:_url];

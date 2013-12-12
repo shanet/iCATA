@@ -14,5 +14,7 @@
 #import "DataManagerDelegate.h"
 
 @interface SPTRoutesModel : NSObject <DataManagerDelegate>
+- (SPTRoute*) getRouteWithId:(NSNumber*)routeId;
+
 + (void) addGroupToDatabase:(NSDictionary*)dict;
 @end

@@ -11,9 +11,11 @@
 #import <KML/KML.h>
 #import "SPTPrefsModel.h"
 #import "SPTRoute.h"
+#import "SPTRouteStop.h"
 #import "SPTBusDetailView.h"
 #import "SPTStopDetailView.h"
 #import "SPTImageUtils.h"
+#import "SPTStopScheduleViewController.h"
 #import "MBProgressHUD.h"
 #import "Toast+UIView.h"
 

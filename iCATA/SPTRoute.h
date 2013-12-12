@@ -15,6 +15,8 @@
 #import "SPTRouteParent.h"
 #import "SPTServerApiModel.h"
 
+@class SPTRouteStop;
+
 @protocol SPTRouteDownloadDelegate <NSObject>
 - (void) routeDownloadComplete;
 - (void) routeDownloadError:(NSError*)error;
@@ -30,7 +32,6 @@
 @property (strong, nonatomic) UIColor *color;
 @property (strong, nonatomic) KMLRoot *routeKml;
 
-@property (strong, nonatomic) SPTServerApiModel *serverApiModel;
 @property (strong, nonatomic) id<SPTRouteDownloadDelegate> delegate;
 
 - (void) downloadRouteData;

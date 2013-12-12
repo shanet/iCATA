@@ -26,7 +26,7 @@
 #define kMapTypeRoads 0
 #define kMapTypeSatellite 1
 
-#define kToastDuration 2
+#define kToastDuration 2.5
 #define kAutoRefreshTime 10.0
 #define kShowLoadingViewTime 1.5
 #define kApproachingBusThreshold 0.02
@@ -91,6 +91,9 @@
     
     // Ensure that the routes are sorted by weight
     [self sortRoutesArray];
+    
+    [self setInitialMapState];
+    [self downloadRouteInfo];
 }
 
 - (void) sortRoutesArray {
@@ -105,9 +108,6 @@
     // Reset the found approaching bus flag whenever the view is shown
     self.didFoundApproachingBus = NO;
     self.didShowErrorDialog = NO;
-        
-    [self setInitialMapState];
-    [self downloadRouteInfo];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -233,11 +233,13 @@
     [self.mapView animateWithCameraUpdate:cameraUpdate];
 }
 
-- (void) addBusesOverlays {    
+- (void) addBusesOverlays {
+    NSMutableArray *routesWithoutBuses = [[NSMutableArray alloc] init];
+
     for(SPTRoute *route in self.routes) {
         // Show a toast if there are no buses running (and this is the first load)
         if([route.buses count] == 0 && !self.isRefresh) {
-            [self.view makeToast:[NSString stringWithFormat:@"There are no %@ buses running", route.name] duration:kToastDuration position:@"bottom"];
+            [routesWithoutBuses addObject:route.code];
         }
         
         for(SPTRouteBus *routeBus in route.buses) {
@@ -256,6 +258,28 @@
             [self.busMarkers addObject:@{@"marker": busMarker, @"bus": routeBus, @"route": route}];
         }
     }
+    
+    // Show the toast for all routes with no buses
+    if([routesWithoutBuses count] != 0) {
+        [self showNoRunningBusesToast:routesWithoutBuses];
+    }
+}
+
+- (void) showNoRunningBusesToast:(NSArray*)routesWithoutBuses {
+    NSString *toastString = @"";
+    
+    for(NSInteger i=0; i<[routesWithoutBuses count]; i++) {
+        NSString *formatString;
+        if(i == [routesWithoutBuses count]-1) {
+            formatString = @"or %@";
+        } else {
+            formatString = @"%@, ";
+        }
+        
+        toastString = [toastString stringByAppendingString:[NSString stringWithFormat:formatString, [routesWithoutBuses objectAtIndex:i]]];
+    }
+    
+    [self.view makeToast:[NSString stringWithFormat:@"There are no %@ buses running", toastString] duration:kToastDuration position:@"bottom"];
 }
 
 - (void) addRoutesStopsOverlays {
@@ -430,10 +454,22 @@
 }
 
 - (void) mapView:(GMSMapView *)mapView didTapInfoWindowOfMarker:(GMSMarker *)marker {
+    // The window markers in Google Maps are actually images instead of views. This means that any buttons in the
+    // nib the image was created from won't work so use tapping anywhere on the marker as a cue to show the stop
+    // schedule view
     for(NSDictionary *dict in self.stopMarkers) {
         if([dict objectForKey:@"marker"] == marker) {
-            
+            SPTRouteStop *stop = [dict objectForKey:@"stop"];
+            [self performSegueWithIdentifier:@"ShowStopScheduleSegue" sender:stop];
         }
+    }
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Give the selected stop to the stop schedule controller
+    if([segue.identifier isEqualToString:@"ShowStopScheduleSegue"]) {
+        SPTStopScheduleViewController *stopSchedulerController = segue.destinationViewController;
+        stopSchedulerController.stop = (SPTRouteStop*)sender;
     }
 }
 

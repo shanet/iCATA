@@ -23,4 +23,5 @@
 @property (strong, nonatomic) NSError *downloadError;
 
 - (void) downloadDataForRoute:(NSInteger)routeId;
+- (void) downloadScheduleForStop:(NSInteger)stopId;
 @end

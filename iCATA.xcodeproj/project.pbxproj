@@ -41,6 +41,8 @@
 		25D6BBD818567DF20099A49D /* StopDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D6BBD718567DF20099A49D /* StopDetailView.xib */; };
 		25D6BBDD18567EEA0099A49D /* SPTStopDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D6BBDC18567EEA0099A49D /* SPTStopDetailView.m */; };
 		25D6BBE01856935C0099A49D /* SPTServerApiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D6BBDF1856935C0099A49D /* SPTServerApiModel.m */; };
+		25D6BBE31856B6EA0099A49D /* SPTStopScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D6BBE21856B6EA0099A49D /* SPTStopScheduleViewController.m */; };
+		25D6BBE61856BE0A0099A49D /* SPTStopDeparture.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D6BBE51856BE0A0099A49D /* SPTStopDeparture.m */; };
 		25E2988F183319B500FC033D /* defaultPrefs.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25E2988E183319B500FC033D /* defaultPrefs.plist */; };
 		25E2989018331C0900FC033D /* SPTRoutesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298871833194B00FC033D /* SPTRoutesModel.m */; };
 		25E2989118331C0D00FC033D /* DataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E298801833192D00FC033D /* DataManager.m */; };
@@ -123,6 +125,10 @@
 		25D6BBDC18567EEA0099A49D /* SPTStopDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTStopDetailView.m; sourceTree = "<group>"; };
 		25D6BBDE1856935C0099A49D /* SPTServerApiModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTServerApiModel.h; sourceTree = "<group>"; };
 		25D6BBDF1856935C0099A49D /* SPTServerApiModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTServerApiModel.m; sourceTree = "<group>"; };
+		25D6BBE11856B6EA0099A49D /* SPTStopScheduleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTStopScheduleViewController.h; sourceTree = "<group>"; };
+		25D6BBE21856B6EA0099A49D /* SPTStopScheduleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTStopScheduleViewController.m; sourceTree = "<group>"; };
+		25D6BBE41856BE0A0099A49D /* SPTStopDeparture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTStopDeparture.h; sourceTree = "<group>"; };
+		25D6BBE51856BE0A0099A49D /* SPTStopDeparture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTStopDeparture.m; sourceTree = "<group>"; };
 		25E2987F1833192D00FC033D /* DataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
 		25E298801833192D00FC033D /* DataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataManager.m; sourceTree = "<group>"; };
 		25E298811833192D00FC033D /* DataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
@@ -212,6 +218,8 @@
 				2518B4431839D20D00435ABC /* SPTRouteBus.m */,
 				25E298A318335E1B00FC033D /* SPTRouteStop.h */,
 				25E298A418335E1C00FC033D /* SPTRouteStop.m */,
+				25D6BBE41856BE0A0099A49D /* SPTStopDeparture.h */,
+				25D6BBE51856BE0A0099A49D /* SPTStopDeparture.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -324,6 +332,8 @@
 		25E2987D183318EE00FC033D /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				25D6BBE11856B6EA0099A49D /* SPTStopScheduleViewController.h */,
+				25D6BBE21856B6EA0099A49D /* SPTStopScheduleViewController.m */,
 				25E298A01833599300FC033D /* SPTMapViewController.h */,
 				25E298A11833599300FC033D /* SPTMapViewController.m */,
 				25E2988C1833198000FC033D /* SPTRoutesListViewController.h */,
@@ -497,6 +507,8 @@
 				25FC87F4184F9A0F0087213B /* Reachability.m in Sources */,
 				25D6BBDD18567EEA0099A49D /* SPTStopDetailView.m in Sources */,
 				25D6BBE01856935C0099A49D /* SPTServerApiModel.m in Sources */,
+				25D6BBE31856B6EA0099A49D /* SPTStopScheduleViewController.m in Sources */,
+				25D6BBE61856BE0A0099A49D /* SPTStopDeparture.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

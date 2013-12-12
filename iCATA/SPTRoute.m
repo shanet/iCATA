@@ -9,7 +9,7 @@
 #import "SPTRoute.h"
 
 @interface SPTRoute()
-@property enum DownloadType downloadType;
+@property (strong, nonatomic) SPTServerApiModel *serverApiModel;
 @end
 
 @implementation SPTRoute
@@ -50,7 +50,7 @@
 }
 
 - (void) downloadCompletedWithData:(NSData*)data {
-    [self parseJson:[self.serverApiModel downloadedData]];
+    [self parseJson:data];
     [self.delegate routeDownloadComplete];
 }
 
@@ -58,7 +58,7 @@
     [self.delegate routeDownloadError:error];
 }
 
-- (void) parseJson:(NSData*) data {
+- (void) parseJson:(NSData*)data {
     NSError *error;
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
@@ -75,11 +75,11 @@
     self.routeKml = [KMLParser parseKMLAtURL:[NSURL URLWithString:[NSString stringWithFormat:@"%s/InfoPoint/Resources/Traces/%@", kServerHostname, filename]]];
 }
 
-- (void) parseJsonColor:(NSString*) colorString {
+- (void) parseJsonColor:(NSString*)colorString {
     self.color = [SPTImageUtils UIColorFromHexString:colorString];
 }
 
-- (void) parseJsonStops:(NSArray*) jsonStops {
+- (void) parseJsonStops:(NSArray*)jsonStops {
     [self.stops removeAllObjects];
     
     for(NSDictionary *stop in jsonStops) {
@@ -88,7 +88,7 @@
     }
 }
 
-- (void) parseJsonBuses:(NSArray*) jsonBuses {
+- (void) parseJsonBuses:(NSArray*)jsonBuses {
     [self.buses removeAllObjects];
     
     for(NSDictionary *bus in jsonBuses) {
