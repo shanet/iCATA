@@ -270,7 +270,9 @@
     
     for(NSInteger i=0; i<[routesWithoutBuses count]; i++) {
         NSString *formatString;
-        if(i == [routesWithoutBuses count]-1) {
+        if([routesWithoutBuses count] == 1) {
+            formatString = @"%@";
+        } else if(i == [routesWithoutBuses count]-1) {
             formatString = @"or %@";
         } else {
             formatString = @"%@, ";
