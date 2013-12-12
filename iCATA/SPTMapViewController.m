@@ -29,7 +29,7 @@
 #define kToastDuration 2.5
 #define kAutoRefreshTime 10.0
 #define kShowLoadingViewTime 1.5
-#define kApproachingBusThreshold 0.02
+#define kApproachingBusThreshold 0.005
 
 @interface SPTMapViewController ()
 @property (strong, nonatomic) NSMutableArray *busMarkers;
