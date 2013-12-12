@@ -67,6 +67,8 @@
 		25E298BB1833EE5600FC033D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E298BA1833EE5600FC033D /* OpenGLES.framework */; };
 		25E298BD1833EE5F00FC033D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E298BC1833EE5F00FC033D /* QuartzCore.framework */; };
 		25E298BF1833EE6500FC033D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E298BE1833EE6500FC033D /* SystemConfiguration.framework */; };
+		25EB8A5B18598427005FB859 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EB8A5918598427005FB859 /* Icon.png */; };
+		25EB8A5C18598427005FB859 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25EB8A5A18598427005FB859 /* Icon@2x.png */; };
 		25FC87DD184B55EB0087213B /* SPTPrefsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87DC184B55EB0087213B /* SPTPrefsModel.m */; };
 		25FC87E2184BED680087213B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87E1184BED680087213B /* MBProgressHUD.m */; };
 		25FC87E6184D78E10087213B /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FC87E5184D78E00087213B /* Toast+UIView.m */; };
@@ -162,6 +164,10 @@
 		25E298BA1833EE5600FC033D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		25E298BC1833EE5F00FC033D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		25E298BE1833EE6500FC033D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		25EB8A5918598427005FB859 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		25EB8A5A18598427005FB859 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		25EB8A5D18598439005FB859 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		25EB8A5F1859843E005FB859 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		25FC87DB184B55EB0087213B /* SPTPrefsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPTPrefsModel.h; sourceTree = "<group>"; };
 		25FC87DC184B55EB0087213B /* SPTPrefsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPTPrefsModel.m; sourceTree = "<group>"; };
 		25FC87E0184BED680087213B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -227,6 +233,8 @@
 		258F1E23181B4FCE007D3ACE = {
 			isa = PBXGroup;
 			children = (
+				25EB8A5F1859843E005FB859 /* Icon.png */,
+				25EB8A5D18598439005FB859 /* Icon@2x.png */,
 				25E298BE1833EE6500FC033D /* SystemConfiguration.framework */,
 				25E298BC1833EE5F00FC033D /* QuartzCore.framework */,
 				25E298BA1833EE5600FC033D /* OpenGLES.framework */,
@@ -305,6 +313,8 @@
 				258F1E38181B4FCE007D3ACE /* InfoPlist.strings */,
 				258F1E3B181B4FCE007D3ACE /* main.m */,
 				258F1E3D181B4FCE007D3ACE /* iCATA-Prefix.pch */,
+				25EB8A5918598427005FB859 /* Icon.png */,
+				25EB8A5A18598427005FB859 /* Icon@2x.png */,
 				258F1E41181B4FCE007D3ACE /* Default.png */,
 				258F1E43181B4FCE007D3ACE /* Default@2x.png */,
 				258F1E45181B4FCE007D3ACE /* Default-568h@2x.png */,
@@ -471,6 +481,8 @@
 				25AEDC891846E41D009D5C65 /* bus_icons in Resources */,
 				25FC87EB184D89540087213B /* RouteCell.xib in Resources */,
 				25D6BBD818567DF20099A49D /* StopDetailView.xib in Resources */,
+				25EB8A5B18598427005FB859 /* Icon.png in Resources */,
+				25EB8A5C18598427005FB859 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
