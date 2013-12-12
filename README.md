@@ -1,12 +1,11 @@
 iCATA
 =====
 
-### shane tully
-### shanetully.com
+### shane tully / shanetully.com
 
 iCATA is a realtime iOS app for CATA bus locations and schedules. It was created for a school project and is not and will not ever be on the iTunes App Store. In fact, don't expect it to be maintained in the future as the author has no interest in furthing its development.
 
-## Features
+### Features
 
 * Ability to create route groups
 * Highlight stop closest to the user's location
@@ -16,13 +15,13 @@ iCATA is a realtime iOS app for CATA bus locations and schedules. It was created
 * View bus info such as number of people on board, direction, and time by tapping on bus.
 * Show bus schedule for individual stops
 
-## Screenshots
+### Screenshots
 
-![alt tag](https://raw.github.com/shanet/iCATA/tree/master/routes.png)
+![routes screenshot](https://raw.github.com/shanet/iCATA/master/routes.png)
 
-![alt tag](https://raw.github.com/shanet/iCATA/tree/master/map.png)
+![maps screenshot](https://raw.github.com/shanet/iCATA/master/map.png)
 
-## License
+### License
 Copyright (C) 2013 Shane Tully
 
 This program is free software: you can redistribute it and/or modify
