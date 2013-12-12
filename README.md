@@ -17,9 +17,9 @@ iCATA is a realtime iOS app for CATA bus locations and schedules. It was created
 
 ### Screenshots
 
-![routes screenshot](https://raw.github.com/shanet/iCATA/master/routes.png)
+![routes screenshot](https://raw.github.com/shanet/iCATA/master/screenshots/routes.png)
 
-![maps screenshot](https://raw.github.com/shanet/iCATA/master/map.png)
+![maps screenshot](https://raw.github.com/shanet/iCATA/master/screenshots/map.png)
 
 ### License
 Copyright (C) 2013 Shane Tully
